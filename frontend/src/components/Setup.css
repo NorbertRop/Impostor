@@ -1,0 +1,130 @@
+.setup-container {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.setup-container h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+}
+
+.setup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #555;
+  font-size: 1.1rem;
+}
+
+.form-group input[type="number"] {
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input[type="number"]:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.players-list h3 {
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.player-input-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.player-input-group label {
+  min-width: 80px;
+  font-weight: 500;
+  color: #666;
+}
+
+.player-input-group input {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.player-input-group input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.error {
+  background: #fee;
+  color: #c00;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.start-button {
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.start-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+}
+
+.start-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+  .setup-container {
+    padding: 20px;
+  }
+
+  .setup-container h1 {
+    font-size: 2rem;
+  }
+
+  .player-input-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+  }
+
+  .player-input-group label {
+    min-width: auto;
+  }
+}
+
