@@ -1,76 +1,112 @@
-# Gra w Impostora
+# Gra w Impostora 📱
 
-Webowa gra w impostora dla n graczy z polskim słownikiem. Wszyscy gracze oprócz jednego widzą to samo słowo, a impostor musi udawać, że je zna.
+Progressive Web App (PWA) - gra towarzyska w impostora z polskim słownikiem. Działa całkowicie offline na iPhone!
 
-## Wymagania
+## 🎮 Jak działa gra
 
-- Python 3.8+
-- Node.js 18+
-- npm
+Wszyscy gracze oprócz jednego widzą to samo słowo. Impostor musi udawać, że je zna!
 
-## Instalacja i uruchomienie
+1. Wybierz liczbę graczy (minimum 3)
+2. Wpisz imiona wszystkich graczy
+3. Każdy gracz po kolei podchodzi i widzi swoją informację
+4. Jeden losowy gracz jest impostorem
+5. Znajdźcie impostora pytając o szczegóły słowa!
 
-### Backend (FastAPI)
+## 🚀 Wersja Standalone (bez komputera)
 
-```bash
-cd backend
-pip install -r requirements.txt
-uvicorn main:app --reload
-```
+**Aplikacja działa teraz 100% offline na telefonie!**
 
-Backend będzie działał na `http://localhost:8000`
+### Instalacja na iPhone:
 
-### Frontend (React + Vite)
+1. **Wejdź na link:** [Zobacz DEPLOYMENT.md](./DEPLOYMENT.md) jak wdrożyć na hosting
+2. **Otwórz w Safari** na iPhone
+3. **Kliknij przycisk "Udostępnij"** (kwadrat ze strzałką)
+4. **Wybierz "Dodaj do ekranu głównego"**
+5. **Gotowe!** Aplikacja działa offline
+
+### Opcje hostingu (darmowe):
+
+- **GitHub Pages** - https://pages.github.com/
+- **Vercel** - https://vercel.com/
+- **Netlify** - https://www.netlify.com/
+- **Cloudflare Pages** - https://pages.cloudflare.com/
+
+Zobacz [DEPLOYMENT.md](./DEPLOYMENT.md) dla szczegółowych instrukcji.
+
+## 💻 Rozwój lokalny
+
+### Build aplikacji:
 
 ```bash
 cd frontend
 npm install
-npm run dev
+npm run build
 ```
 
-Frontend będzie działał na `http://localhost:5173`
+### Test lokalny:
 
-## Jak grać
+```bash
+npm run preview
+```
 
-1. Otwórz `http://localhost:5173` w przeglądarce
-2. Wybierz liczbę graczy (minimum 3)
-3. Wpisz imiona wszystkich graczy
-4. Kliknij "Rozpocznij Grę"
-5. Każdy gracz po kolei podchodzi do komputera i widzi:
-   - Swoje słowo (jeśli jest normalnym graczem)
-   - Komunikat "Jesteś IMPOSTOREM!" (jeśli jest impostorem)
-6. Po zobaczeniu słowa, gracz klika "Następny Gracz"
-7. Po tym jak wszyscy zobaczyli swoje słowa, możecie rozpocząć grę
+Aplikacja będzie dostępna na `http://localhost:4173`
 
-## Struktura projektu
+### Test na iPhone (lokalna sieć):
+
+```bash
+npm run dev -- --host
+```
+
+Znajdź swoje IP i otwórz `http://YOUR_IP:5173` w Safari na iPhone
+
+## 📁 Struktura projektu
 
 ```
 impostor/
-├── backend/
-│   ├── main.py           # FastAPI endpoints
-│   ├── game.py           # Game logic
-│   ├── dictionary.py     # Polish dictionary loader
-│   ├── requirements.txt  # Python dependencies
-│   └── data/
-│       └── polish_words.txt  # 340k+ Polish words
-├── frontend/
+├── frontend/              # PWA React app
+│   ├── public/
+│   │   ├── words.txt     # 10,000 polskich słów
+│   │   ├── manifest.json # PWA manifest
+│   │   ├── sw.js         # Service worker
+│   │   └── icon-*.png    # Ikony aplikacji
 │   ├── src/
-│   │   ├── App.jsx
-│   │   ├── components/
-│   │   │   ├── Setup.jsx       # Game setup screen
-│   │   │   ├── PlayerView.jsx  # Player turn screen
-│   │   │   └── *.css           # Component styles
+│   │   ├── utils/
+│   │   │   └── game.js   # Logika gry (client-side)
+│   │   └── components/   # Komponenty React
 │   └── package.json
-└── README.md
+├── backend/              # [DEPRECATED] Nie jest już potrzebny!
+├── DEPLOYMENT.md         # Szczegółowy przewodnik wdrożenia
+└── README.md            # Ten plik
 ```
 
-## Słownik
+## 🎯 Funkcje
 
-Projekt używa oficjalnego słownika polskiego z [sjp.pl](https://sjp.pl/sl/ort/) zawierającego ponad 340,000 polskich słów.
+✅ **Całkowicie offline** - działa bez internetu po instalacji
+✅ **10,000+ polskich słów** - zoptymalizowany słownik
+✅ **PWA** - instalacja jak natywna aplikacja
+✅ **Responsywne UI** - piękny gradient, nowoczesny design
+✅ **Zero backendu** - wszystko działa w przeglądarce
+✅ **Optymalizacja iOS** - idealne na iPhone
 
-## Technologie
+## 📱 Kompatybilność
 
-- **Backend**: FastAPI, Python 3
-- **Frontend**: React, Vite
-- **Słownik**: SJP.pl (licencje: GPL 2, LGPL 2.1, CC BY 4.0, MPL 1.1, Apache 2.0)
+- ✅ iPhone (Safari) - PWA support
+- ✅ Android (Chrome) - PWA support
+- ✅ Desktop (wszystkie przeglądarki)
 
+## 🛠️ Technologie
+
+- **React 19** - UI framework
+- **Vite** - Build tool
+- **PWA** - Progressive Web App
+- **Service Worker** - Offline functionality
+- **Słownik**: SJP.pl (GPL 2, LGPL 2.1, CC BY 4.0)
+
+## 📝 Licencja
+
+Aplikacja: MIT
+Słownik polski: SJP.pl (GPL 2, LGPL 2.1, CC BY 4.0, MPL 1.1, Apache 2.0)
+
+---
+
+**Uwaga:** Stara wersja z backendem (FastAPI) znajduje się w folderze `backend/` ale **nie jest już potrzebna**. Nowa wersja działa w 100% po stronie klienta!

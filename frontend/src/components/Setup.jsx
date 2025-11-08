@@ -3,8 +3,8 @@ import { loadDictionary, createGame } from '../utils/game';
 import './Setup.css';
 
 function Setup({ onGameStart }) {
-  const [numPlayers, setNumPlayers] = useState(3);
-  const [playerNames, setPlayerNames] = useState(['', '', '']);
+  const [numPlayers, setNumPlayers] = useState(4);
+  const [playerNames, setPlayerNames] = useState(['Patrycja', 'Bebol', 'David', 'Dajmond']);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
