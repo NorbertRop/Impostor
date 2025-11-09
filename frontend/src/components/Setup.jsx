@@ -13,12 +13,30 @@ function Setup({ onGameStart }) {
   }, []);
 
   const handleNumPlayersChange = (e) => {
-    const num = parseInt(e.target.value);
-    if (num >= 3 && num <= 20) {
-      setNumPlayers(num);
-      const newNames = Array(num).fill('').map((_, i) => 
-        playerNames[i] || ''
-      );
+    const value = e.target.value;
+    const num = parseInt(value);
+    
+    // Allow empty input for editing
+    if (value === '' || isNaN(num)) {
+      setNumPlayers(value);
+      return;
+    }
+    
+    // Clamp value between 3 and 20
+    const clampedNum = Math.max(3, Math.min(20, num));
+    setNumPlayers(clampedNum);
+    
+    const newNames = Array(clampedNum).fill('').map((_, i) => 
+      playerNames[i] || ''
+    );
+    setPlayerNames(newNames);
+  };
+
+  const handleNumPlayersBlur = () => {
+    const num = parseInt(numPlayers);
+    if (isNaN(num) || num < 3) {
+      setNumPlayers(3);
+      const newNames = Array(3).fill('').map((_, i) => playerNames[i] || '');
       setPlayerNames(newNames);
     }
   };
@@ -68,6 +86,7 @@ function Setup({ onGameStart }) {
             max="20"
             value={numPlayers}
             onChange={handleNumPlayersChange}
+            onBlur={handleNumPlayersBlur}
           />
         </div>
 
