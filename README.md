@@ -74,7 +74,6 @@ impostor/
 │   │   │   └── game.js   # Logika gry (client-side)
 │   │   └── components/   # Komponenty React
 │   └── package.json
-├── backend/              # [DEPRECATED] Nie jest już potrzebny!
 ├── DEPLOYMENT.md         # Szczegółowy przewodnik wdrożenia
 └── README.md            # Ten plik
 ```
@@ -106,7 +105,3 @@ impostor/
 
 Aplikacja: MIT
 Słownik polski: SJP.pl (GPL 2, LGPL 2.1, CC BY 4.0, MPL 1.1, Apache 2.0)
-
----
-
-**Uwaga:** Stara wersja z backendem (FastAPI) znajduje się w folderze `backend/` ale **nie jest już potrzebna**. Nowa wersja działa w 100% po stronie klienta!
