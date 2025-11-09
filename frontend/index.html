@@ -15,10 +15,11 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script>
+    <script type="module">
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/Impostor/sw.js')
+          const base = window.location.pathname.includes('/Impostor/') ? '/Impostor' : '';
+          navigator.serviceWorker.register(`${base}/sw.js`)
             .then(registration => console.log('SW registered'))
             .catch(err => console.log('SW registration failed'));
         });
