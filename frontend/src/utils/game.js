@@ -4,7 +4,7 @@ export async function loadDictionary() {
   if (words.length > 0) return;
   
   try {
-    const response = await fetch('/words.txt');
+    const response = await fetch(`${import.meta.env.BASE_URL}words.txt`);
     const text = await response.text();
     words = text.trim().split('\n').filter(w => w.length > 0);
   } catch (error) {

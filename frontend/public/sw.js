@@ -1,4 +1,4 @@
-const CACHE_NAME = 'impostor-v2';
+const CACHE_NAME = 'impostor-v3';
 // Detect base path from service worker location
 const base = self.location.pathname.includes('/Impostor/') ? '/Impostor' : '';
 const urlsToCache = [
