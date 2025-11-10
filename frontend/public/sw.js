@@ -1,10 +1,8 @@
 const CACHE_NAME = 'impostor-v5';
-// Detect base path from service worker location
-const base = self.location.pathname.includes('/Impostor/') ? '/Impostor' : '';
 const urlsToCache = [
-  `${base}/`,
-  `${base}/index.html`,
-  `${base}/words.txt`
+  '/',
+  '/index.html',
+  '/words.txt'
 ];
 
 self.addEventListener('install', (event) => {
