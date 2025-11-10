@@ -4,6 +4,7 @@ from datetime import datetime
 
 from firestore_client import get_db
 from google.cloud.firestore_v1 import SERVER_TIMESTAMP
+from loguru import logger
 
 
 def generate_room_id():
@@ -27,13 +28,13 @@ def load_word_list():
             with open(path, "r", encoding="utf-8") as f:
                 words = [line.strip() for line in f if line.strip()]
                 if words:
-                    print(f"✅ Loaded {len(words)} words from {path}")
+                    logger.success(f"Loaded {len(words)} words from {path}")
                     return words
         except FileNotFoundError:
             continue
 
     # Fallback words if file not found
-    print("⚠️ Using fallback word list")
+    logger.warning("Using fallback word list")
     return [
         "kot",
         "pies",

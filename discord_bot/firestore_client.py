@@ -3,6 +3,7 @@ import json
 import firebase_admin
 from config import config
 from firebase_admin import credentials, firestore
+from loguru import logger
 
 
 def initialize_firebase():
@@ -13,9 +14,9 @@ def initialize_firebase():
             cred_dict = json.loads(cred_json)
             cred = credentials.Certificate(cred_dict)
             firebase_admin.initialize_app(cred)
-            print("✅ Firebase Admin SDK initialized successfully")
+            logger.success("Firebase Admin SDK initialized successfully")
     except Exception as e:
-        print(f"❌ Failed to initialize Firebase: {e}")
+        logger.error(f"Failed to initialize Firebase: {e}")
         raise
 
 

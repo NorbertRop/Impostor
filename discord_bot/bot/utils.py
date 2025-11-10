@@ -1,4 +1,5 @@
 import discord
+from loguru import logger
 
 
 async def send_word_dm(user: discord.User, room_id: str, secret: dict, web_url: str):
@@ -41,7 +42,7 @@ async def send_word_dm(user: discord.User, room_id: str, secret: dict, web_url: 
     except discord.Forbidden:
         return False
     except Exception as e:
-        print(f"Error sending DM to {user.name}: {e}")
+        logger.error(f"Error sending DM to {user.name}: {e}")
         return False
 
 

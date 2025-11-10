@@ -2,6 +2,7 @@ import discord
 import game_logic
 from config import config
 from discord import app_commands
+from loguru import logger
 
 from bot.bot import bot
 from bot.utils import format_player_list, send_word_dm
@@ -115,7 +116,7 @@ async def impostor_command(
                         else:
                             failed_users.append(secret["name"])
                     except Exception as e:
-                        print(f"Failed to send DM to {discord_id}: {e}")
+                        logger.error(f"Failed to send DM to {discord_id}: {e}")
                         failed_users.append(secret["name"])
 
             embed = discord.Embed(
@@ -252,6 +253,6 @@ async def impostor_command(
     except ValueError as e:
         await interaction.followup.send(f"❌ {str(e)}", ephemeral=True)
     except Exception as e:
-        print(f"Error in command {action.value}: {e}")
+        logger.error(f"Error in command {action.value}: {e}")
         await interaction.followup.send(f"❌ Wystąpił błąd: {str(e)}", ephemeral=True)
 
