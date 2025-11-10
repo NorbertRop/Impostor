@@ -1,67 +1,67 @@
 import { useState, useEffect } from 'react';
-import { loadDictionary, createGame } from '../utils/game';
+import { useNavigate } from 'react-router-dom';
+import { ensureAnonAuth } from '../firebase';
+import { createRoom, joinRoom } from '../api/room';
+import { loadDictionary } from '../utils/game';
 import './Setup.css';
 
-function Setup({ onGameStart }) {
-  const [numPlayers, setNumPlayers] = useState(4);
-  const [playerNames, setPlayerNames] = useState(['Patrycja', 'Bebol', 'David', 'Dajmond']);
+function Setup() {
+  const navigate = useNavigate();
+  const [playerName, setPlayerName] = useState('');
+  const [roomCode, setRoomCode] = useState('');
+  const [mode, setMode] = useState('menu');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
     loadDictionary().then(() => setLoading(false));
   }, []);
 
-  const handleNumPlayersChange = (e) => {
-    const value = e.target.value;
-    const num = parseInt(value);
-    
-    // Allow empty input for editing
-    if (value === '' || isNaN(num)) {
-      setNumPlayers(value);
-      return;
-    }
-    
-    // Clamp value between 3 and 20
-    const clampedNum = Math.max(3, Math.min(20, num));
-    setNumPlayers(clampedNum);
-    
-    const newNames = Array(clampedNum).fill('').map((_, i) => 
-      playerNames[i] || ''
-    );
-    setPlayerNames(newNames);
-  };
-
-  const handleNumPlayersBlur = () => {
-    const num = parseInt(numPlayers);
-    if (isNaN(num) || num < 3) {
-      setNumPlayers(3);
-      const newNames = Array(3).fill('').map((_, i) => playerNames[i] || '');
-      setPlayerNames(newNames);
-    }
-  };
-
-  const handlePlayerNameChange = (index, value) => {
-    const newNames = [...playerNames];
-    newNames[index] = value;
-    setPlayerNames(newNames);
-  };
-
-  const handleStartGame = () => {
-    const filledNames = playerNames.filter(name => name.trim() !== '');
-    
-    if (filledNames.length < 3) {
-      setError('Musisz podać przynajmniej 3 graczy');
-      return;
-    }
-    
-    if (filledNames.length !== playerNames.length) {
-      setError('Wszystkie pola muszą być wypełnione');
+  const handleCreateRoom = async () => {
+    if (!playerName.trim()) {
+      setError('Podaj swoje imię');
       return;
     }
 
-    const game = createGame(filledNames);
-    onGameStart(game);
+    setProcessing(true);
+    setError('');
+    
+    try {
+      await ensureAnonAuth();
+      const roomId = await createRoom(playerName.trim());
+      navigate(`/r/${roomId}`);
+    } catch (err) {
+      console.error('Error creating room:', err);
+      setError('Nie udało się utworzyć pokoju: ' + err.message);
+      setProcessing(false);
+    }
+  };
+
+  const handleJoinRoom = async () => {
+    if (!playerName.trim()) {
+      setError('Podaj swoje imię');
+      return;
+    }
+
+    if (!roomCode.trim()) {
+      setError('Podaj kod pokoju');
+      return;
+    }
+
+    setProcessing(true);
+    setError('');
+    
+    try {
+      await ensureAnonAuth();
+      const normalizedCode = roomCode.trim().toUpperCase();
+      await joinRoom(normalizedCode, playerName.trim());
+      navigate(`/r/${normalizedCode}`);
+    } catch (err) {
+      console.error('Error joining room:', err);
+      setError('Nie udało się dołączyć: ' + err.message);
+      setProcessing(false);
+    }
   };
 
   if (loading) {
@@ -77,40 +77,130 @@ function Setup({ onGameStart }) {
       <h1>Gra w Impostora</h1>
       
       <div className="setup-form">
-        <div className="form-group">
-          <label htmlFor="numPlayers">Liczba graczy:</label>
-          <input
-            type="number"
-            id="numPlayers"
-            min="3"
-            max="20"
-            value={numPlayers}
-            onChange={handleNumPlayersChange}
-            onBlur={handleNumPlayersBlur}
-          />
-        </div>
-
-        <div className="players-list">
-          <h3>Imiona graczy:</h3>
-          {playerNames.map((name, index) => (
-            <div key={index} className="player-input-group">
-              <label htmlFor={`player-${index}`}>Gracz {index + 1}:</label>
+        {mode === 'menu' && (
+          <div className="menu-mode">
+            <p className="description">
+              Gra towarzyska, w której jeden gracz jest impostorem i nie zna słowa.
+              Odkryj, kto nim jest!
+            </p>
+            
+            <div className="name-input-group">
+              <label htmlFor="playerName">Twoje imię:</label>
               <input
                 type="text"
-                id={`player-${index}`}
-                value={name}
-                onChange={(e) => handlePlayerNameChange(index, e.target.value)}
-                placeholder={`Imię gracza ${index + 1}`}
+                id="playerName"
+                value={playerName}
+                onChange={(e) => setPlayerName(e.target.value)}
+                placeholder="Wpisz swoje imię"
+                maxLength={20}
               />
             </div>
-          ))}
-        </div>
 
-        {error && <div className="error">{error}</div>}
+            {error && <div className="error">{error}</div>}
 
-        <button className="start-button" onClick={handleStartGame}>
-          Rozpocznij Grę
-        </button>
+            <div className="button-group">
+              <button
+                className="primary-button"
+                onClick={() => playerName.trim() ? setMode('create') : setError('Podaj swoje imię')}
+                disabled={processing}
+              >
+                Stwórz pokój
+              </button>
+              
+              <button
+                className="secondary-button"
+                onClick={() => playerName.trim() ? setMode('join') : setError('Podaj swoje imię')}
+                disabled={processing}
+              >
+                Dołącz do pokoju
+              </button>
+            </div>
+          </div>
+        )}
+
+        {mode === 'create' && (
+          <div className="create-mode">
+            <p className="mode-description">
+              Utworzysz pokój i zostaniesz hostem. Inni gracze będą mogli dołączyć używając kodu pokoju.
+            </p>
+            
+            <div className="player-info">
+              <strong>Twoje imię:</strong> {playerName}
+            </div>
+
+            {error && <div className="error">{error}</div>}
+
+            <div className="button-group">
+              <button
+                className="primary-button"
+                onClick={handleCreateRoom}
+                disabled={processing}
+              >
+                {processing ? 'Tworzenie...' : 'Utwórz pokój'}
+              </button>
+              
+              <button
+                className="back-button"
+                onClick={() => {
+                  setMode('menu');
+                  setError('');
+                }}
+                disabled={processing}
+              >
+                Wróć
+              </button>
+            </div>
+          </div>
+        )}
+
+        {mode === 'join' && (
+          <div className="join-mode">
+            <p className="mode-description">
+              Wpisz kod pokoju, który otrzymałeś od hosta.
+            </p>
+            
+            <div className="player-info">
+              <strong>Twoje imię:</strong> {playerName}
+            </div>
+
+            <div className="code-input-group">
+              <label htmlFor="roomCode">Kod pokoju:</label>
+              <input
+                type="text"
+                id="roomCode"
+                value={roomCode}
+                onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
+                placeholder="np. ABC123"
+                maxLength={6}
+                style={{ textTransform: 'uppercase' }}
+              />
+            </div>
+
+            {error && <div className="error">{error}</div>}
+
+            <div className="button-group">
+              <button
+                className="primary-button"
+                onClick={handleJoinRoom}
+                disabled={processing}
+              >
+                {processing ? 'Dołączanie...' : 'Dołącz'}
+              </button>
+              
+              <button
+                className="back-button"
+                onClick={() => {
+                  setMode('menu');
+                  setRoomCode('');
+                  setError('');
+                }}
+                disabled={processing}
+              >
+                Wróć
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

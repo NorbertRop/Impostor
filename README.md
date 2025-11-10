@@ -1,10 +1,26 @@
 # Gra w Impostora 📱
 
-Progressive Web App (PWA) - gra towarzyska w impostora z polskim słownikiem. Działa całkowicie offline na iPhone!
+Progressive Web App (PWA) - gra towarzyska w impostora z polskim słownikiem. **Teraz z trybem multiplayer online!**
 
 ## 🎮 Jak działa gra
 
 Wszyscy gracze oprócz jednego widzą to samo słowo. Impostor musi udawać, że je zna!
+
+### 🌐 Tryb Multiplayer (NOWE!)
+
+**Web:**
+1. **Host tworzy pokój** - otrzymuje 6-znakowy kod
+2. **Gracze dołączają** - używając kodu lub linku
+3. **Host rozpoczyna grę** - każdy widzi swoją rolę na swoim urządzeniu
+4. **Znajdźcie impostora!** - dyskutujcie i głosujcie
+
+**Discord Bot:**
+1. Użyj `/impostor create` na serwerze Discord
+2. Inni gracze: `/impostor join code:ABC123`
+3. Host: `/impostor start code:ABC123`
+4. Bot wysyła DM z słowami do każdego gracza!
+
+### 📱 Tryb lokalny (pojedyncze urządzenie)
 
 1. Wybierz liczbę graczy (minimum 3)
 2. Wpisz imiona wszystkich graczy
@@ -12,11 +28,40 @@ Wszyscy gracze oprócz jednego widzą to samo słowo. Impostor musi udawać, że
 4. Jeden losowy gracz jest impostorem
 5. Znajdźcie impostora pytając o szczegóły słowa!
 
-## 🚀 Wersja Standalone (bez komputera)
+## 🚀 Szybki Start
 
-**Aplikacja działa teraz 100% offline na telefonie!**
+### Option 1: Web Multiplayer (Firebase)
 
-### Instalacja na iPhone:
+**Wymagania**: Firebase project (darmowy)
+
+1. **Setup Firebase** - Zobacz [FIREBASE_SETUP.md](./FIREBASE_SETUP.md)
+2. **Configure environment** - Wypełnij `frontend/.env`
+3. **Start app**:
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+4. **Open** `http://localhost:5173` w przeglądarce
+5. **Test** - otwórz w wielu kartach/urządzeniach
+
+### Option 2: Discord Bot (FastAPI + Discord.py)
+
+**Wymagania**: Discord bot + Render account (darmowy)
+
+1. **Setup Discord Bot** - Zobacz [DISCORD_SETUP.md](./DISCORD_SETUP.md)
+2. **Deploy Backend** - Zobacz [BACKEND_DEPLOYMENT.md](./BACKEND_DEPLOYMENT.md)
+3. **Use commands**:
+   ```
+   /impostor create
+   /impostor join code:ABC123
+   /impostor start code:ABC123
+   ```
+4. **Receive DM** - Bot wysyła słowa przez wiadomości prywatne!
+
+### Tryb lokalny (bez internetu)
+
+**Nie potrzebujesz Firebase do trybu lokalnego!**
 
 1. **Wejdź na link:** [Zobacz DEPLOYMENT.md](./DEPLOYMENT.md) jak wdrożyć na hosting
 2. **Otwórz w Safari** na iPhone
@@ -26,7 +71,7 @@ Wszyscy gracze oprócz jednego widzą to samo słowo. Impostor musi udawać, że
 
 ### Opcje hostingu (darmowe):
 
-- **GitHub Pages** - https://pages.github.com/
+- **Firebase Hosting** - https://firebase.google.com/docs/hosting
 - **Vercel** - https://vercel.com/
 - **Netlify** - https://www.netlify.com/
 - **Cloudflare Pages** - https://pages.cloudflare.com/
@@ -63,28 +108,57 @@ Znajdź swoje IP i otwórz `http://YOUR_IP:5173` w Safari na iPhone
 
 ```
 impostor/
-├── frontend/              # PWA React app
+├── frontend/                  # PWA React app
 │   ├── public/
-│   │   ├── words.txt     # 10,000 polskich słów
-│   │   ├── manifest.json # PWA manifest
-│   │   ├── sw.js         # Service worker
-│   │   └── icon-*.png    # Ikony aplikacji
+│   │   ├── words.txt         # 10,000 polskich słów
+│   │   ├── manifest.json     # PWA manifest
+│   │   ├── sw.js             # Service worker
+│   │   └── icon-*.png        # Ikony aplikacji
 │   ├── src/
+│   │   ├── api/
+│   │   │   └── room.js       # Firestore API functions
+│   │   ├── components/
+│   │   │   ├── Setup.jsx     # Create/Join room
+│   │   │   ├── Room.jsx      # Room orchestrator
+│   │   │   ├── Lobby.jsx     # Waiting room
+│   │   │   └── Reveal.jsx    # Word reveal screen
 │   │   ├── utils/
-│   │   │   └── game.js   # Logika gry (client-side)
-│   │   └── components/   # Komponenty React
+│   │   │   └── game.js       # Game logic
+│   │   ├── firebase.js       # Firebase config
+│   │   └── App.jsx           # Router setup
 │   └── package.json
-├── DEPLOYMENT.md         # Szczegółowy przewodnik wdrożenia
-└── README.md            # Ten plik
+├── backend/                   # FastAPI + Discord bot
+│   ├── main.py               # Entry point
+│   ├── game_logic.py         # Shared game functions
+│   ├── firestore_client.py   # Firebase Admin SDK
+│   ├── api/
+│   │   ├── rooms.py          # REST endpoints
+│   │   └── models.py         # Pydantic models
+│   └── bot/
+│       ├── bot.py            # Discord bot setup
+│       ├── commands.py       # Slash commands
+│       └── utils.py          # DM helpers
+├── firestore.rules           # Firestore security rules
+├── firebase.json             # Firebase Hosting config
+├── FIREBASE_SETUP.md         # Firebase setup guide
+├── DISCORD_SETUP.md          # Discord bot setup guide
+├── BACKEND_DEPLOYMENT.md     # Backend deployment guide
+├── DEPLOYMENT.md             # Frontend deployment guide
+└── README.md                 # Ten plik
 ```
 
 ## 🎯 Funkcje
 
-✅ **Całkowicie offline** - działa bez internetu po instalacji
+✅ **Discord Bot** - graj przez Discord z DM-ami
+✅ **Multiplayer online** - graj na wielu urządzeniach jednocześnie
+✅ **Hybrid mode** - mieszaj graczy Discord i Web
+✅ **Real-time sync** - Firestore realtime updates
+✅ **Pokoje gry** - krótkie kody dołączania (ABC123)
+✅ **Prywatne słowa** - każdy widzi swoją rolę tylko na swoim urządzeniu
 ✅ **10,000+ polskich słów** - zoptymalizowany słownik
 ✅ **PWA** - instalacja jak natywna aplikacja
 ✅ **Responsywne UI** - piękny gradient, nowoczesny design
-✅ **Zero backendu** - wszystko działa w przeglądarce
+✅ **Tryb offline** - tryb lokalny działa bez internetu
 ✅ **Optymalizacja iOS** - idealne na iPhone
 
 ## 📱 Kompatybilność
@@ -95,11 +169,34 @@ impostor/
 
 ## 🛠️ Technologie
 
+**Frontend:**
 - **React 19** - UI framework
 - **Vite** - Build tool
+- **Firebase Firestore** - Real-time database
+- **Firebase Auth** - Anonymous authentication
+- **Firebase Hosting** - Static hosting
+- **React Router** - Client-side routing
 - **PWA** - Progressive Web App
-- **Service Worker** - Offline functionality
+
+**Backend:**
+- **FastAPI** - REST API framework
+- **Discord.py** - Discord bot library
+- **Firebase Admin SDK** - Server-side Firestore
+- **Uvicorn** - ASGI server
+- **Render** - Deployment platform
+
+**Shared:**
+- **Firestore** - Shared database for web + Discord
 - **Słownik**: SJP.pl (GPL 2, LGPL 2.1, CC BY 4.0)
+
+## 🔮 Przyszłe funkcje
+
+Potencjalne ulepszenia:
+- 📊 Statistics - śledź statystyki gier i ranking graczy
+- 🏆 Leaderboards - tabele wyników per serwer Discord
+- 🗳️ Voting system - głosowanie na impostora w Discord
+- 🎨 Custom word lists - własne listy słów per serwer
+- 🌍 Multi-language - wsparcie dla innych języków
 
 ## 📝 Licencja
 

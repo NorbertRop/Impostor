@@ -22,19 +22,39 @@
   gap: 25px;
 }
 
-.form-group {
+.description {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.mode-description {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.name-input-group,
+.code-input-group {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-bottom: 1rem;
 }
 
-.form-group label {
+.name-input-group label,
+.code-input-group label {
   font-weight: 600;
   color: #555;
   font-size: 1.1rem;
 }
 
-.form-group input[type="number"] {
+.name-input-group input,
+.code-input-group input {
   padding: 12px;
   border: 2px solid #ddd;
   border-radius: 10px;
@@ -42,41 +62,94 @@
   transition: border-color 0.3s;
 }
 
-.form-group input[type="number"]:focus {
+.name-input-group input:focus,
+.code-input-group input:focus {
   outline: none;
   border-color: #667eea;
 }
 
-.players-list h3 {
-  color: #555;
-  margin-bottom: 15px;
+.player-info {
+  background: #f5f5f5;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
 }
 
-.player-input-group {
+.button-group {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 15px;
-  margin-bottom: 10px;
+  margin-top: 1rem;
 }
 
-.player-input-group label {
-  min-width: 80px;
-  font-weight: 500;
-  color: #666;
+.primary-button,
+.secondary-button {
+  padding: 15px 30px;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.player-input-group input {
-  flex: 1;
-  padding: 10px;
-  border: 2px solid #ddd;
+.primary-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.primary-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+}
+
+.primary-button:active {
+  transform: translateY(0);
+}
+
+.primary-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.secondary-button {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+}
+
+.secondary-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(76, 175, 80, 0.4);
+}
+
+.secondary-button:active {
+  transform: translateY(0);
+}
+
+.secondary-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.back-button {
+  padding: 12px 24px;
+  background: #666;
+  color: white;
+  border: none;
   border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.player-input-group input:focus {
-  outline: none;
-  border-color: #667eea;
+.back-button:hover:not(:disabled) {
+  background: #555;
+}
+
+.back-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }
 
 .error {
@@ -88,26 +161,6 @@
   font-weight: 500;
 }
 
-.start-button {
-  padding: 15px 30px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.start-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-}
-
-.start-button:active {
-  transform: translateY(0);
-}
-
 @media (max-width: 600px) {
   .setup-container {
     padding: 20px;
@@ -115,16 +168,6 @@
 
   .setup-container h1 {
     font-size: 2rem;
-  }
-
-  .player-input-group {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 5px;
-  }
-
-  .player-input-group label {
-    min-width: auto;
   }
 }
 

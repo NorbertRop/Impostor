@@ -1,27 +1,18 @@
-import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Setup from './components/Setup';
-import PlayerView from './components/PlayerView';
+import Room from './components/Room';
 import './App.css';
 
 function App() {
-  const [game, setGame] = useState(null);
-
-  const handleGameStart = (newGame) => {
-    setGame(newGame);
-  };
-
-  const handleReset = () => {
-    setGame(null);
-  };
-
   return (
+    <Router>
     <div className="app">
-      {!game ? (
-        <Setup onGameStart={handleGameStart} />
-      ) : (
-        <PlayerView game={game} onReset={handleReset} />
-      )}
+        <Routes>
+          <Route path="/" element={<Setup />} />
+          <Route path="/r/:roomId" element={<Room />} />
+        </Routes>
     </div>
+    </Router>
   );
 }
 
