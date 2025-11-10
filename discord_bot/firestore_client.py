@@ -2,7 +2,7 @@ import json
 
 import firebase_admin
 from config import config
-from firebase_admin import credentials
+from firebase_admin import credentials, firestore
 
 
 def initialize_firebase():
@@ -17,3 +17,8 @@ def initialize_firebase():
     except Exception as e:
         print(f"❌ Failed to initialize Firebase: {e}")
         raise
+
+
+def get_db():
+    """Get Firestore database client"""
+    return firestore.client()
