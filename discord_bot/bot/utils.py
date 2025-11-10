@@ -1,5 +1,6 @@
 import discord
 
+
 async def send_word_dm(user: discord.User, room_id: str, secret: dict, web_url: str):
     try:
         if secret['role'] == 'impostor':
@@ -38,11 +39,11 @@ async def send_word_dm(user: discord.User, room_id: str, secret: dict, web_url: 
         await user.send(embed=embed)
         return True
     except discord.Forbidden:
-        # User has DMs disabled
         return False
     except Exception as e:
         print(f"Error sending DM to {user.name}: {e}")
         return False
+
 
 def format_player_list(players: list) -> str:
     if not players:

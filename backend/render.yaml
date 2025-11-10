@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: impostor-backend
+    name: impostor-backend-api
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt
@@ -10,8 +10,6 @@ services:
     branch: main
     rootDir: backend
     envVars:
-      - key: DISCORD_TOKEN
-        sync: false
       - key: FIREBASE_SERVICE_ACCOUNT
         sync: false
       - key: CORS_ORIGINS

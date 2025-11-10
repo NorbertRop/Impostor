@@ -36,13 +36,11 @@ function Lobby({ roomId, room, players, isHost, onError }) {
 
   const handleCopyRoomCode = () => {
     navigator.clipboard.writeText(roomId);
-    alert('Kod pokoju skopiowany!');
   };
 
   const handleCopyLink = () => {
     const link = `${window.location.origin}/r/${roomId}`;
     navigator.clipboard.writeText(link);
-    alert('Link skopiowany!');
   };
 
   return (

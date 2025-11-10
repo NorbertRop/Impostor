@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ensureAnonAuth, auth } from '../firebase';
+import { ensureAnonAuth } from '../firebase';
 import { subscribeRoom, subscribePlayers, subscribeMySecret } from '../api/room';
-import { loadDictionary } from '../utils/game';
 import Lobby from './Lobby';
 import Reveal from './Reveal';
 import './Room.css';
@@ -24,7 +23,6 @@ function Room() {
 
     async function initialize() {
       try {
-        await loadDictionary();
         const user = await ensureAnonAuth();
         setMyUid(user.uid);
 

@@ -2,7 +2,6 @@ const CACHE_NAME = 'impostor-v5';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/words.txt'
 ];
 
 self.addEventListener('install', (event) => {

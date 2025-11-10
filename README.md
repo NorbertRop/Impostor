@@ -127,25 +127,35 @@ impostor/
 │   │   ├── firebase.js       # Firebase config
 │   │   └── App.jsx           # Router setup
 │   └── package.json
-├── backend/                   # FastAPI + Discord bot
+├── backend/                   # FastAPI REST API (web only)
 │   ├── main.py               # Entry point
 │   ├── game_logic.py         # Shared game functions
 │   ├── firestore_client.py   # Firebase Admin SDK
-│   ├── api/
-│   │   ├── rooms.py          # REST endpoints
-│   │   └── models.py         # Pydantic models
-│   └── bot/
-│       ├── bot.py            # Discord bot setup
-│       ├── commands.py       # Slash commands
-│       └── utils.py          # DM helpers
+│   └── api/
+│       ├── rooms.py          # REST endpoints
+│       └── models.py         # Pydantic models
+├── discord_bot/               # Discord bot (standalone deployment)
+│   ├── bot/
+│   │   ├── bot.py            # Discord bot setup
+│   │   ├── commands.py       # Slash commands
+│   │   └── utils.py          # DM helpers
+│   ├── main.py               # Bot entry point
+│   ├── game_logic.py         # Game logic (shared)
+│   ├── config.py             # Configuration
+│   ├── requirements.txt      # Python dependencies
+│   ├── Dockerfile            # Docker config
+│   └── README.md             # Bot deployment guide
+├── functions/                 # Firebase Cloud Functions
+│   ├── index.js              # Scheduled cleanup (runs every hour)
+│   └── package.json          # Node.js dependencies
 ├── firestore.rules           # Firestore security rules
 ├── firebase.json             # Firebase Hosting config
 ├── FIREBASE_SETUP.md         # Firebase setup guide
 ├── DISCORD_SETUP.md          # Discord bot setup guide
-├── BACKEND_DEPLOYMENT.md     # Backend deployment guide
-├── DEPLOYMENT.md             # Frontend deployment guide
 └── README.md                 # Ten plik
 ```
+
+**Note**: Bot został przeniesiony do osobnego katalogu `discord_bot/` aby umożliwić niezależny deployment osobno od API.
 
 ## 🎯 Funkcje
 
@@ -160,6 +170,7 @@ impostor/
 ✅ **Responsywne UI** - piękny gradient, nowoczesny design
 ✅ **Tryb offline** - tryb lokalny działa bez internetu
 ✅ **Optymalizacja iOS** - idealne na iPhone
+✅ **Auto-cleanup** - stare pokoje (24h+) są automatycznie usuwane
 
 ## 📱 Kompatybilność
 
@@ -184,6 +195,10 @@ impostor/
 - **Firebase Admin SDK** - Server-side Firestore
 - **Uvicorn** - ASGI server
 - **Render** - Deployment platform
+
+**Cloud Functions:**
+- **Firebase Functions** - Scheduled cleanup tasks
+- **Cloud Scheduler** - Automatic hourly cleanup
 
 **Shared:**
 - **Firestore** - Shared database for web + Discord

@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ensureAnonAuth } from '../firebase';
 import { createRoom, joinRoom } from '../api/room';
-import { loadDictionary } from '../utils/game';
 import './Setup.css';
 
 function Setup() {
@@ -11,12 +10,7 @@ function Setup() {
   const [roomCode, setRoomCode] = useState('');
   const [mode, setMode] = useState('menu');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
-
-  useEffect(() => {
-    loadDictionary().then(() => setLoading(false));
-  }, []);
 
   const handleCreateRoom = async () => {
     if (!playerName.trim()) {
@@ -64,14 +58,6 @@ function Setup() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="setup-container">
-        <h1>Ładowanie słownika...</h1>
-      </div>
-    );
-  }
-
   return (
     <div className="setup-container">
       <h1>Gra w Impostora</h1>
@@ -101,10 +87,10 @@ function Setup() {
             <div className="button-group">
               <button
                 className="primary-button"
-                onClick={() => playerName.trim() ? setMode('create') : setError('Podaj swoje imię')}
+                onClick={handleCreateRoom}
                 disabled={processing}
               >
-                Stwórz pokój
+                {processing ? 'Tworzenie...' : 'Stwórz pokój'}
               </button>
               
               <button
@@ -113,41 +99,6 @@ function Setup() {
                 disabled={processing}
               >
                 Dołącz do pokoju
-              </button>
-            </div>
-          </div>
-        )}
-
-        {mode === 'create' && (
-          <div className="create-mode">
-            <p className="mode-description">
-              Utworzysz pokój i zostaniesz hostem. Inni gracze będą mogli dołączyć używając kodu pokoju.
-            </p>
-            
-            <div className="player-info">
-              <strong>Twoje imię:</strong> {playerName}
-            </div>
-
-            {error && <div className="error">{error}</div>}
-
-            <div className="button-group">
-              <button
-                className="primary-button"
-                onClick={handleCreateRoom}
-                disabled={processing}
-              >
-                {processing ? 'Tworzenie...' : 'Utwórz pokój'}
-              </button>
-              
-              <button
-                className="back-button"
-                onClick={() => {
-                  setMode('menu');
-                  setError('');
-                }}
-                disabled={processing}
-              >
-                Wróć
               </button>
             </div>
           </div>

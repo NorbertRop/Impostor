@@ -1,193 +1,108 @@
-# Impostor Game Backend
+# Impostor Backend API
 
-FastAPI backend with Discord bot integration for the Impostor multiplayer game.
+FastAPI REST API for the Impostor web game.
 
-## Features
+## ℹ️ Note
 
-- 🤖 Discord bot with slash commands
-- 🔥 Firebase Firestore integration
-- 🌐 REST API endpoints
-- 💬 DM-based word distribution
-- 🎮 Hybrid Discord + Web gameplay
+**The Discord bot has been moved to the `discord_bot/` directory for independent deployment.**
 
-## Setup
+This backend now serves **only the web API** for the web frontend.
 
-### 1. Install Dependencies
+## 🚀 Quick Start
 
-```bash
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
+### Local Development
+
+1. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Setup environment variables**:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your Firebase credentials
+   ```
+
+3. **Run the server**:
+   ```bash
+   python main.py
+   ```
+
+   The API will be available at `http://localhost:8000`
+
+## 📋 Environment Variables
+
+- `FIREBASE_SERVICE_ACCOUNT` - Firebase service account JSON (required)
+- `CORS_ORIGINS` - Comma-separated list of allowed origins (default: `http://localhost:5173`)
+- `PORT` - Server port (default: `8000`)
+- `WEB_BASE_URL` - Web frontend URL (default: `http://localhost:5173`)
+
+## 📦 Deployment
+
+### Render (Free Tier)
+
+1. Create new Web Service on Render
+2. Connect your repository
+3. Set root directory: `backend`
+4. Build command: `pip install -r requirements.txt`
+5. Start command: `python main.py`
+6. Add environment variables
+7. Deploy
+
+**Note**: Render free tier sleeps after 15 min of inactivity. This is OK for a web API that's only called from the frontend.
+
+### Optional: Keep Awake with UptimeRobot
+
+To prevent sleep on Render free tier:
+1. Sign up at [uptimerobot.com](https://uptimerobot.com) (free)
+2. Create monitor for: `https://your-app.onrender.com/health`
+3. Set interval to 5 minutes
+
+## 🔌 API Endpoints
+
+### Health Check
 ```
-
-### 2. Configure Environment
-
-Copy `.env.example` to `.env` and fill in:
-
-```bash
-DISCORD_TOKEN=your_discord_bot_token
-FIREBASE_SERVICE_ACCOUNT={"type":"service_account",...}
-CORS_ORIGINS=https://your-project.web.app,http://localhost:5173
-WEB_BASE_URL=https://your-project.web.app
-PORT=8000
+GET /health
 ```
+Returns API status.
 
-**Getting Discord Token:**
-1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
-2. Create New Application
-3. Bot tab → Add Bot
-4. Copy token
-
-**Getting Firebase Service Account:**
-1. Firebase Console → Project Settings
-2. Service Accounts tab
-3. Generate New Private Key
-4. Copy entire JSON as single-line string
-
-### 3. Run Locally
-
-```bash
-python main.py
+### Root
 ```
-
-The backend will start:
-- 📡 API on `http://localhost:8000`
-- 📚 Docs on `http://localhost:8000/docs`
-- 🤖 Discord bot will connect
-
-## Discord Commands
-
-### `/impostor create`
-Creates a new game room.
-
-### `/impostor join code:ABC123`
-Joins an existing room.
-
-### `/impostor start code:ABC123`
-Starts the game (host only). Sends DMs to all players.
-
-### `/impostor status code:ABC123`
-Shows room status and player list.
-
-### `/impostor reveal code:ABC123`
-Shows your word again (DM).
-
-## API Endpoints
-
-### `POST /api/rooms/create`
-Create a new room via API.
-
-### `POST /api/rooms/{room_id}/join`
-Join a room via API.
-
-### `GET /api/rooms/{room_id}`
-Get room status.
-
-### `POST /api/rooms/{room_id}/start`
-Start the game.
-
-### `GET /health`
-Health check endpoint.
-
-## Deployment to Render
-
-### 1. Push to GitHub
-
-```bash
-git add backend/
-git commit -m "Add backend implementation"
-git push
+GET /
 ```
+Returns API information.
 
-### 2. Create Render Service
-
-1. Go to [Render Dashboard](https://dashboard.render.com/)
-2. New → Web Service
-3. Connect your GitHub repo
-4. Configure:
-   - Name: `impostor-backend`
-   - Root Directory: `backend`
-   - Build Command: `pip install -r requirements.txt`
-   - Start Command: `python main.py`
-
-### 3. Set Environment Variables
-
-In Render dashboard, add:
-- `DISCORD_TOKEN` - Your Discord bot token
-- `FIREBASE_SERVICE_ACCOUNT` - Service account JSON (single line)
-- `CORS_ORIGINS` - Your frontend URL
-- `WEB_BASE_URL` - Your frontend URL
-
-### 4. Deploy
-
-Render will auto-deploy. Check logs for:
+### Rooms API
 ```
-✅ Firebase Admin SDK initialized successfully
-✅ Discord bot logged in as YourBot
-✅ Synced N command(s)
+GET /api/rooms/{room_id}
 ```
+Get room details (requires proper authentication).
 
-## Project Structure
+See `api/rooms.py` for full API documentation.
+
+## 🛠️ Architecture
 
 ```
 backend/
-├── main.py                 # Entry point
-├── config.py               # Configuration
-├── firestore_client.py     # Firebase setup
-├── game_logic.py           # Game functions
-├── words.txt               # Polish word list
 ├── api/
-│   ├── rooms.py           # API endpoints
-│   └── models.py          # Pydantic models
-└── bot/
-    ├── bot.py             # Discord bot setup
-    ├── commands.py        # Slash commands
-    └── utils.py           # Helper functions
+│   ├── __init__.py
+│   ├── models.py        # Pydantic models
+│   └── rooms.py         # Room endpoints
+├── config.py            # Configuration
+├── firestore_client.py  # Firebase Admin SDK
+├── game_logic.py        # Game logic
+├── main.py              # Entry point
+├── requirements.txt     # Dependencies
+├── render.yaml          # Render config
+└── words.txt            # Polish word list
 ```
 
-## Development
+## 🤖 Discord Bot
 
-### Run with auto-reload
+The Discord bot is now in a **separate directory**: `../discord_bot/`
 
-```bash
-uvicorn main:app --reload --port 8000
-```
+See `../discord_bot/README.md` for bot deployment instructions.
 
-(Note: This only reloads FastAPI, not the Discord bot)
-
-### Test API
-
-```bash
-curl http://localhost:8000/health
-```
-
-### View API Docs
-
-Open `http://localhost:8000/docs` in browser.
-
-## Troubleshooting
-
-### Bot not connecting
-- Check `DISCORD_TOKEN` is correct
-- Verify bot has proper permissions
-- Check internet connection
-
-### Firebase errors
-- Verify service account JSON is valid
-- Check Firestore rules are deployed
-- Ensure project ID matches
-
-### Commands not appearing
-- Wait a few minutes for Discord to sync
-- Try in a different server
-- Check bot has `applications.commands` scope
-
-### DMs not working
-- Users must enable DMs from server members
-- Bot needs `SEND_MESSAGES` permission
-- Check user privacy settings
-
-## License
+## 📄 License
 
 MIT
-

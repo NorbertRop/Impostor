@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: impostor-discord-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./impostor-6320a-firebase-adminsdk-fbsvc-25b6c16cd5.json:/app/impostor-6320a-firebase-adminsdk-fbsvc-25b6c16cd5.json:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+

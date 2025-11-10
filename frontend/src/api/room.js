@@ -125,7 +125,7 @@ export async function startGame(roomId) {
     throw new Error('Need at least 3 players to start');
   }
   
-  const word = getRandomWord();
+  const word = await getRandomWord();
   const impostorIndex = Math.floor(Math.random() * players.length);
   
   for (let i = 0; i < players.length; i++) {

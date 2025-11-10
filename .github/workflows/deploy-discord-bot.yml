@@ -1,0 +1,32 @@
+name: Deploy Discord Bot to GCP
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "discord_bot/**"
+      - ".github/workflows/deploy-discord-bot.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚀 Deploy to GCP Instance
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.GCP_HOST }}
+          username: ${{ secrets.GCP_USERNAME }}
+          key: ${{ secrets.GCP_SSH_KEY }}
+          port: ${{ secrets.GCP_SSH_PORT || 22 }}
+          script: |
+            cd ~/impostor
+            git pull origin main
+            cd discord_bot
+            docker-compose down
+            docker-compose build
+            docker-compose up -d
+            echo "✅ Deployment successful!"
+            docker ps | grep impostor-discord-bot
