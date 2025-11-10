@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   bot:
     build: .
@@ -14,4 +12,3 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-
