@@ -51,10 +51,8 @@ async def create_room(
         "seen": False,
         "present": True,
         "source": source,
+        "discordId": user_id,
     }
-
-    if source == "discord":
-        player_data["discordId"] = user_id
 
     player_ref.set(player_data)
 

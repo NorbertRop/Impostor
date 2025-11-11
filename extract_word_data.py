@@ -168,6 +168,10 @@ def extract_word_data(word: str, wn) -> dict[str, Any] | None:
     # Generate hints (using fuzzy synonyms, hypernyms, and collocations)
     hints = generate_hints(fuzzy_synonyms, hypernyms, collocations)
 
+    # Skip words with no hints
+    if not hints:
+        return None
+
     # Assess difficulty
     difficulty = assess_difficulty(word, collocations, hypernyms)
 

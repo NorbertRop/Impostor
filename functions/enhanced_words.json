@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "total_words": 4980,
+    "total_words": 4785,
     "source": "plWordNet 4.2",
-    "not_found_count": 20
+    "not_found_count": 215
   },
   "words": [
     {
@@ -28,15 +28,6 @@
       ],
       "difficulty": "easy",
       "variants": 3
-    },
-    {
-      "word": "czas",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 8
     },
     {
       "word": "człowiek",
@@ -449,15 +440,6 @@
       ],
       "difficulty": "medium",
       "variants": 9
-    },
-    {
-      "word": "pani",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 8
     },
     {
       "word": "część",
@@ -1497,15 +1479,6 @@
       ],
       "difficulty": "medium",
       "variants": 3
-    },
-    {
-      "word": "działanie",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 9
     },
     {
       "word": "tydzień",
@@ -3045,24 +3018,6 @@
       "variants": 2
     },
     {
-      "word": "minuta",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 5
-    },
-    {
-      "word": "działalność",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "szczęście",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -3418,15 +3373,6 @@
       ],
       "difficulty": "medium",
       "variants": 6
-    },
-    {
-      "word": "wydarzenie",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "powrót",
@@ -3819,15 +3765,6 @@
       ],
       "difficulty": "medium",
       "variants": 7
-    },
-    {
-      "word": "kontakt",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 8
     },
     {
       "word": "choroba",
@@ -4491,15 +4428,6 @@
       ],
       "difficulty": "hard",
       "variants": 1
-    },
-    {
-      "word": "typ",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 6
     },
     {
       "word": "źródło",
@@ -5863,24 +5791,6 @@
       "variants": 1
     },
     {
-      "word": "interes",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 5
-    },
-    {
-      "word": "przedmiot",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 4
-    },
-    {
       "word": "postępowanie",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -6260,15 +6170,6 @@
         "Często z: wina"
       ],
       "difficulty": "medium",
-      "variants": 4
-    },
-    {
-      "word": "świadomość",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
       "variants": 4
     },
     {
@@ -6779,15 +6680,6 @@
       "variants": 7
     },
     {
-      "word": "obiekt",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 6
-    },
-    {
       "word": "realizacja",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -6900,15 +6792,6 @@
       ],
       "difficulty": "medium",
       "variants": 7
-    },
-    {
-      "word": "zdarzenie",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 2
     },
     {
       "word": "zakup",
@@ -10242,15 +10125,6 @@
       "variants": 1
     },
     {
-      "word": "przemysł",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "fundacja",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -10326,15 +10200,6 @@
       ],
       "difficulty": "medium",
       "variants": 3
-    },
-    {
-      "word": "krzyż",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 10
     },
     {
       "word": "mistrz",
@@ -11047,15 +10912,6 @@
       "variants": 2
     },
     {
-      "word": "sekunda",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 3
-    },
-    {
       "word": "fotel",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -11074,15 +10930,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "gatunek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 3
     },
     {
       "word": "transport",
@@ -12041,15 +11888,6 @@
       "variants": 3
     },
     {
-      "word": "zajęcia",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "poezja",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -12158,15 +11996,6 @@
       "variants": 4
     },
     {
-      "word": "czynność",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "przemoc",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -12211,15 +12040,6 @@
       ],
       "difficulty": "hard",
       "variants": 10
-    },
-    {
-      "word": "komórka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 9
     },
     {
       "word": "maszyna",
@@ -12912,15 +12732,6 @@
       ],
       "difficulty": "easy",
       "variants": 4
-    },
-    {
-      "word": "koleżanka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "platforma",
@@ -14110,15 +13921,6 @@
       "variants": 2
     },
     {
-      "word": "mięso",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 5
-    },
-    {
       "word": "ulga",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -14494,15 +14296,6 @@
       "variants": 15
     },
     {
-      "word": "klatka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 6
-    },
-    {
       "word": "scenariusz",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -14711,15 +14504,6 @@
       "variants": 4
     },
     {
-      "word": "próg",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 9
-    },
-    {
       "word": "społeczność",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -14804,15 +14588,6 @@
       ],
       "difficulty": "medium",
       "variants": 22
-    },
-    {
-      "word": "szyba",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
     },
     {
       "word": "nastrój",
@@ -15129,15 +14904,6 @@
       "variants": 1
     },
     {
-      "word": "dzieciństwo",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "kamienica",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -15203,15 +14969,6 @@
         "Rodzaj: uczestnik"
       ],
       "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "czyn",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
       "variants": 1
     },
     {
@@ -15306,15 +15063,6 @@
       ],
       "difficulty": "medium",
       "variants": 4
-    },
-    {
-      "word": "lekcja",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 7
     },
     {
       "word": "zabieg",
@@ -15600,15 +15348,6 @@
       ],
       "difficulty": "medium",
       "variants": 8
-    },
-    {
-      "word": "własność",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 3
     },
     {
       "word": "brzuch",
@@ -16025,15 +15764,6 @@
       ],
       "difficulty": "easy",
       "variants": 2
-    },
-    {
-      "word": "rezultat",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "skarb",
@@ -17751,15 +17481,6 @@
       "variants": 1
     },
     {
-      "word": "autorka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "działka",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -17875,15 +17596,6 @@
       ],
       "difficulty": "medium",
       "variants": 1
-    },
-    {
-      "word": "parafia",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 4
     },
     {
       "word": "drewno",
@@ -18158,15 +17870,6 @@
       "variants": 4
     },
     {
-      "word": "weekend",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 3
-    },
-    {
       "word": "pochodzenie",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -18239,15 +17942,6 @@
         "Często z: wyborczy"
       ],
       "difficulty": "medium",
-      "variants": 2
-    },
-    {
-      "word": "przyroda",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
       "variants": 2
     },
     {
@@ -24510,15 +24204,6 @@
       "variants": 1
     },
     {
-      "word": "łam",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 1
-    },
-    {
       "word": "piekło",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -24827,15 +24512,6 @@
         "Rodzaj: zabójca",
         "Często z: działanie"
       ],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "mięsień",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
       "difficulty": "medium",
       "variants": 1
     },
@@ -25179,15 +24855,6 @@
       ],
       "difficulty": "hard",
       "variants": 3
-    },
-    {
-      "word": "powieka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
     },
     {
       "word": "wystąpienie",
@@ -25971,15 +25638,6 @@
       "variants": 1
     },
     {
-      "word": "płuco",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "piec",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -26111,15 +25769,6 @@
       "variants": 4
     },
     {
-      "word": "kostka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 8
-    },
-    {
       "word": "gol",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -26205,15 +25854,6 @@
       ],
       "difficulty": "medium",
       "variants": 4
-    },
-    {
-      "word": "zakończenie",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 6
     },
     {
       "word": "poczta",
@@ -28881,15 +28521,6 @@
       "variants": 8
     },
     {
-      "word": "narodzenie",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 2
-    },
-    {
       "word": "okładka",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -28960,15 +28591,6 @@
       ],
       "difficulty": "medium",
       "variants": 1
-    },
-    {
-      "word": "wymaganie",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 5
     },
     {
       "word": "mrok",
@@ -29212,15 +28834,6 @@
       "variants": 2
     },
     {
-      "word": "jezdnia",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "staw",
       "fuzzy_synonyms": [],
       "hypernyms": [],
@@ -29365,15 +28978,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "nauczycielka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 3
     },
     {
       "word": "tłumaczenie",
@@ -29735,15 +29339,6 @@
       "variants": 2
     },
     {
-      "word": "śledczy",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "dupa",
       "fuzzy_synonyms": [
         "dupnąć"
@@ -29920,15 +29515,6 @@
       ],
       "difficulty": "medium",
       "variants": 3
-    },
-    {
-      "word": "pacjentka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "wyrób",
@@ -30178,15 +29764,6 @@
       "variants": 3
     },
     {
-      "word": "wagon",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 7
-    },
-    {
       "word": "rzeźba",
       "fuzzy_synonyms": [
         "żywa rzeźba"
@@ -30208,15 +29785,6 @@
       ],
       "difficulty": "medium",
       "variants": 3
-    },
-    {
-      "word": "właściwość",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 5
     },
     {
       "word": "podopieczny",
@@ -30849,15 +30417,6 @@
       ],
       "difficulty": "medium",
       "variants": 5
-    },
-    {
-      "word": "waluta",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 3
     },
     {
       "word": "plakat",
@@ -32365,15 +31924,6 @@
       "variants": 3
     },
     {
-      "word": "zastrzeżenie",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 4
-    },
-    {
       "word": "seksualność",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -32711,15 +32261,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "poranek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
     },
     {
       "word": "cytat",
@@ -33404,15 +32945,6 @@
       "variants": 3
     },
     {
-      "word": "szefowa",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "opona",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -34094,15 +33626,6 @@
       "variants": 4
     },
     {
-      "word": "szuflada",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "wesele",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -34599,15 +34122,6 @@
       "variants": 1
     },
     {
-      "word": "puszka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 11
-    },
-    {
       "word": "magia",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -34842,24 +34356,6 @@
       ],
       "difficulty": "medium",
       "variants": 10
-    },
-    {
-      "word": "sąsiadka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
-      "word": "rodzeństwo",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "puszcza",
@@ -35198,15 +34694,6 @@
       "variants": 4
     },
     {
-      "word": "kwadrans",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 2
-    },
-    {
       "word": "komisariat",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -35293,15 +34780,6 @@
       ],
       "difficulty": "medium",
       "variants": 1
-    },
-    {
-      "word": "rocznik",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 4
     },
     {
       "word": "zamieszanie",
@@ -35503,15 +34981,6 @@
       ],
       "difficulty": "medium",
       "variants": 4
-    },
-    {
-      "word": "fabuła",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
     },
     {
       "word": "tok",
@@ -35756,15 +35225,6 @@
       "variants": 2
     },
     {
-      "word": "paznokieć",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "segment",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -35797,15 +35257,6 @@
       ],
       "difficulty": "medium",
       "variants": 5
-    },
-    {
-      "word": "poetka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
     },
     {
       "word": "socjalizm",
@@ -36089,15 +35540,6 @@
       ],
       "difficulty": "medium",
       "variants": 3
-    },
-    {
-      "word": "utrzymanie",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 10
     },
     {
       "word": "niezależność",
@@ -36751,15 +36193,6 @@
       "variants": 5
     },
     {
-      "word": "tkanka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "nowoczesność",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -36939,15 +36372,6 @@
       "variants": 2
     },
     {
-      "word": "ranek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "debiut",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -36981,15 +36405,6 @@
       ],
       "difficulty": "easy",
       "variants": 1
-    },
-    {
-      "word": "on",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 5
     },
     {
       "word": "porucznik",
@@ -37332,15 +36747,6 @@
         "Często z: sałata"
       ],
       "difficulty": "medium",
-      "variants": 4
-    },
-    {
-      "word": "panienka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
       "variants": 4
     },
     {
@@ -37925,15 +37331,6 @@
       "variants": 1
     },
     {
-      "word": "łokieć",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 4
-    },
-    {
       "word": "melodia",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -37972,15 +37369,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "właścicielka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "latarnia",
@@ -38411,15 +37799,6 @@
       ],
       "difficulty": "medium",
       "variants": 5
-    },
-    {
-      "word": "bagażnik",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "jutro",
@@ -39017,15 +38396,6 @@
       "variants": 1
     },
     {
-      "word": "biodro",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "powołanie",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -39331,15 +38701,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "pisarka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
     },
     {
       "word": "pył",
@@ -39809,15 +39170,6 @@
       ],
       "difficulty": "medium",
       "variants": 5
-    },
-    {
-      "word": "podejrzany",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 4
     },
     {
       "word": "bal",
@@ -40602,15 +39954,6 @@
       "variants": 1
     },
     {
-      "word": "mamusia",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "powiązanie",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -41284,15 +40627,6 @@
         "Rodzaj: różnica",
         "Rodzaj: różnica zdań"
       ],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "tatuś",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
       "difficulty": "medium",
       "variants": 1
     },
@@ -42013,15 +41347,6 @@
       ],
       "difficulty": "medium",
       "variants": 5
-    },
-    {
-      "word": "gówno",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 4
     },
     {
       "word": "chrzest",
@@ -44281,15 +43606,6 @@
       "variants": 1
     },
     {
-      "word": "oczko",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 16
-    },
-    {
       "word": "prostytutka",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -44308,15 +43624,6 @@
       ],
       "difficulty": "medium",
       "variants": 1
-    },
-    {
-      "word": "gen",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 2
     },
     {
       "word": "podstawówka",
@@ -44972,15 +44279,6 @@
       ],
       "difficulty": "medium",
       "variants": 7
-    },
-    {
-      "word": "lekarka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
     },
     {
       "word": "apetyt",
@@ -46102,15 +45400,6 @@
       "variants": 4
     },
     {
-      "word": "radna",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "dziedziniec",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -46649,15 +45938,6 @@
       "variants": 3
     },
     {
-      "word": "studentka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "geniusz",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -46763,15 +46043,6 @@
       ],
       "difficulty": "medium",
       "variants": 9
-    },
-    {
-      "word": "ciuch",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
     },
     {
       "word": "śmietnik",
@@ -47830,15 +47101,6 @@
       "variants": 2
     },
     {
-      "word": "szkolnictwo",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "ostrze",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -47854,15 +47116,6 @@
       ],
       "difficulty": "medium",
       "variants": 1
-    },
-    {
-      "word": "smród",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 4
     },
     {
       "word": "sformułowanie",
@@ -48803,15 +48056,6 @@
       "variants": 3
     },
     {
-      "word": "kącik",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 4
-    },
-    {
       "word": "pysk",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -48897,15 +48141,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "blondynka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "blog",
@@ -49515,15 +48750,6 @@
       "variants": 7
     },
     {
-      "word": "opiekunka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "fraza",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -49778,15 +49004,6 @@
       "variants": 2
     },
     {
-      "word": "dyrektorka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "szczęka",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -49999,15 +49216,6 @@
       "variants": 4
     },
     {
-      "word": "pobocze",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "odsetek",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -50074,15 +49282,6 @@
         "Podobne do: odczyn poszczepienny"
       ],
       "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "posłanka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
       "variants": 1
     },
     {
@@ -50207,15 +49406,6 @@
       "variants": 5
     },
     {
-      "word": "mentalność",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "drut",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -50291,15 +49481,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "skroń",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
     },
     {
       "word": "sznur",
@@ -50916,15 +50097,6 @@
       "variants": 2
     },
     {
-      "word": "bark",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 14
-    },
-    {
       "word": "projekcja",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -51268,15 +50440,6 @@
         "Rodzaj: dokument",
         "Rodzaj: akt"
       ],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "obcas",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
       "difficulty": "medium",
       "variants": 1
     },
@@ -51911,15 +51074,6 @@
       "variants": 1
     },
     {
-      "word": "kadr",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 1
-    },
-    {
       "word": "pasmo",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -52101,15 +51255,6 @@
       "variants": 3
     },
     {
-      "word": "kluczyk",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 2
-    },
-    {
       "word": "hol",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -52206,15 +51351,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "pracownica",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "reflektor",
@@ -52337,15 +51473,6 @@
       ],
       "difficulty": "medium",
       "variants": 1
-    },
-    {
-      "word": "główka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 7
     },
     {
       "word": "robot",
@@ -53571,15 +52698,6 @@
       "variants": 4
     },
     {
-      "word": "pośladek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "kuzynka",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -54717,15 +53835,6 @@
       "variants": 1
     },
     {
-      "word": "ul",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 2
-    },
-    {
       "word": "uprzedzenie",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -55124,15 +54233,6 @@
       "variants": 2
     },
     {
-      "word": "materac",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "posiadłość",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -55374,15 +54474,6 @@
       "variants": 2
     },
     {
-      "word": "kandydatka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "rozmach",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -55567,15 +54658,6 @@
       "variants": 1
     },
     {
-      "word": "piesek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "żłobek",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -55594,15 +54676,6 @@
       ],
       "difficulty": "medium",
       "variants": 4
-    },
-    {
-      "word": "półwysep",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "pieprz",
@@ -56093,15 +55166,6 @@
       "variants": 3
     },
     {
-      "word": "kratka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 4
-    },
-    {
       "word": "prostota",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -56566,24 +55630,6 @@
       "variants": 2
     },
     {
-      "word": "koszyk",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 4
-    },
-    {
-      "word": "zarys",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 3
-    },
-    {
       "word": "nawias",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -56943,15 +55989,6 @@
       ],
       "difficulty": "easy",
       "variants": 10
-    },
-    {
-      "word": "ścianka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 4
     },
     {
       "word": "lada",
@@ -57455,15 +56492,6 @@
       "variants": 2
     },
     {
-      "word": "uczynek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "wychowanek",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -57479,15 +56507,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "pryzmat",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 3
     },
     {
       "word": "rock",
@@ -57811,24 +56830,6 @@
       ],
       "difficulty": "medium",
       "variants": 3
-    },
-    {
-      "word": "służąca",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "czytanie",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 5
     },
     {
       "word": "górnictwo",
@@ -58375,15 +57376,6 @@
       "variants": 1
     },
     {
-      "word": "nadgarstek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "śmigłowiec",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -58784,24 +57776,6 @@
       "variants": 7
     },
     {
-      "word": "odrodzenie",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
-      "word": "znajoma",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "schorzenie",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -58894,15 +57868,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "winny",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 8
     },
     {
       "word": "inwazja",
@@ -59590,15 +58555,6 @@
       ],
       "difficulty": "medium",
       "variants": 1
-    },
-    {
-      "word": "ego",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 5
     },
     {
       "word": "włodarz",
@@ -60520,15 +59476,6 @@
       "variants": 5
     },
     {
-      "word": "kelnerka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "zamysł",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -61265,15 +60212,6 @@
       "variants": 1
     },
     {
-      "word": "zakamarek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "pierścionek",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -61591,15 +60529,6 @@
       "variants": 2
     },
     {
-      "word": "zainteresowany",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 2
-    },
-    {
       "word": "przyzwolenie",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -61790,15 +60719,6 @@
       "variants": 1
     },
     {
-      "word": "nieznajomy",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 2
-    },
-    {
       "word": "magister",
       "fuzzy_synonyms": [
         "magister"
@@ -61877,15 +60797,6 @@
       ],
       "difficulty": "medium",
       "variants": 5
-    },
-    {
-      "word": "szkielet",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 4
     },
     {
       "word": "biurowiec",
@@ -62055,15 +60966,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "buda",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 7
     },
     {
       "word": "sanktuarium",
@@ -62322,15 +61224,6 @@
         "Rodzaj: rozmowa",
         "Rodzaj: dyskusja"
       ],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "zderzak",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
       "difficulty": "medium",
       "variants": 1
     },
@@ -62908,15 +61801,6 @@
       "variants": 3
     },
     {
-      "word": "pokoik",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "kraniec",
       "fuzzy_synonyms": [
         "kraj"
@@ -62988,15 +61872,6 @@
       "variants": 3
     },
     {
-      "word": "wers",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 2
-    },
-    {
       "word": "obiektyw",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -63032,15 +61907,6 @@
       ],
       "difficulty": "medium",
       "variants": 1
-    },
-    {
-      "word": "obłok",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 2
     },
     {
       "word": "piętno",
@@ -63621,15 +62487,6 @@
       ],
       "difficulty": "medium",
       "variants": 1
-    },
-    {
-      "word": "samica",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 2
     },
     {
       "word": "obsada",
@@ -64287,15 +63144,6 @@
       "variants": 2
     },
     {
-      "word": "mostek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 10
-    },
-    {
       "word": "kręg",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -64471,15 +63319,6 @@
       ],
       "difficulty": "easy",
       "variants": 5
-    },
-    {
-      "word": "piosenkarka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "akcjonariusz",
@@ -64842,15 +63681,6 @@
       "variants": 1
     },
     {
-      "word": "chuj",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 3
-    },
-    {
       "word": "niedobór",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -65064,24 +63894,6 @@
         "Rodzaj: jedzenie",
         "Rodzaj: karma"
       ],
-      "difficulty": "medium",
-      "variants": 3
-    },
-    {
-      "word": "powódka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "atrybut",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
       "difficulty": "medium",
       "variants": 3
     },
@@ -65351,15 +64163,6 @@
       ],
       "difficulty": "easy",
       "variants": 13
-    },
-    {
-      "word": "sedno",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
     },
     {
       "word": "barykada",
@@ -65850,15 +64653,6 @@
       "variants": 4
     },
     {
-      "word": "scenografia",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "zwłoka",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -65944,15 +64738,6 @@
         "Rodzaj: zjawisko naturalne",
         "Rodzaj: światło"
       ],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "wdech",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
       "difficulty": "medium",
       "variants": 1
     },
@@ -66059,15 +64844,6 @@
       ],
       "difficulty": "medium",
       "variants": 5
-    },
-    {
-      "word": "towarzyszka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "cukiernia",
@@ -66951,15 +65727,6 @@
       "variants": 3
     },
     {
-      "word": "żagiel",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "znaczek",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -67025,15 +65792,6 @@
       ],
       "difficulty": "medium",
       "variants": 1
-    },
-    {
-      "word": "pyłek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 3
     },
     {
       "word": "zamiana",
@@ -67485,15 +66243,6 @@
       "variants": 2
     },
     {
-      "word": "ekologia",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 2
-    },
-    {
       "word": "c",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -67865,15 +66614,6 @@
       "variants": 1
     },
     {
-      "word": "reputacja",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 2
-    },
-    {
       "word": "rewelacja",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -67963,15 +66703,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "chłopczyk",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "błękit",
@@ -68209,24 +66940,6 @@
       "variants": 3
     },
     {
-      "word": "ławeczka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
-      "word": "czytelniczka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 2
-    },
-    {
       "word": "farma",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -68318,15 +67031,6 @@
       ],
       "difficulty": "medium",
       "variants": 16
-    },
-    {
-      "word": "robotnica",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 2
     },
     {
       "word": "koncept",
@@ -69140,15 +67844,6 @@
       "variants": 1
     },
     {
-      "word": "karteczka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "smuga",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -69322,15 +68017,6 @@
       ],
       "difficulty": "easy",
       "variants": 5
-    },
-    {
-      "word": "ukradek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
     },
     {
       "word": "market",
@@ -69888,15 +68574,6 @@
       "variants": 6
     },
     {
-      "word": "wytwór",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 2
-    },
-    {
       "word": "azyl",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -70009,15 +68686,6 @@
       "variants": 2
     },
     {
-      "word": "dziad",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 7
-    },
-    {
       "word": "temperament",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -70036,15 +68704,6 @@
       ],
       "difficulty": "medium",
       "variants": 7
-    },
-    {
-      "word": "myszka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 5
     },
     {
       "word": "parafianin",
@@ -70085,15 +68744,6 @@
       ],
       "difficulty": "easy",
       "variants": 4
-    },
-    {
-      "word": "źrenica",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
     },
     {
       "word": "pręt",
@@ -70609,15 +69259,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "partyzantka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 4
     },
     {
       "word": "egoizm",
@@ -71181,15 +69822,6 @@
       "variants": 1
     },
     {
-      "word": "uczestniczka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "hobby",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -71649,15 +70281,6 @@
       "variants": 2
     },
     {
-      "word": "przedramię",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "macica",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -71704,15 +70327,6 @@
         "Rodzaj: impreza"
       ],
       "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "rękawica",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
       "variants": 1
     },
     {
@@ -71781,15 +70395,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "kierowniczka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "synteza",
@@ -72108,15 +70713,6 @@
       "variants": 14
     },
     {
-      "word": "poetyka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 2
-    },
-    {
       "word": "napływ",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -72429,15 +71025,6 @@
       ],
       "difficulty": "easy",
       "variants": 6
-    },
-    {
-      "word": "asystentka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 3
     },
     {
       "word": "niezgoda",
@@ -73265,15 +71852,6 @@
       "variants": 4
     },
     {
-      "word": "lipa",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 7
-    },
-    {
       "word": "konserwacja",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -73813,15 +72391,6 @@
         "Rodzaj: substancja pochodzenia naturalnego"
       ],
       "difficulty": "easy",
-      "variants": 1
-    },
-    {
-      "word": "kucharka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
       "variants": 1
     },
     {
@@ -74704,15 +73273,6 @@
       "variants": 1
     },
     {
-      "word": "kontur",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 3
-    },
-    {
       "word": "skorupa",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -75121,15 +73681,6 @@
       ],
       "difficulty": "medium",
       "variants": 1
-    },
-    {
-      "word": "rzadkość",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 7
     },
     {
       "word": "oficyna",
@@ -76390,15 +74941,6 @@
       "variants": 3
     },
     {
-      "word": "dziurka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "ukłon",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -77228,15 +75770,6 @@
       "variants": 3
     },
     {
-      "word": "chatka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "tłok",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -77394,15 +75927,6 @@
       ],
       "difficulty": "easy",
       "variants": 2
-    },
-    {
-      "word": "dołek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 9
     },
     {
       "word": "rozbieżność",
@@ -77692,15 +76216,6 @@
       "variants": 1
     },
     {
-      "word": "przedstawicielka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "ministrant",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -77729,15 +76244,6 @@
       ],
       "difficulty": "hard",
       "variants": 1
-    },
-    {
-      "word": "krawężnik",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 2
     },
     {
       "word": "hańba",
@@ -78073,15 +76579,6 @@
       "variants": 6
     },
     {
-      "word": "karoseria",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "dezaprobata",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -78236,15 +76733,6 @@
       ],
       "difficulty": "easy",
       "variants": 4
-    },
-    {
-      "word": "policjantka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
     },
     {
       "word": "komar",
@@ -78973,15 +77461,6 @@
       "variants": 8
     },
     {
-      "word": "wierzący",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 2
-    },
-    {
       "word": "establishment",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -79158,15 +77637,6 @@
       "variants": 1
     },
     {
-      "word": "intruz",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 2
-    },
-    {
       "word": "gwizdek",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -79239,15 +77709,6 @@
       ],
       "difficulty": "medium",
       "variants": 1
-    },
-    {
-      "word": "mechanika",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 3
     },
     {
       "word": "wróbel",
@@ -80091,15 +78552,6 @@
       "variants": 3
     },
     {
-      "word": "członkini",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "osiąg",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -80352,15 +78804,6 @@
       "variants": 4
     },
     {
-      "word": "ekspres",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 8
-    },
-    {
       "word": "gwarant",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -80601,15 +79044,6 @@
       ],
       "difficulty": "medium",
       "variants": 6
-    },
-    {
-      "word": "idiotka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 2
     },
     {
       "word": "umarły",
@@ -80920,15 +79354,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "płat",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 5
     },
     {
       "word": "arbiter",
@@ -81734,15 +80159,6 @@
       "variants": 4
     },
     {
-      "word": "podeszwa",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 2
-    },
-    {
       "word": "zwątpienie",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -82011,24 +80427,6 @@
       "variants": 7
     },
     {
-      "word": "forsa",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "słówko",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 2
-    },
-    {
       "word": "przekładnia",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -82228,15 +80626,6 @@
       "variants": 1
     },
     {
-      "word": "murek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
       "word": "aktualizacja",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -82399,15 +80788,6 @@
         "Rodzaj: rodzicielstwo"
       ],
       "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "karuzela",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
       "variants": 1
     },
     {
@@ -82627,15 +81007,6 @@
         "Rodzaj: pozycja"
       ],
       "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "badaczka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
       "variants": 1
     },
     {
@@ -82921,15 +81292,6 @@
       "variants": 4
     },
     {
-      "word": "łuska",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 11
-    },
-    {
       "word": "kinematografia",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -82996,15 +81358,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "herbatka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 4
     },
     {
       "word": "umiar",
@@ -83740,15 +82093,6 @@
       "variants": 1
     },
     {
-      "word": "sprzątaczka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "serwetka",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -84100,15 +82444,6 @@
         "Rodzaj: nieprawidłowość",
         "Rodzaj: zaburzenie"
       ],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "chwilka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
       "difficulty": "medium",
       "variants": 1
     },
@@ -84584,15 +82919,6 @@
       "variants": 2
     },
     {
-      "word": "działaczka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "huragan",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -84659,15 +82985,6 @@
       ],
       "difficulty": "medium",
       "variants": 1
-    },
-    {
-      "word": "angielski",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 8
     },
     {
       "word": "żebrak",
@@ -84931,15 +83248,6 @@
       "variants": 2
     },
     {
-      "word": "podbródek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 3
-    },
-    {
       "word": "lokum",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -84992,15 +83300,6 @@
       ],
       "difficulty": "medium",
       "variants": 2
-    },
-    {
-      "word": "lądowanie",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 4
     },
     {
       "word": "hetman",
@@ -85638,15 +83937,6 @@
       "variants": 8
     },
     {
-      "word": "mały",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "easy",
-      "variants": 13
-    },
-    {
       "word": "demonstrant",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -86058,15 +84348,6 @@
       "variants": 4
     },
     {
-      "word": "nowinka",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 2
-    },
-    {
       "word": "podkład",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -86141,15 +84422,6 @@
       "variants": 3
     },
     {
-      "word": "przełożona",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 1
-    },
-    {
       "word": "kruk",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -86205,15 +84477,6 @@
       "variants": 2
     },
     {
-      "word": "braciszek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "hard",
-      "variants": 2
-    },
-    {
       "word": "przekąska",
       "fuzzy_synonyms": [],
       "hypernyms": [
@@ -86266,15 +84529,6 @@
       ],
       "difficulty": "medium",
       "variants": 3
-    },
-    {
-      "word": "ptaszek",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
-      "difficulty": "medium",
-      "variants": 4
     },
     {
       "word": "homofobia",
@@ -86494,15 +84748,6 @@
         "Rodzaj: wytwór roślinny",
         "Rodzaj: produkt rolny"
       ],
-      "difficulty": "medium",
-      "variants": 1
-    },
-    {
-      "word": "hufiec",
-      "fuzzy_synonyms": [],
-      "hypernyms": [],
-      "collocations": [],
-      "hints": [],
       "difficulty": "medium",
       "variants": 1
     },
