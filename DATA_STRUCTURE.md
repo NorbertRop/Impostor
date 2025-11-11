@@ -87,27 +87,27 @@ Private game information (readable only by that player).
 
 ### ✅ Correct (Use These)
 
-| Field | Type | Usage |
-|-------|------|-------|
-| `discordId` | `string` | Discord user ID (camelCase) |
-| `isHost` | `boolean` | Host flag (camelCase) |
-| `source` | `"web" \| "discord"` | Player source (lowercase) |
-| `createdAt` | `timestamp` | Creation time (camelCase) |
-| `joinedAt` | `timestamp` | Join time (camelCase) |
-| `startedAt` | `timestamp` | Start time (camelCase) |
-| `allowJoin` | `boolean` | Can join flag (camelCase) |
-| `hostUid` | `string` | Host player ID (camelCase) |
-| `hostSource` | `string` | Host source (camelCase) |
-| `impostorId` | `string` | Impostor player ID (camelCase) |
+| Field        | Type                 | Usage                          |
+| ------------ | -------------------- | ------------------------------ |
+| `discordId`  | `string`             | Discord user ID (camelCase)    |
+| `isHost`     | `boolean`            | Host flag (camelCase)          |
+| `source`     | `"web" \| "discord"` | Player source (lowercase)      |
+| `createdAt`  | `timestamp`          | Creation time (camelCase)      |
+| `joinedAt`   | `timestamp`          | Join time (camelCase)          |
+| `startedAt`  | `timestamp`          | Start time (camelCase)         |
+| `allowJoin`  | `boolean`            | Can join flag (camelCase)      |
+| `hostUid`    | `string`             | Host player ID (camelCase)     |
+| `hostSource` | `string`             | Host source (camelCase)        |
+| `impostorId` | `string`             | Impostor player ID (camelCase) |
 
 ### ❌ Incorrect (Don't Use)
 
-| Wrong | Correct | Why |
-|-------|---------|-----|
-| `discord_id` | `discordId` | Use camelCase consistently |
-| `discordUserId` | `discordId` | Too verbose |
-| `is_host` | `isHost` | Use camelCase |
-| `created_at` | `createdAt` | Use camelCase |
+| Wrong           | Correct     | Why                        |
+| --------------- | ----------- | -------------------------- |
+| `discord_id`    | `discordId` | Use camelCase consistently |
+| `discordUserId` | `discordId` | Too verbose                |
+| `is_host`       | `isHost`    | Use camelCase              |
+| `created_at`    | `createdAt` | Use camelCase              |
 
 ## Example Data
 
@@ -202,10 +202,10 @@ Private game information (readable only by that player).
 
 ### Breaking Changes from Old Structure
 
-| Old Field | New Field | Migration |
-|-----------|-----------|-----------|
-| `discordUserId` | `discordId` | Update all writes |
-| `discord_id` | `discordId` | Update all reads |
+| Old Field        | New Field       | Migration         |
+| ---------------- | --------------- | ----------------- |
+| `discordUserId`  | `discordId`     | Update all writes |
+| `discord_id`     | `discordId`     | Update all reads  |
 | Missing `source` | `source: "web"` | Add to web client |
 
 ### How to Migrate Existing Data
