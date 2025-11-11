@@ -327,38 +327,6 @@ updateDoc(docRef, data);   // Partial update
 └──────────────────────────────────────────────────┘
 ```
 
-## Development Workflow
-
-```
-Developer                     Git                Firebase
-    │                         │                     │
-    │──git clone──────────────>│                    │
-    │                         │                     │
-    │──npm install────────────│                     │
-    │                         │                     │
-    │──setup .env─────────────│                     │
-    │  (Firebase credentials) │                     │
-    │                         │                     │
-    │──npm run dev────────────│                     │
-    │                         │                     │
-    │<──localhost:5173────────│                     │
-    │                         │                     │
-    │  (connects to)──────────────────────────────>│
-    │                         │   (dev Firebase)   │
-    │                         │                     │
-    │──make changes───────────│                     │
-    │                         │                     │
-    │──test locally───────────│                     │
-    │                         │                     │
-    │──git push───────────────>│                    │
-    │                         │                     │
-    │──npm run build──────────│                     │
-    │                         │                     │
-    │──deploy to hosting──────┼─────────────────────>│
-    │                         │                     │
-    │  (production URL)───────────────────────────<│
-```
-
 ## Error Handling
 
 ### Firebase Errors
