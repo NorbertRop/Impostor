@@ -1,6 +1,5 @@
 import random
 import string
-from datetime import datetime
 
 from firestore_client import get_db
 from google.cloud.firestore_v1 import SERVER_TIMESTAMP
@@ -11,59 +10,6 @@ def generate_room_id():
     chars = string.ascii_uppercase + string.digits
     chars = chars.replace("0", "").replace("O", "").replace("1", "").replace("I", "")
     return "".join(random.choice(chars) for _ in range(6))
-
-
-def load_word_list():
-    import os
-
-    # Try multiple paths
-    possible_paths = [
-        "words.txt",  # Same directory
-        "/app/words.txt",  # Docker/Render deployment
-        os.path.join(os.path.dirname(__file__), "words.txt"),  # Relative to this file
-    ]
-
-    for path in possible_paths:
-        try:
-            with open(path, "r", encoding="utf-8") as f:
-                words = [line.strip() for line in f if line.strip()]
-                if words:
-                    logger.success(f"Loaded {len(words)} words from {path}")
-                    return words
-        except FileNotFoundError:
-            continue
-
-    # Fallback words if file not found
-    logger.warning("Using fallback word list")
-    return [
-        "kot",
-        "pies",
-        "dom",
-        "drzewo",
-        "stół",
-        "krzesło",
-        "kwiat",
-        "książka",
-        "komputer",
-        "telefon",
-        "samochód",
-        "rower",
-        "gitara",
-        "pianino",
-        "obrazek",
-        "lampa",
-        "okno",
-        "drzwi",
-        "ściana",
-        "podłoga",
-    ]
-
-
-WORDS = load_word_list()
-
-
-def get_random_word():
-    return random.choice(WORDS)
 
 
 async def create_room(
@@ -201,37 +147,8 @@ async def start_game(room_id: str, host_uid: str):
     if len(players_docs) < 2:
         raise ValueError("Need at least 3 players to start")
 
-    # Pick word and impostor
-    word = get_random_word()
-    impostor_index = random.randint(0, len(players_docs) - 1)
-
-    # Write secrets
-    for i, player_doc in enumerate(players_docs):
-        is_impostor = i == impostor_index
-        secret_ref = room_ref.collection("secrets").document(player_doc.id)
-        secret_ref.set(
-            {
-                "role": "impostor" if is_impostor else "civilian",
-                "word": None if is_impostor else word,
-            }
-        )
-
-    # Update room status
-    room_ref.update({"status": "dealt"})
-
-    # Return player secrets for DM distribution
-    secrets = {}
-    for i, player_doc in enumerate(players_docs):
-        is_impostor = i == impostor_index
-        player_data = player_doc.to_dict()
-        secrets[player_doc.id] = {
-            "name": player_data.get("name"),
-            "discordId": player_data.get("discordId"),
-            "role": "impostor" if is_impostor else "civilian",
-            "word": None if is_impostor else word,
-        }
-
-    return secrets
+    # Update room status to "started" - cloud function will handle the rest
+    room_ref.update({"status": "started"})
 
 
 async def get_player_secret(room_id: str, user_id: str):

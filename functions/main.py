@@ -20,20 +20,21 @@ from google.cloud.firestore_v1 import FieldFilter
 
 initialize_app()
 
-# Load word list
-WORDS = []
-try:
-    with open("words.txt", "r", encoding="utf-8") as f:
-        WORDS = [line.strip() for line in f if line.strip()]
-        print(f"✅ Loaded {len(WORDS)} words from words.txt")
-except FileNotFoundError:
-    print("❌ Failed to load words.txt, using fallback")
-    WORDS = ["kot", "pies", "dom", "drzewo", "słońce", "księżyc"]
+# Load enhanced word list (fail loud if not available)
+with open("enhanced_words.json", "r", encoding="utf-8") as f:
+    data = json.load(f)
+    ENHANCED_WORDS = data.get("words", [])
+    if not ENHANCED_WORDS:
+        raise ValueError("enhanced_words.json contains no words")
+    print(f"✅ Loaded {len(ENHANCED_WORDS)} enhanced words")
 
 
-def get_random_word() -> str:
-    """Select a random word from the word list"""
-    return random.choice(WORDS)
+def get_random_word() -> dict:
+    """
+    Select a random word from the enhanced word list.
+    Returns enhanced word data dict with word, hints, and category.
+    """
+    return random.choice(ENHANCED_WORDS)
 
 
 def select_impostor(player_ids: list[str]) -> str:
@@ -116,11 +117,17 @@ def on_game_start(event: firestore_fn.Event[firestore_fn.Change]) -> None:
                 return
 
             # Select random word and impostor
-            word = get_random_word()
+            word_data = get_random_word()
+            word = word_data["word"]
+            hints = word_data.get("hints", [])
+            category = word_data.get("category", "other")
+
             impostor_id = select_impostor(player_ids)
 
-            print(f"📝 Selected word: {word}")
+            print(f"📝 Selected word: {word} (category: {category})")
             print(f"🎭 Selected impostor: {impostor_id}")
+            if hints:
+                print(f"💡 Impostor hints: {hints}")
 
             # Delete old secrets if this is a restart
             secrets_ref = room_ref.collection("secrets")
@@ -144,6 +151,11 @@ def on_game_start(event: firestore_fn.Event[firestore_fn.Change]) -> None:
                     "discordId": player.get("discordId"),
                     "createdAt": firestore.SERVER_TIMESTAMP,
                 }
+
+                # Add hints for impostor
+                if is_impostor and hints:
+                    secret_data["hints"] = hints
+                    secret_data["category"] = category
 
                 batch.set(secrets_ref.document(player_id), secret_data)
 
