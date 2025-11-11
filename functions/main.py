@@ -124,8 +124,13 @@ def on_game_start(event: firestore_fn.Event[firestore_fn.Change]) -> None:
 
             impostor_id = select_impostor(player_ids)
 
+            # Generate random speaking order
+            speaking_order = player_ids.copy()
+            random.shuffle(speaking_order)
+
             print(f"📝 Selected word: {word} (category: {category})")
             print(f"🎭 Selected impostor: {impostor_id}")
+            print(f"🎤 Speaking order: {speaking_order}")
             if hints:
                 print(f"💡 Impostor hints: {hints}")
 
@@ -165,6 +170,7 @@ def on_game_start(event: firestore_fn.Event[firestore_fn.Change]) -> None:
                 {
                     "word": word,
                     "impostorId": impostor_id,
+                    "speakingOrder": speaking_order,
                     "status": "dealt",
                     "startedAt": firestore.SERVER_TIMESTAMP,
                 },

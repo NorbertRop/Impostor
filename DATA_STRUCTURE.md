@@ -29,6 +29,7 @@ Main room document.
   // Set when game starts (by Cloud Function)
   word?: string,                // The secret word (only after game starts)
   impostorId?: string,          // Player ID of the impostor
+  speakingOrder?: string[],     // Random order of player IDs for speaking
   startedAt?: timestamp,
   
   // Optional Discord integration
@@ -157,6 +158,7 @@ Private game information (readable only by that player).
   status: "dealt",
   word: "kot",
   impostorId: "firebase-uid-123",
+  speakingOrder: ["987654321", "firebase-uid-123", "firebase-uid-456"],
   startedAt: 2025-01-01T12:05:00Z
 }
 

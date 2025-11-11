@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { markSeen, restartGame } from '../api/room';
+import { subscribeRoom } from '../api/room';
 import './Reveal.css';
 
 function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
@@ -7,10 +8,12 @@ function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
   const [marking, setMarking] = useState(false);
   const [showRestartConfirm, setShowRestartConfirm] = useState(false);
   const [restarting, setRestarting] = useState(false);
+  const [room, setRoom] = useState(null);
 
   const myPlayer = players.find(p => p.uid === myUid);
   const seenCount = players.filter(p => p.seen).length;
   const totalCount = players.length;
+  const allPlayersSeen = seenCount === totalCount;
 
   const handleReveal = () => {
     setRevealed(true);
@@ -32,6 +35,13 @@ function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
       setRevealed(true);
     }
   }, [myPlayer?.seen]);
+
+  useEffect(() => {
+    const unsubscribe = subscribeRoom(roomId, (roomData) => {
+      setRoom(roomData);
+    });
+    return () => unsubscribe();
+  }, [roomId]);
 
   const handleRestartGame = async () => {
     setRestarting(true);
@@ -87,12 +97,39 @@ function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
         )}
         <div className="waiting-section">
           <h1>Gotowy!</h1>
-          <p className="waiting-text">
-            Czekaj na innych graczy...
-          </p>
-          <div className="progress-info">
-            <p>Graczy gotowych: {seenCount} / {totalCount}</p>
-          </div>
+          {!allPlayersSeen ? (
+            <>
+              <p className="waiting-text">
+                Czekaj na innych graczy...
+              </p>
+              <div className="progress-info">
+                <p>Graczy gotowych: {seenCount} / {totalCount}</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="waiting-text">
+                Wszyscy gracze są gotowi! Możecie rozpocząć grę.
+              </p>
+              {room?.speakingOrder && (
+                <div className="speaking-order">
+                  <h3>Kolejność wypowiedzi:</h3>
+                  <ol className="order-list">
+                    {room.speakingOrder.map((playerId) => {
+                      const player = players.find(p => p.uid === playerId);
+                      const isMe = playerId === myUid;
+                      return (
+                        <li key={playerId} className={isMe ? 'my-turn' : ''}>
+                          {player?.name || 'Nieznany gracz'}
+                          {isMe && ' (Ty)'}
+                        </li>
+                      );
+                    })}
+                  </ol>
+                </div>
+              )}
+            </>
+          )}
           {mySecret.role === 'impostor' ? (
             <div className="reminder impostor-reminder">
               <p>Pamiętaj: Jesteś IMPOSTOREM!</p>

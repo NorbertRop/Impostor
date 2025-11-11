@@ -1,12 +1,105 @@
 import discord
 import game_logic
 from discord import app_commands
+from discord.ui import Button, View
 from firestore_client import get_db
 from loguru import logger
 from user_sessions import get_user_room, set_user_room
 
 from bot.bot import bot
 from bot.utils import format_player_list
+
+
+class JoinGameButton(View):
+    def __init__(self, room_id: str):
+        super().__init__(timeout=None)
+        self.room_id = room_id
+
+        join_button = Button(
+            label=f"Dołącz do gry {room_id}",
+            style=discord.ButtonStyle.green,
+            emoji="🎮",
+            custom_id=f"join_game:{room_id}",
+        )
+        join_button.callback = self.join_game_callback
+        self.add_item(join_button)
+
+    async def join_game_callback(self, interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=True)
+
+        user_id = str(interaction.user.id)
+        username = interaction.user.display_name
+
+        try:
+            await game_logic.join_room(
+                self.room_id, user_id, username, source="discord"
+            )
+
+            await set_user_room(user_id, self.room_id)
+
+            bot.firestore_listener.start_room_listener(self.room_id)
+            logger.info(
+                f"User {username} ({user_id}) joined room {self.room_id} via button"
+            )
+
+            embed = discord.Embed(
+                title="✅ Dołączono do pokoju!",
+                description=f"Pokój: **{self.room_id}**\n\n💡",
+                color=discord.Color.green(),
+            )
+            embed.add_field(
+                name="Co dalej?",
+                value="Czekaj aż host rozpocznie grę. Otrzymasz DM ze swoim słowem!",
+                inline=False,
+            )
+
+            await interaction.followup.send(embed=embed, ephemeral=True)
+
+        except ValueError as e:
+            await interaction.followup.send(f"❌ {str(e)}", ephemeral=True)
+        except Exception as e:
+            logger.error(f"Error joining game via button: {e}")
+            await interaction.followup.send(
+                f"❌ Wystąpił błąd: {str(e)}", ephemeral=True
+            )
+
+
+class RestartGameButton(View):
+    def __init__(self, room_id: str):
+        super().__init__(timeout=None)
+        self.room_id = room_id
+
+        restart_button = Button(
+            label="Zrestartuj grę",
+            style=discord.ButtonStyle.blurple,
+            emoji="🔄",
+            custom_id=f"restart_game:{room_id}",
+        )
+        restart_button.callback = self.restart_game_callback
+        self.add_item(restart_button)
+
+    async def restart_game_callback(self, interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=True)
+
+        user_id = str(interaction.user.id)
+
+        try:
+            await game_logic.restart_game(self.room_id, user_id)
+
+            logger.info(f"User {user_id} restarted room {self.room_id} via button")
+
+            await interaction.followup.send(
+                f"✅ Gra **{self.room_id}** została zrestartowana! Gracze otrzymują nowe role.",
+                ephemeral=True,
+            )
+
+        except ValueError as e:
+            await interaction.followup.send(f"❌ {str(e)}", ephemeral=True)
+        except Exception as e:
+            logger.error(f"Error restarting game via button: {e}")
+            await interaction.followup.send(
+                f"❌ Wystąpił błąd: {str(e)}", ephemeral=True
+            )
 
 
 @bot.tree.command(name="create", description="Stwórz nowy pokój do gry w Impostora")
@@ -36,7 +129,7 @@ async def create_command(interaction: discord.Interaction):
         )
         embed.add_field(
             name="Jak dołączyć?",
-            value=f"Discord: `/join code:{room_id}`",
+            value=f"Kliknij przycisk poniżej lub użyj:\n`/join code:{room_id}`",
             inline=False,
         )
         embed.add_field(
@@ -46,7 +139,8 @@ async def create_command(interaction: discord.Interaction):
         )
         embed.set_footer(text="Tylko host może rozpocząć grę")
 
-        await interaction.followup.send(embed=embed)
+        view = JoinGameButton(room_id)
+        await interaction.followup.send(embed=embed, view=view)
 
     except Exception as e:
         logger.error(f"Error in create command: {e}")
@@ -153,7 +247,8 @@ async def start_command(interaction: discord.Interaction, code: str | None = Non
             text="DM-y będą wysłane za chwilę... Jeśli nie dostaniesz, użyj /reveal"
         )
 
-        await interaction.followup.send(embed=embed)
+        view = RestartGameButton(code)
+        await interaction.followup.send(embed=embed, view=view)
 
     except ValueError as e:
         await interaction.followup.send(f"❌ {str(e)}", ephemeral=True)
@@ -317,7 +412,8 @@ async def restart_command(interaction: discord.Interaction, code: str | None = N
             text="Wszyscy gracze pozostali w pokoju. Wybrano nowe słowo i impostora."
         )
 
-        await interaction.followup.send(embed=embed)
+        view = RestartGameButton(code)
+        await interaction.followup.send(embed=embed, view=view)
 
     except ValueError as e:
         await interaction.followup.send(f"❌ {str(e)}", ephemeral=True)
