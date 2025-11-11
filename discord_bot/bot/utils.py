@@ -2,7 +2,7 @@ import discord
 from loguru import logger
 
 
-async def send_word_dm(user: discord.User, room_id: str, secret: dict, web_url: str):
+async def send_word_dm(user: discord.User, room_id: str, secret: dict):
     try:
         if secret['role'] == 'impostor':
             embed = discord.Embed(
@@ -28,12 +28,7 @@ async def send_word_dm(user: discord.User, room_id: str, secret: dict, web_url: 
         embed.add_field(
             name="Kod pokoju",
             value=f"`{room_id}`",
-            inline=True
-        )
-        embed.add_field(
-            name="Link",
-            value=f"[Otwórz w przeglądarce]({web_url}/r/{room_id})",
-            inline=True
+            inline=False
         )
         embed.set_footer(text="Możesz użyć /impostor reveal aby zobaczyć swoje słowo ponownie")
         

@@ -16,9 +16,8 @@ from loguru import logger
 class FirestoreListener:
     """Listens to Firestore changes and triggers Discord actions"""
 
-    def __init__(self, bot: discord.Client, web_url: str):
+    def __init__(self, bot: discord.Client):
         self.bot = bot
-        self.web_url = web_url
         self.db = get_db()
         self.active_listeners = {}
 
@@ -66,7 +65,7 @@ class FirestoreListener:
             user = await self.bot.fetch_user(user_id)
 
             if user:
-                success = await send_word_dm(user, room_id, secret, self.web_url)
+                success = await send_word_dm(user, room_id, secret)
                 if success:
                     logger.success(
                         f"Sent DM to Discord user {user.name} for room {room_id}"

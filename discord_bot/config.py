@@ -8,7 +8,6 @@ load_dotenv()
 class Config:
     DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
     FIREBASE_SERVICE_ACCOUNT = os.getenv("FIREBASE_SERVICE_ACCOUNT")
-    WEB_BASE_URL = os.getenv("WEB_BASE_URL", "http://localhost:5173")
 
     @classmethod
     def validate(cls):

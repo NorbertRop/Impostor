@@ -1,6 +1,5 @@
 import discord
 import game_logic
-from config import config
 from discord import app_commands
 from loguru import logger
 
@@ -52,10 +51,7 @@ async def impostor_command(
             )
             embed.add_field(
                 name="Jak dołączyć?",
-                value=(
-                    f"Discord: `/impostor join code:{room_id}`\n"
-                    f"Web: {config.WEB_BASE_URL}/r/{room_id}"
-                ),
+                value=f"Discord: `/impostor join code:{room_id}`",
                 inline=False,
             )
             embed.add_field(
@@ -90,11 +86,6 @@ async def impostor_command(
             embed.add_field(
                 name="Co dalej?",
                 value="Czekaj aż host rozpocznie grę. Otrzymasz DM ze swoim słowem!",
-                inline=False,
-            )
-            embed.add_field(
-                name="Link do pokoju",
-                value=f"{config.WEB_BASE_URL}/r/{code}",
                 inline=False,
             )
 
@@ -156,11 +147,6 @@ async def impostor_command(
             embed.add_field(
                 name="Gracze", value=f"{players_count} graczy w grze", inline=True
             )
-            embed.add_field(
-                name="Link do gry",
-                value=f"{config.WEB_BASE_URL}/r/{code}",
-                inline=False,
-            )
             embed.set_footer(
                 text="DM-y będą wysłane za chwilę... Jeśli nie dostaniesz, użyj /impostor reveal"
             )
@@ -220,9 +206,6 @@ async def impostor_command(
                 value=format_player_list(room_status["players"]),
                 inline=False,
             )
-            embed.add_field(
-                name="Link", value=f"{config.WEB_BASE_URL}/r/{code}", inline=False
-            )
 
             await interaction.followup.send(embed=embed)
 
@@ -256,12 +239,7 @@ async def impostor_command(
                     color=discord.Color.green(),
                 )
 
-            embed.add_field(name="Pokój", value=f"`{code}`", inline=True)
-            embed.add_field(
-                name="Link",
-                value=f"[Otwórz]({config.WEB_BASE_URL}/r/{code})",
-                inline=True,
-            )
+            embed.add_field(name="Pokój", value=f"`{code}`", inline=False)
 
             await interaction.followup.send(embed=embed, ephemeral=True)
 

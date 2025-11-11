@@ -31,7 +31,7 @@ async def main():
     logger.success("Firebase initialized")
 
     # Initialize Firestore listener
-    listener = FirestoreListener(bot, config.WEB_URL)
+    listener = FirestoreListener(bot)
     bot.firestore_listener = listener  # Attach to bot for access in commands
     logger.success("Firestore listener initialized")
 
