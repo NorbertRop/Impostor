@@ -10,3 +10,4 @@ ENV/
 
 # Firebase
 .firebase/
+firebase-debug.log
