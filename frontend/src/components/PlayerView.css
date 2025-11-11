@@ -19,7 +19,7 @@
 }
 
 .player-turn h2 {
-  color: #666;
+  color: #333;
   font-size: 1.3rem;
   margin: 0;
 }
@@ -37,7 +37,7 @@
 }
 
 .instruction p {
-  color: #666;
+  color: #333;
   font-size: 1.1rem;
   margin-bottom: 20px;
 }
@@ -147,7 +147,7 @@
 }
 
 .game-ready p {
-  color: #666;
+  color: #333;
   font-size: 1.2rem;
   margin-bottom: 30px;
 }

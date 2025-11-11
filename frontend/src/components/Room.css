@@ -23,7 +23,7 @@
 
 .room-error p {
   font-size: 1.2rem;
-  color: #666;
+  color: #333;
   margin-bottom: 2rem;
 }
 
@@ -103,7 +103,7 @@
 
 .game-starting p {
   font-size: 1.2rem;
-  color: #666;
+  color: #333;
 }
 
 .spinner {
