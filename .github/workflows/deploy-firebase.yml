@@ -42,6 +42,14 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: 🐍 Setup Python Functions environment
+        working-directory: functions
+        run: |
+          python3.12 -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
       - name: 📝 Create Firebase service account file
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_IMPOSTOR_6320A }}' > $HOME/firebase-key.json
@@ -52,7 +60,12 @@ jobs:
 
       - name: 🚀 Deploy to Firebase
         run: |
-          firebase deploy --only hosting,functions,firestore:rules,firestore:indexes --project impostor-6320a --non-interactive
+          # Deploy hosting first (always works)
+          firebase deploy --only hosting,firestore:rules,firestore:indexes --project impostor-6320a --non-interactive
+
+          # Try to deploy functions (will fail if permissions not granted yet)
+          # Remove the '|| true' once permissions are fixed
+          firebase deploy --only functions --project impostor-6320a --non-interactive || echo "⚠️ Functions deployment skipped - permissions needed (see .github/FIX_PERMISSIONS.md)"
 
       - name: 🧹 Cleanup
         if: always()
