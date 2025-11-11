@@ -8,13 +8,13 @@ Written in **Python 3.12** - same language as the Discord bot for code consisten
 
 - **Automatic game start** - Firestore trigger handles word selection and impostor assignment
 - **5000+ Polish words** - Loaded from `words.txt` (43KB, included in deployment)
-- **Automatic cleanup** - Removes old rooms daily
+- **Automatic cleanup** - Removes old rooms and anonymous users daily
 - **Serverless** - No server to maintain, scales automatically
 - **Python** - Consistent with Discord bot, type-safe
 
 ## 📦 Functions
 
-### `on_game_start` (Firestore Trigger) ⭐ **NEW**
+### `on_game_start` (Firestore Trigger) ⭐
 - **Trigger**: When a room's `status` changes to `"started"`
 - **Purpose**: 
   - Selects random word from 5000+ words
@@ -32,11 +32,23 @@ Written in **Python 3.12** - same language as the Discord bot for code consisten
 - **Purpose**: Automatically deletes rooms and their subcollections older than 24 hours
 - **Keeps**: Firestore clean and costs low
 
+### `cleanup_anonymous_users` (Scheduled) ⭐ **NEW**
+- **Trigger**: Every 24 hours
+- **Purpose**: Automatically deletes anonymous Firebase Auth users who haven't signed in for 30 days
+- **Why**: Prevents accumulation of unused anonymous user accounts
+- **Keeps**: Authentication costs low and user list manageable
+
 ### `manual_cleanup` (HTTP)
 - **Trigger**: HTTP request
 - **Purpose**: Manual cleanup for testing
 - **Parameters**: `?hours=X` - cleanup rooms older than X hours (default: 24)
 - **Example**: `https://YOUR_PROJECT.cloudfunctions.net/manual_cleanup?hours=12`
+
+### `manual_user_cleanup` (HTTP) ⭐ **NEW**
+- **Trigger**: HTTP request
+- **Purpose**: Manual anonymous user cleanup for testing
+- **Parameters**: `?days=X` - cleanup anonymous users inactive for X days (default: 30)
+- **Example**: `https://YOUR_PROJECT.cloudfunctions.net/manual_user_cleanup?days=7`
 
 ## 🏗️ Architecture
 
