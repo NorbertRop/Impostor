@@ -4,7 +4,8 @@ import {
   setDoc, 
   getDoc, 
   getDocs,
-  updateDoc, 
+  updateDoc,
+  deleteDoc, 
   onSnapshot,
   serverTimestamp,
   query,
@@ -156,6 +157,32 @@ export async function resetGame(roomId) {
     await updateDoc(playerRef, {
       seen: false
     });
+  });
+}
+
+export async function restartGame(roomId) {
+  const playersRef = collection(db, 'rooms', roomId, 'players');
+  const playersSnap = await getDocs(playersRef);
+  
+  const secretsRef = collection(db, 'rooms', roomId, 'secrets');
+  const secretsSnap = await getDocs(secretsRef);
+  
+  const batch = [];
+  
+  playersSnap.forEach((playerDoc) => {
+    const playerRef = doc(db, 'rooms', roomId, 'players', playerDoc.id);
+    batch.push(updateDoc(playerRef, { seen: false }));
+  });
+  
+  secretsSnap.forEach((secretDoc) => {
+    batch.push(deleteDoc(secretDoc.ref));
+  });
+  
+  await Promise.all(batch);
+  
+  const roomRef = doc(db, 'rooms', roomId);
+  await updateDoc(roomRef, {
+    status: 'started'
   });
 }
 

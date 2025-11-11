@@ -18,6 +18,7 @@ from bot.utils import format_player_list
         app_commands.Choice(name="start - Rozpocznij grę", value="start"),
         app_commands.Choice(name="status - Sprawdź status pokoju", value="status"),
         app_commands.Choice(name="reveal - Pokaż słowo ponownie", value="reveal"),
+        app_commands.Choice(name="restart - Zrestartuj grę", value="restart"),
     ]
 )
 async def impostor_command(
@@ -245,6 +246,31 @@ async def impostor_command(
             embed.add_field(name="Pokój", value=f"`{code}`", inline=False)
 
             await interaction.followup.send(embed=embed, ephemeral=True)
+
+        elif action.value == "restart":
+            if not code:
+                await interaction.followup.send(
+                    "❌ Musisz podać kod pokoju!", ephemeral=True
+                )
+                return
+
+            code = code.upper().strip()
+
+            try:
+                await game_logic.restart_game(code, user_id)
+
+                embed = discord.Embed(
+                    title="🔄 Gra zrestartowana!",
+                    description=f"Pokój: **{code}**\n\nNowa runda rozpoczyna się teraz!\nGracze Discord otrzymają DM z nowymi rolami.",
+                    color=discord.Color.orange(),
+                )
+                embed.set_footer(
+                    text="Wszyscy gracze pozostali w pokoju. Wybrano nowe słowo i impostora."
+                )
+
+                await interaction.followup.send(embed=embed)
+            except ValueError as e:
+                await interaction.followup.send(f"❌ {str(e)}", ephemeral=True)
 
     except ValueError as e:
         await interaction.followup.send(f"❌ {str(e)}", ephemeral=True)

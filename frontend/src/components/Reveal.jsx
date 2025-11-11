@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { markSeen } from '../api/room';
+import { markSeen, restartGame } from '../api/room';
 import './Reveal.css';
 
-function Reveal({ roomId, myUid, mySecret, players, onError }) {
+function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
   const [revealed, setRevealed] = useState(false);
   const [marking, setMarking] = useState(false);
+  const [showRestartConfirm, setShowRestartConfirm] = useState(false);
+  const [restarting, setRestarting] = useState(false);
 
   const myPlayer = players.find(p => p.uid === myUid);
   const seenCount = players.filter(p => p.seen).length;
@@ -31,6 +33,19 @@ function Reveal({ roomId, myUid, mySecret, players, onError }) {
     }
   }, [myPlayer?.seen]);
 
+  const handleRestartGame = async () => {
+    setRestarting(true);
+    try {
+      await restartGame(roomId);
+      setRevealed(false);
+      setShowRestartConfirm(false);
+    } catch (error) {
+      console.error('Error restarting game:', error);
+      onError('Nie udało się zrestartować gry: ' + error.message);
+      setRestarting(false);
+    }
+  };
+
   if (!mySecret) {
     return (
       <div className="reveal-container">
@@ -44,6 +59,31 @@ function Reveal({ roomId, myUid, mySecret, players, onError }) {
   if (myPlayer?.seen) {
     return (
       <div className="reveal-container">
+        {showRestartConfirm && (
+          <div className="modal-overlay" onClick={() => setShowRestartConfirm(false)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <h2>Zrestartować grę?</h2>
+              <p>Nowa runda rozpocznie się natychmiast z nowymi słowami i nowym impostorem.</p>
+              <p>Wszyscy gracze pozostaną w pokoju.</p>
+              <div className="modal-buttons">
+                <button 
+                  onClick={handleRestartGame} 
+                  disabled={restarting}
+                  className="confirm-button"
+                >
+                  {restarting ? 'Restartowanie...' : 'Tak, restartuj'}
+                </button>
+                <button 
+                  onClick={() => setShowRestartConfirm(false)} 
+                  className="cancel-button"
+                  disabled={restarting}
+                >
+                  Anuluj
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="waiting-section">
           <h1>Gotowy!</h1>
           <p className="waiting-text">
@@ -60,6 +100,14 @@ function Reveal({ roomId, myUid, mySecret, players, onError }) {
             <div className="reminder civilian-reminder">
               <p>Twoje słowo: <strong>{mySecret.word}</strong></p>
             </div>
+          )}
+          {isHost && (
+            <button 
+              onClick={() => setShowRestartConfirm(true)} 
+              className="restart-button"
+            >
+              Restartuj grę
+            </button>
           )}
         </div>
       </div>

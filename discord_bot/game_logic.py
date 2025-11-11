@@ -257,3 +257,37 @@ async def mark_player_seen(room_id: str, user_id: str):
     if player_doc.exists:
         player_ref.update({"seen": True})
         logger.info(f"Marked player {user_id} as seen in room {room_id}")
+
+
+async def restart_game(room_id: str, host_uid: str):
+    db = get_db()
+    room_ref = db.collection("rooms").document(room_id)
+    room_doc = room_ref.get()
+
+    if not room_doc.exists:
+        raise ValueError(f"Room {room_id} does not exist")
+
+    room_data = room_doc.to_dict()
+
+    if room_data.get("hostUid") != host_uid:
+        raise ValueError("Only the host can restart the game")
+
+    players_ref = room_ref.collection("players")
+    players_docs = list(players_ref.stream())
+
+    if len(players_docs) < 2:
+        raise ValueError("Need at least 3 players to restart")
+
+    secrets_ref = room_ref.collection("secrets")
+    secrets_docs = list(secrets_ref.stream())
+
+    for player_doc in players_docs:
+        player_ref = room_ref.collection("players").document(player_doc.id)
+        player_ref.update({"seen": False})
+
+    for secret_doc in secrets_docs:
+        secret_doc.reference.delete()
+
+    room_ref.update({"status": "started"})
+
+    logger.info(f"Game restarted for room {room_id} by host {host_uid}")

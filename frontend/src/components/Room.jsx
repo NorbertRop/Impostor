@@ -124,6 +124,7 @@ function Room() {
           myUid={myUid}
           mySecret={mySecret}
           players={players}
+          isHost={isHost}
           onError={handleError}
         />
       )}

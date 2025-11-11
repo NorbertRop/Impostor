@@ -44,6 +44,7 @@ def on_game_start(event: firestore_fn.Event[firestore_fn.Change]) -> None:
     """
     Firestore trigger - automatically starts game when status changes to 'started'
     Assigns random word and selects impostor
+    Handles both initial game start and restart scenarios
     """
     before = event.data.before
     after = event.data.after
@@ -54,7 +55,10 @@ def on_game_start(event: firestore_fn.Event[firestore_fn.Change]) -> None:
     after_status = after.get("status") if after else None
 
     if before_status != "started" and after_status == "started":
-        print(f"🎮 Game starting for room: {room_id}")
+        is_restart = before_status in ["dealt", "playing"]
+        print(
+            f"🎮 Game {'restarting' if is_restart else 'starting'} for room: {room_id}"
+        )
 
         try:
             db = firestore.client()
@@ -77,9 +81,16 @@ def on_game_start(event: firestore_fn.Event[firestore_fn.Change]) -> None:
             print(f"📝 Selected word: {word}")
             print(f"🎭 Selected impostor: {impostor_id}")
 
+            # Delete old secrets if this is a restart
+            secrets_ref = room_ref.collection("secrets")
+            old_secrets = list(secrets_ref.stream())
+            if old_secrets:
+                print(f"🗑️  Deleting {len(old_secrets)} old secrets")
+                for secret_doc in old_secrets:
+                    secret_doc.reference.delete()
+
             # Create secrets for each player
             batch = db.batch()
-            secrets_ref = room_ref.collection("secrets")
 
             for player_id in player_ids:
                 player = players[player_id]
@@ -218,8 +229,6 @@ def manual_cleanup(req: https_fn.Request) -> https_fn.Response:
         deleted_count = 0
 
         for room_doc in rooms_docs:
-            room_id = room_doc.id
-
             # Delete subcollections
             players_ref = room_doc.reference.collection("players")
             for player_doc in players_ref.stream():
