@@ -71,8 +71,16 @@ class FirestoreListener:
             if user:
                 success = await send_word_dm(user, room_id, secret)
                 if success:
+                    # Mark player as having seen their word
+                    player_ref = (
+                        self.db.collection("rooms")
+                        .document(room_id)
+                        .collection("players")
+                        .document(discord_id)
+                    )
+                    player_ref.update({"seen": True})
                     logger.success(
-                        f"Sent DM to Discord user {user.name} for room {room_id}"
+                        f"Sent DM to Discord user {user.name} for room {room_id} and marked as seen"
                     )
                 else:
                     logger.warning(

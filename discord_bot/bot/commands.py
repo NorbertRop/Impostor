@@ -4,7 +4,7 @@ from discord import app_commands
 from loguru import logger
 
 from bot.bot import bot
-from bot.utils import format_player_list, send_word_dm
+from bot.utils import format_player_list
 
 
 @bot.tree.command(name="impostor", description="Gra w Impostora")
@@ -225,6 +225,9 @@ async def impostor_command(
                     ephemeral=True,
                 )
                 return
+
+            # Mark player as having seen their word
+            await game_logic.mark_player_seen(code, user_id)
 
             if secret["role"] == "impostor":
                 embed = discord.Embed(

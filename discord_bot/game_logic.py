@@ -245,3 +245,15 @@ async def get_player_secret(room_id: str, user_id: str):
         return None
 
     return secret_doc.to_dict()
+
+
+async def mark_player_seen(room_id: str, user_id: str):
+    db = get_db()
+    player_ref = (
+        db.collection("rooms").document(room_id).collection("players").document(user_id)
+    )
+    player_doc = player_ref.get()
+
+    if player_doc.exists:
+        player_ref.update({"seen": True})
+        logger.info(f"Marked player {user_id} as seen in room {room_id}")
