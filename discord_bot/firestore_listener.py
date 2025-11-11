@@ -4,12 +4,10 @@ Listens for game state changes and sends DMs to Discord players
 """
 
 import asyncio
-from typing import Callable
 
 import discord
 from bot.utils import send_word_dm
 from firestore_client import get_db
-from google.cloud.firestore_v1.watch import DocumentChange
 from loguru import logger
 
 
@@ -42,8 +40,14 @@ class FirestoreListener:
                     discord_id = secret_data.get("discordId")
                     if discord_id:
                         # Schedule DM sending in the bot's event loop
-                        asyncio.create_task(
-                            self._send_discord_dm(room_id, discord_id, secret_data)
+                        # Use asyncio.run_coroutine_threadsafe since Firestore callbacks
+                        # run in a separate thread
+                        asyncio.run_coroutine_threadsafe(
+                            self._send_discord_dm(room_id, discord_id, secret_data),
+                            self.bot.loop,
+                        )
+                        logger.info(
+                            f"Scheduled DM for discord_id={discord_id} in room {room_id}"
                         )
 
         # Start watching the collection
