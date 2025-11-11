@@ -5,11 +5,11 @@ import {
   getDoc, 
   getDocs,
   updateDoc,
-  deleteDoc, 
   onSnapshot,
   serverTimestamp,
   query,
-  orderBy
+  orderBy,
+  writeBatch
 } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 
@@ -143,39 +143,41 @@ export async function toggleAllowJoin(roomId, allow) {
 }
 
 export async function resetGame(roomId) {
+  const playersRef = collection(db, 'rooms', roomId, 'players');
+  const playersSnap = await getDocs(playersRef);
+  
+  const batch = writeBatch(db);
+  
+  playersSnap.forEach((playerDoc) => {
+    const playerRef = doc(db, 'rooms', roomId, 'players', playerDoc.id);
+    batch.update(playerRef, { seen: false });
+  });
+  
   const roomRef = doc(db, 'rooms', roomId);
-  await updateDoc(roomRef, {
+  batch.update(roomRef, {
     status: 'lobby',
     allowJoin: true
   });
   
-  const playersRef = collection(db, 'rooms', roomId, 'players');
-  const playersSnap = await getDocs(playersRef);
-  
-  playersSnap.forEach(async (playerDoc) => {
-    const playerRef = doc(db, 'rooms', roomId, 'players', playerDoc.id);
-    await updateDoc(playerRef, {
-      seen: false
-    });
-  });
+  await batch.commit();
 }
 
 export async function restartGame(roomId) {
   const playersRef = collection(db, 'rooms', roomId, 'players');
   const playersSnap = await getDocs(playersRef);
   
-  const batch = [];
+  const batch = writeBatch(db);
   
   playersSnap.forEach((playerDoc) => {
     const playerRef = doc(db, 'rooms', roomId, 'players', playerDoc.id);
-    batch.push(updateDoc(playerRef, { seen: false }));
+    batch.update(playerRef, { seen: false });
   });
-  
-  await Promise.all(batch);
   
   const roomRef = doc(db, 'rooms', roomId);
-  await updateDoc(roomRef, {
+  batch.update(roomRef, {
     status: 'started'
   });
+  
+  await batch.commit();
 }
 
