@@ -31,10 +31,28 @@ Discord bot dla gry Impostor - standalone deployment.
 The bot provides the `/impostor` slash command with the following actions:
 
 - **create** - Create a new game room
-- **join** - Join an existing room
-- **start** - Start the game (host only)
-- **status** - Check room status
-- **reveal** - Show your word again
+- **join** - Join an existing room (requires code first time)
+- **start** - Start the game (host only, code optional after first join)
+- **status** - Check room status (code optional after first join)
+- **reveal** - Show your word again (code optional after first join)
+- **restart** - Restart the game with new roles (code optional after first join)
+
+### 💡 Room Memory Feature
+
+The bot automatically remembers which room you're currently in! After you create or join a room, you don't need to provide the room code in subsequent commands:
+
+```bash
+# First time - provide the code
+/impostor join code:ABC123
+
+# Later - no code needed!
+/impostor status
+/impostor reveal
+/impostor start
+
+# Want to switch rooms? Just provide a new code
+/impostor join code:XYZ789
+```
 
 ## 🛠️ Architecture
 
@@ -47,7 +65,9 @@ discord_bot/
 │   └── utils.py        # Helper functions
 ├── config.py           # Configuration
 ├── firestore_client.py # Firebase connection
+├── firestore_listener.py # Firestore change listener
 ├── game_logic.py       # Game logic
+├── user_sessions.py    # User session management
 ├── main.py             # Entry point
 ├── requirements.txt    # Python dependencies
 ├── words.txt           # Polish word list
@@ -62,6 +82,8 @@ discord_bot/
 - ✅ DM word distribution
 - ✅ Integration with Firebase Firestore
 - ✅ Polish language support
+- ✅ Room memory - no need to repeat room codes
+- ✅ Persistent user sessions across bot restarts
 
 ## 🤝 Contributing
 

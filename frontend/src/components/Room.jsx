@@ -118,6 +118,14 @@ function Room() {
         />
       )}
 
+      {room.status === 'started' && (
+        <div className="game-starting">
+          <div className="spinner"></div>
+          <h2>Rozpoczynanie gry...</h2>
+          <p>Losowanie ról i słów...</p>
+        </div>
+      )}
+
       {(room.status === 'dealt' || room.status === 'playing') && (
         <Reveal
           roomId={roomId}

@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ensureAnonAuth } from '../firebase';
 import { createRoom, joinRoom } from '../api/room';
 import './Setup.css';
+
+const PLAYER_NAME_KEY = 'impostor_player_name';
 
 function Setup() {
   const navigate = useNavigate();
@@ -11,6 +13,13 @@ function Setup() {
   const [mode, setMode] = useState('menu');
   const [error, setError] = useState('');
   const [processing, setProcessing] = useState(false);
+
+  useEffect(() => {
+    const savedName = localStorage.getItem(PLAYER_NAME_KEY);
+    if (savedName) {
+      setPlayerName(savedName);
+    }
+  }, []);
 
   const handleCreateRoom = async () => {
     if (!playerName.trim()) {
@@ -22,8 +31,10 @@ function Setup() {
     setError('');
     
     try {
+      const trimmedName = playerName.trim();
+      localStorage.setItem(PLAYER_NAME_KEY, trimmedName);
       await ensureAnonAuth();
-      const roomId = await createRoom(playerName.trim());
+      const roomId = await createRoom(trimmedName);
       navigate(`/r/${roomId}`);
     } catch (err) {
       console.error('Error creating room:', err);
@@ -47,9 +58,11 @@ function Setup() {
     setError('');
     
     try {
+      const trimmedName = playerName.trim();
+      localStorage.setItem(PLAYER_NAME_KEY, trimmedName);
       await ensureAnonAuth();
       const normalizedCode = roomCode.trim().toUpperCase();
-      await joinRoom(normalizedCode, playerName.trim());
+      await joinRoom(normalizedCode, trimmedName);
       navigate(`/r/${normalizedCode}`);
     } catch (err) {
       console.error('Error joining room:', err);

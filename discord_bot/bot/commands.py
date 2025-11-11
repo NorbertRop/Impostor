@@ -5,11 +5,13 @@ from loguru import logger
 
 from bot.bot import bot
 from bot.utils import format_player_list
+from user_sessions import get_user_room, set_user_room
 
 
 @bot.tree.command(name="impostor", description="Gra w Impostora")
 @app_commands.describe(
-    action="Akcja do wykonania", code="Kod pokoju (dla join/start/status/reveal)"
+    action="Akcja do wykonania", 
+    code="Kod pokoju (opcjonalny - bot zapamięta twój ostatni pokój)"
 )
 @app_commands.choices(
     action=[
@@ -40,6 +42,9 @@ async def impostor_command(
                 channel_id=str(interaction.channel_id),
             )
 
+            # Store this room as the user's current room
+            await set_user_room(user_id, room_id)
+
             # Start listening for secrets in this room
             if hasattr(bot, "firestore_listener"):
                 bot.firestore_listener.start_room_listener(room_id)
@@ -47,7 +52,7 @@ async def impostor_command(
 
             embed = discord.Embed(
                 title="✅ Pokój utworzony!",
-                description=f"Kod pokoju: **{room_id}**",
+                description=f"Kod pokoju: **{room_id}**\n\n💡 Ten pokój został zapamiętany - nie musisz podawać kodu w kolejnych komendach!",
                 color=discord.Color.green(),
             )
             embed.add_field(
@@ -57,7 +62,7 @@ async def impostor_command(
             )
             embed.add_field(
                 name="Rozpoczęcie gry",
-                value=f"Gdy będzie minimum 3 graczy, użyj:\n`/impostor start code:{room_id}`",
+                value=f"Gdy będzie minimum 3 graczy, użyj:\n`/impostor start` (lub `/impostor start code:{room_id}`)",
                 inline=False,
             )
             embed.set_footer(text="Tylko host może rozpocząć grę")
@@ -67,12 +72,15 @@ async def impostor_command(
         elif action.value == "join":
             if not code:
                 await interaction.followup.send(
-                    "❌ Musisz podać kod pokoju!", ephemeral=True
+                    "❌ Musisz podać kod pokoju przy pierwszym dołączeniu!", ephemeral=True
                 )
                 return
 
             code = code.upper().strip()
             await game_logic.join_room(code, user_id, username, source="discord")
+
+            # Store this room as the user's current room
+            await set_user_room(user_id, code)
 
             # Start listening for secrets in this room (if not already)
             if hasattr(bot, "firestore_listener"):
@@ -81,7 +89,7 @@ async def impostor_command(
 
             embed = discord.Embed(
                 title="✅ Dołączono do pokoju!",
-                description=f"Pokój: **{code}**",
+                description=f"Pokój: **{code}**\n\n💡 Ten pokój został zapamiętany - nie musisz podawać kodu w kolejnych komendach!",
                 color=discord.Color.green(),
             )
             embed.add_field(
@@ -94,12 +102,16 @@ async def impostor_command(
 
         elif action.value == "start":
             if not code:
-                await interaction.followup.send(
-                    "❌ Musisz podać kod pokoju!", ephemeral=True
-                )
-                return
-
-            code = code.upper().strip()
+                code = await get_user_room(user_id)
+                if not code:
+                    await interaction.followup.send(
+                        "❌ Nie znaleziono zapamiętanego pokoju! Podaj kod pokoju: `/impostor start code:KOD`",
+                        ephemeral=True,
+                    )
+                    return
+                logger.info(f"Using remembered room {code} for user {user_id}")
+            else:
+                code = code.upper().strip()
 
             # Verify host and player count, then trigger Cloud Function
             from firestore_client import get_db
@@ -156,12 +168,16 @@ async def impostor_command(
 
         elif action.value == "status":
             if not code:
-                await interaction.followup.send(
-                    "❌ Musisz podać kod pokoju!", ephemeral=True
-                )
-                return
-
-            code = code.upper().strip()
+                code = await get_user_room(user_id)
+                if not code:
+                    await interaction.followup.send(
+                        "❌ Nie znaleziono zapamiętanego pokoju! Podaj kod pokoju: `/impostor status code:KOD`",
+                        ephemeral=True,
+                    )
+                    return
+                logger.info(f"Using remembered room {code} for user {user_id}")
+            else:
+                code = code.upper().strip()
             room_status = await game_logic.get_room_status(code)
 
             if not room_status:
@@ -212,12 +228,16 @@ async def impostor_command(
 
         elif action.value == "reveal":
             if not code:
-                await interaction.followup.send(
-                    "❌ Musisz podać kod pokoju!", ephemeral=True
-                )
-                return
-
-            code = code.upper().strip()
+                code = await get_user_room(user_id)
+                if not code:
+                    await interaction.followup.send(
+                        "❌ Nie znaleziono zapamiętanego pokoju! Podaj kod pokoju: `/impostor reveal code:KOD`",
+                        ephemeral=True,
+                    )
+                    return
+                logger.info(f"Using remembered room {code} for user {user_id}")
+            else:
+                code = code.upper().strip()
             secret = await game_logic.get_player_secret(code, user_id)
 
             if not secret:
@@ -249,12 +269,16 @@ async def impostor_command(
 
         elif action.value == "restart":
             if not code:
-                await interaction.followup.send(
-                    "❌ Musisz podać kod pokoju!", ephemeral=True
-                )
-                return
-
-            code = code.upper().strip()
+                code = await get_user_room(user_id)
+                if not code:
+                    await interaction.followup.send(
+                        "❌ Nie znaleziono zapamiętanego pokoju! Podaj kod pokoju: `/impostor restart code:KOD`",
+                        ephemeral=True,
+                    )
+                    return
+                logger.info(f"Using remembered room {code} for user {user_id}")
+            else:
+                code = code.upper().strip()
 
             try:
                 await game_logic.restart_game(code, user_id)

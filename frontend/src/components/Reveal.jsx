@@ -50,7 +50,8 @@ function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
     return (
       <div className="reveal-container">
         <div className="loading-message">
-          <p>Ładowanie...</p>
+          <div className="spinner"></div>
+          <p>Ładowanie twojej roli...</p>
         </div>
       </div>
     );
