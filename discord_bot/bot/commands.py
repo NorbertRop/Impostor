@@ -3,7 +3,7 @@ import game_logic
 from discord import app_commands
 from loguru import logger
 from user_sessions import get_user_room, set_user_room
- from firestore_client import get_db
+from firestore_client import get_db
 
 from bot.bot import bot
 from bot.utils import format_player_list
