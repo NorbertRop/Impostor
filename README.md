@@ -45,19 +45,18 @@ Wszyscy gracze oprócz jednego widzą to samo słowo. Impostor musi udawać, że
 4. **Open** `http://localhost:5173` w przeglądarce
 5. **Test** - otwórz w wielu kartach/urządzeniach
 
-### Option 2: Discord Bot (FastAPI + Discord.py)
+### Option 2: Discord Bot (Discord.py)
 
 **Wymagania**: Discord bot + Render account (darmowy)
 
 1. **Setup Discord Bot** - Zobacz [DISCORD_SETUP.md](./DISCORD_SETUP.md)
-2. **Deploy Backend** - Zobacz [BACKEND_DEPLOYMENT.md](./BACKEND_DEPLOYMENT.md)
-3. **Use commands**:
+2. **Use commands**:
    ```
    /impostor create
    /impostor join code:ABC123
    /impostor start code:ABC123
    ```
-4. **Receive DM** - Bot wysyła słowa przez wiadomości prywatne!
+3. **Receive DM** - Bot wysyła słowa przez wiadomości prywatne!
 
 ### Tryb lokalny (bez internetu)
 
@@ -122,31 +121,23 @@ impostor/
 │   │   │   ├── Room.jsx      # Room orchestrator
 │   │   │   ├── Lobby.jsx     # Waiting room
 │   │   │   └── Reveal.jsx    # Word reveal screen
-│   │   ├── utils/
-│   │   │   └── game.js       # Game logic
 │   │   ├── firebase.js       # Firebase config
 │   │   └── App.jsx           # Router setup
 │   └── package.json
-├── backend/                   # FastAPI REST API (web only)
-│   ├── main.py               # Entry point
-│   ├── game_logic.py         # Shared game functions
-│   ├── firestore_client.py   # Firebase Admin SDK
-│   └── api/
-│       ├── rooms.py          # REST endpoints
-│       └── models.py         # Pydantic models
 ├── discord_bot/               # Discord bot (standalone deployment)
 │   ├── bot/
 │   │   ├── bot.py            # Discord bot setup
 │   │   ├── commands.py       # Slash commands
 │   │   └── utils.py          # DM helpers
 │   ├── main.py               # Bot entry point
-│   ├── game_logic.py         # Game logic (shared)
+│   ├── game_logic.py         # Game logic
 │   ├── config.py             # Configuration
 │   ├── requirements.txt      # Python dependencies
 │   ├── Dockerfile            # Docker config
 │   └── README.md             # Bot deployment guide
 ├── functions/                 # Firebase Cloud Functions
-│   ├── index.js              # Scheduled cleanup (runs every hour)
+│   ├── index.js              # Game logic & scheduled cleanup
+│   ├── words.txt             # Polish word list
 │   └── package.json          # Node.js dependencies
 ├── firestore.rules           # Firestore security rules
 ├── firebase.json             # Firebase Hosting config
@@ -155,7 +146,6 @@ impostor/
 └── README.md                 # Ten plik
 ```
 
-**Note**: Bot został przeniesiony do osobnego katalogu `discord_bot/` aby umożliwić niezależny deployment osobno od API.
 
 ## 🎯 Funkcje
 
@@ -189,16 +179,14 @@ impostor/
 - **React Router** - Client-side routing
 - **PWA** - Progressive Web App
 
-**Backend:**
-- **FastAPI** - REST API framework
+**Cloud Functions:**
+- **Firebase Functions** - Game logic & scheduled cleanup
+- **Cloud Scheduler** - Automatic cleanup
+
+**Discord Bot:**
 - **Discord.py** - Discord bot library
 - **Firebase Admin SDK** - Server-side Firestore
-- **Uvicorn** - ASGI server
 - **Render** - Deployment platform
-
-**Cloud Functions:**
-- **Firebase Functions** - Scheduled cleanup tasks
-- **Cloud Scheduler** - Automatic hourly cleanup
 
 **Shared:**
 - **Firestore** - Shared database for web + Discord

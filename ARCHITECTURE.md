@@ -86,22 +86,25 @@ All Connected Devices           │
 
 ### 3. Start Game Flow
 ```
-Host Device                    Firebase                 Other Players
-    │                             │                          │
-    │─────startGame()────────────>│                          │
-    │                             │                          │
-    │──getDocs(players)──────────>│                          │
-    │<────player list─────────────│                          │
-    │                             │                          │
-    │ [Pick impostor & word]      │                          │
-    │                             │                          │
-    │──setDoc(secrets/uid1)──────>│                          │
-    │──setDoc(secrets/uid2)──────>│                          │
-    │──setDoc(secrets/uid3)──────>│                          │
-    │                             │                          │
-    │──updateDoc(status='dealt')─>│                          │
-    │                             │────status update────────>│
-    │                             │──secrets/uid available──>│
+Host Device                    Firebase                 Cloud Function         Other Players
+    │                             │                          │                     │
+    │─────startGame()────────────>│                          │                     │
+    │                             │                          │                     │
+    │──updateDoc(status='started')>│                          │                     │
+    │                             │                          │                     │
+    │                             │──onGameStart triggered──>│                     │
+    │                             │                          │                     │
+    │                             │                          │ [Pick impostor      │
+    │                             │                          │  & word]            │
+    │                             │                          │                     │
+    │                             │<─setDoc(secrets/uid1)────│                     │
+    │                             │<─setDoc(secrets/uid2)────│                     │
+    │                             │<─setDoc(secrets/uid3)────│                     │
+    │                             │                          │                     │
+    │                             │<─updateDoc(status='dealt')│                     │
+    │                             │                          │                     │
+    │                             │────status update─────────────────────────────>│
+    │                             │──secrets/uid available───────────────────────>│
 ```
 
 ### 4. Reveal Word Flow
@@ -284,7 +287,7 @@ updateDoc(docRef, data);   // Partial update
 │  Firestore          - Database          │
 │  Firebase Auth      - Authentication    │
 │  Firebase Hosting   - Static Hosting    │
-│  Cloud Functions    - Serverless (future)│
+│  Cloud Functions    - Game Logic        │
 └─────────────────────────────────────────┘
 ```
 

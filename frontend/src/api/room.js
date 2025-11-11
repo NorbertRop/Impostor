@@ -11,7 +11,6 @@ import {
   orderBy
 } from 'firebase/firestore';
 import { db, auth } from '../firebase';
-import { getRandomWord } from '../utils/game';
 
 export function generateRoomId() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -38,6 +37,7 @@ export async function createRoom(playerName) {
   await setDoc(playerRef, {
     name: playerName,
     isHost: true,
+    source: 'web',
     joinedAt: serverTimestamp(),
     seen: false,
     present: true
@@ -69,6 +69,7 @@ export async function joinRoom(roomId, playerName) {
   await setDoc(playerRef, {
     name: playerName,
     isHost: false,
+    source: 'web',
     joinedAt: serverTimestamp(),
     seen: false,
     present: true
@@ -116,32 +117,13 @@ export async function startGame(roomId) {
   const playersRef = collection(db, 'rooms', roomId, 'players');
   const playersSnap = await getDocs(playersRef);
   
-  const players = [];
-  playersSnap.forEach((doc) => {
-    players.push({ uid: doc.id, ...doc.data() });
-  });
-  
-  if (players.length < 3) {
+  if (playersSnap.size < 2) {
     throw new Error('Need at least 3 players to start');
-  }
-  
-  const word = await getRandomWord();
-  const impostorIndex = Math.floor(Math.random() * players.length);
-  
-  for (let i = 0; i < players.length; i++) {
-    const player = players[i];
-    const isImpostor = i === impostorIndex;
-    
-    const secretRef = doc(db, 'rooms', roomId, 'secrets', player.uid);
-    await setDoc(secretRef, {
-      role: isImpostor ? 'impostor' : 'civilian',
-      word: isImpostor ? null : word
-    });
   }
   
   const roomRef = doc(db, 'rooms', roomId);
   await updateDoc(roomRef, {
-    status: 'dealt'
+    status: 'started'
   });
 }
 

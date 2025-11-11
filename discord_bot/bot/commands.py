@@ -40,6 +40,11 @@ async def impostor_command(
                 channel_id=str(interaction.channel_id),
             )
 
+            # Start listening for secrets in this room
+            if hasattr(bot, "firestore_listener"):
+                bot.firestore_listener.start_room_listener(room_id)
+                logger.info(f"Started listener for room {room_id}")
+
             embed = discord.Embed(
                 title="✅ Pokój utworzony!",
                 description=f"Kod pokoju: **{room_id}**",
@@ -72,6 +77,11 @@ async def impostor_command(
             code = code.upper().strip()
             await game_logic.join_room(code, user_id, username, source="discord")
 
+            # Start listening for secrets in this room (if not already)
+            if hasattr(bot, "firestore_listener"):
+                bot.firestore_listener.start_room_listener(code)
+                logger.info(f"Started listener for room {code}")
+
             embed = discord.Embed(
                 title="✅ Dołączono do pokoju!",
                 description=f"Pokój: **{code}**",
@@ -98,57 +108,62 @@ async def impostor_command(
                 return
 
             code = code.upper().strip()
-            secrets = await game_logic.start_game(code, user_id)
 
-            success_count = 0
-            failed_users = []
+            # Verify host and player count, then trigger Cloud Function
+            from firestore_client import get_db
 
-            for uid, secret in secrets.items():
-                discord_id = secret.get("discord_id")
-                if discord_id:
-                    try:
-                        user = await bot.fetch_user(int(discord_id))
-                        success = await send_word_dm(
-                            user, code, secret, config.WEB_BASE_URL
-                        )
-                        if success:
-                            success_count += 1
-                        else:
-                            failed_users.append(secret["name"])
-                    except Exception as e:
-                        logger.error(f"Failed to send DM to {discord_id}: {e}")
-                        failed_users.append(secret["name"])
+            db = get_db()
+            room_ref = db.collection("rooms").document(code)
+            room_doc = room_ref.get()
+
+            if not room_doc.exists:
+                await interaction.followup.send(
+                    f"❌ Pokój {code} nie istnieje!", ephemeral=True
+                )
+                return
+
+            room_data = room_doc.to_dict()
+
+            # Verify host
+            if room_data.get("hostUid") != user_id:
+                await interaction.followup.send(
+                    "❌ Tylko host może rozpocząć grę!", ephemeral=True
+                )
+                return
+
+            # Check player count
+            players_ref = room_ref.collection("players")
+            players_count = len(list(players_ref.stream()))
+
+            if players_count < 2:
+                await interaction.followup.send(
+                    f"❌ Potrzeba minimum 3 graczy do rozpoczęcia gry! (obecnie: {players_count})",
+                    ephemeral=True,
+                )
+                return
+
+            # Trigger Cloud Function by updating status
+            room_ref.update({"status": "started"})
+            logger.info(
+                f"Game started for room {code}, Cloud Function will handle secrets"
+            )
 
             embed = discord.Embed(
                 title="🎮 Gra rozpoczęta!",
-                description=f"Pokój: **{code}**",
+                description=f"Pokój: **{code}**\n\nGracze Discord otrzymają DM ze swoim słowem!",
                 color=discord.Color.blue(),
             )
             embed.add_field(
-                name="Gracze",
-                value=f"{len(secrets)} graczy otrzymało swoje role",
-                inline=True,
+                name="Gracze", value=f"{players_count} graczy w grze", inline=True
             )
-            embed.add_field(
-                name="DM wysłane",
-                value=f"{success_count}/{len([s for s in secrets.values() if s.get('discord_id')])}",
-                inline=True,
-            )
-
-            if failed_users:
-                embed.add_field(
-                    name="⚠️ Nie udało się wysłać DM",
-                    value="\n".join(failed_users)
-                    + "\n\n*Sprawdź ustawienia prywatności!*",
-                    inline=False,
-                )
-
             embed.add_field(
                 name="Link do gry",
                 value=f"{config.WEB_BASE_URL}/r/{code}",
                 inline=False,
             )
-            embed.set_footer(text="Jeśli nie dostałeś DM, użyj /impostor reveal")
+            embed.set_footer(
+                text="DM-y będą wysłane za chwilę... Jeśli nie dostaniesz, użyj /impostor reveal"
+            )
 
             await interaction.followup.send(embed=embed)
 
@@ -255,4 +270,3 @@ async def impostor_command(
     except Exception as e:
         logger.error(f"Error in command {action.value}: {e}")
         await interaction.followup.send(f"❌ Wystąpił błąd: {str(e)}", ephemeral=True)
-

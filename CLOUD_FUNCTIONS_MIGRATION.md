@@ -1,17 +1,17 @@
-# 🔄 Migration: Backend → Cloud Functions
+# Migration: Backend → Cloud Functions
 
 ## Overview
 
 Replace the backend API server with serverless Cloud Functions for:
-- ✅ **Lower costs**: $0-2/month vs $7-15/month
-- ✅ **Zero maintenance**: No server to manage
-- ✅ **Better scaling**: Automatic, handles any load
-- ✅ **Simpler deployment**: `firebase deploy` vs full CI/CD
-- ✅ **Same functionality**: Word selection, impostor assignment
+- **Lower costs**: $0-2/month vs $7-15/month
+- **Zero maintenance**: No server to manage
+- **Better scaling**: Automatic, handles any load
+- **Simpler deployment**: `firebase deploy` vs full CI/CD
+- **Same functionality**: Word selection, impostor assignment
 
 ## What Changes
 
-### ❌ Removed (Backend)
+### Removed (Backend)
 ```
 backend/
   ├── game_logic.py      # Game logic (word selection, impostor)
@@ -21,12 +21,12 @@ backend/
   └── render.yaml        # Deployment config
 ```
 
-### ✅ Added (Cloud Functions)
+### Added (Cloud Functions)
 ```
 functions/
-  ├── index.js           # Cloud Function with game logic
+  ├── main.py            # Cloud Function with game logic (Python)
   ├── words.txt          # Same word list (5000+ words, 43KB)
-  └── package.json       # Dependencies
+  └── requirements.txt   # Python dependencies
 ```
 
 ## How It Works
@@ -55,11 +55,12 @@ Frontend → Firestore.update(status="started")
 
 ```bash
 cd functions
-npm install
 firebase deploy --only functions
 ```
 
-Verify in Firebase Console that `onGameStart` is deployed.
+Python dependencies are automatically installed during deployment.
+
+Verify in Firebase Console that `on_game_start` is deployed.
 
 ### 2. Update Frontend Code
 
@@ -216,22 +217,22 @@ await game_logic.start_game(code, user_id)
 
 ### Cost Comparison
 
-| Service | Backend (Render) | Cloud Functions |
-|---------|------------------|-----------------|
-| **Monthly cost** | $7-15 | $0-2 |
-| **Free tier** | 750 hours | 2M invocations |
-| **Scaling** | Manual | Automatic |
-| **Cold starts** | App sleeps | 1-2s |
-| **Maintenance** | Updates, monitoring | None |
+| Service          | Backend (Render)    | Cloud Functions |
+| ---------------- | ------------------- | --------------- |
+| **Monthly cost** | $7-15               | $0-2            |
+| **Free tier**    | 750 hours           | 2M invocations  |
+| **Scaling**      | Manual              | Automatic       |
+| **Cold starts**  | App sleeps          | 1-2s            |
+| **Maintenance**  | Updates, monitoring | None            |
 
 ### Performance Comparison
 
-| Operation | Backend API | Cloud Functions |
-|-----------|-------------|-----------------|
-| **Start game** | ~200-300ms | ~100-200ms |
+| Operation        | Backend API  | Cloud Functions  |
+| ---------------- | ------------ | ---------------- |
+| **Start game**   | ~200-300ms   | ~100-200ms       |
 | **Word loading** | Each request | Cached in memory |
-| **Deployment** | 5-10 min | 2-3 min |
-| **Rollback** | Complex | One command |
+| **Deployment**   | 5-10 min     | 2-3 min          |
+| **Rollback**     | Complex      | One command      |
 
 ## Rollback Plan
 
@@ -313,7 +314,7 @@ firebase functions:log --only onGameStart
 
 ## Conclusion
 
-**Recommendation**: ✅ **Migrate to Cloud Functions**
+**Recommendation**: **Migrate to Cloud Functions**
 
 Reasons:
 1. **Cheaper**: Save $5-13/month

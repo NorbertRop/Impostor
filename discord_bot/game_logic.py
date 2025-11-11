@@ -108,7 +108,7 @@ async def create_room(
     }
 
     if source == "discord":
-        player_data["discordUserId"] = user_id
+        player_data["discordId"] = user_id
 
     player_ref.set(player_data)
 
@@ -143,7 +143,7 @@ async def join_room(room_id: str, user_id: str, username: str, source: str = "di
     }
 
     if source == "discord":
-        player_data["discordUserId"] = user_id
+        player_data["discordId"] = user_id
 
     player_ref.set(player_data)
 
@@ -198,7 +198,7 @@ async def start_game(room_id: str, host_uid: str):
     players_ref = room_ref.collection("players")
     players_docs = list(players_ref.stream())
 
-    if len(players_docs) < 3:
+    if len(players_docs) < 2:
         raise ValueError("Need at least 3 players to start")
 
     # Pick word and impostor
@@ -226,7 +226,7 @@ async def start_game(room_id: str, host_uid: str):
         player_data = player_doc.to_dict()
         secrets[player_doc.id] = {
             "name": player_data.get("name"),
-            "discord_id": player_data.get("discordUserId"),
+            "discordId": player_data.get("discordId"),
             "role": "impostor" if is_impostor else "civilian",
             "word": None if is_impostor else word,
         }

@@ -5,6 +5,7 @@ import bot.commands  # noqa: F401 - Import to register commands with bot
 from bot.bot import bot, start_bot
 from config import config
 from firestore_client import initialize_firebase
+from firestore_listener import FirestoreListener
 from loguru import logger
 
 # Configure loguru
@@ -29,11 +30,17 @@ async def main():
     initialize_firebase()
     logger.success("Firebase initialized")
 
+    # Initialize Firestore listener
+    listener = FirestoreListener(bot, config.WEB_URL)
+    bot.firestore_listener = listener  # Attach to bot for access in commands
+    logger.success("Firestore listener initialized")
+
     while True:
         try:
             await start_bot()
         except KeyboardInterrupt:
             logger.info("Shutting down bot...")
+            listener.cleanup()  # Clean up listeners
             await bot.close()
             break
         except Exception as e:

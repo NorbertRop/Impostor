@@ -2,16 +2,19 @@
 
 Cloud Functions handle **all game logic** for the Impostor game, eliminating the need for a backend server!
 
+Written in **Python 3.12** - same language as the Discord bot for code consistency.
+
 ## ✨ Key Features
 
 - **Automatic game start** - Firestore trigger handles word selection and impostor assignment
 - **5000+ Polish words** - Loaded from `words.txt` (43KB, included in deployment)
 - **Automatic cleanup** - Removes old rooms daily
 - **Serverless** - No server to maintain, scales automatically
+- **Python** - Consistent with Discord bot, type-safe
 
 ## 📦 Functions
 
-### `onGameStart` (Firestore Trigger) ⭐ **NEW**
+### `on_game_start` (Firestore Trigger) ⭐ **NEW**
 - **Trigger**: When a room's `status` changes to `"started"`
 - **Purpose**: 
   - Selects random word from 5000+ words
@@ -24,16 +27,16 @@ Cloud Functions handle **all game logic** for the Impostor game, eliminating the
   - Automatic, instant response
   - Works for both web and Discord
 
-### `cleanupOldRooms` (Scheduled)
+### `cleanup_old_rooms` (Scheduled)
 - **Trigger**: Every 24 hours
 - **Purpose**: Automatically deletes rooms and their subcollections older than 24 hours
 - **Keeps**: Firestore clean and costs low
 
-### `manualCleanup` (HTTP)
+### `manual_cleanup` (HTTP)
 - **Trigger**: HTTP request
 - **Purpose**: Manual cleanup for testing
 - **Parameters**: `?hours=X` - cleanup rooms older than X hours (default: 24)
-- **Example**: `https://YOUR_PROJECT.cloudfunctions.net/manualCleanup?hours=12`
+- **Example**: `https://YOUR_PROJECT.cloudfunctions.net/manual_cleanup?hours=12`
 
 ## 🏗️ Architecture
 
@@ -41,8 +44,8 @@ Cloud Functions handle **all game logic** for the Impostor game, eliminating the
 Frontend/Discord Bot
         ↓
     Firestore (set status="started")
-        ↓ (triggers onGameStart)
- Cloud Function
+        ↓ (triggers on_game_start)
+ Cloud Function (Python)
         ↓
    - Load words.txt (5000 words)
    - Select random word
@@ -56,10 +59,15 @@ Frontend/Discord Bot (realtime updates)
 
 ## 🚀 Deployment
 
+### Prerequisites:
+- Python 3.12+
+- Firebase CLI: `npm install -g firebase-tools`
+- Firebase project with Blaze plan (required for Cloud Functions)
+
 ### First time setup:
 ```bash
 cd functions
-npm install
+# Python dependencies are automatically installed during deployment
 ```
 
 ### Deploy all functions:
@@ -69,8 +77,9 @@ firebase deploy --only functions
 
 ### Deploy specific function:
 ```bash
-firebase deploy --only functions:onGameStart
-firebase deploy --only functions:cleanupOldRooms
+firebase deploy --only functions:on_game_start
+firebase deploy --only functions:cleanup_old_rooms
+firebase deploy --only functions:manual_cleanup
 ```
 
 ## 📝 Words File
@@ -84,8 +93,11 @@ The `words.txt` file contains 5000+ Polish words:
 ## 🧪 Local Testing
 
 ```bash
-cd functions
-npm run serve
+# Install Python dependencies locally
+pip install -r requirements.txt
+
+# Start Firebase emulators
+firebase emulators:start --only functions
 ```
 
 Then test with Firebase Emulator UI at http://localhost:4000
@@ -94,7 +106,7 @@ Then test with Firebase Emulator UI at http://localhost:4000
 
 View logs:
 ```bash
-npm run logs
+firebase functions:log
 ```
 
 Or: Firebase Console → Functions → Logs
@@ -113,20 +125,20 @@ Or: Firebase Console → Functions → Logs
 
 ## 🎯 Benefits vs Backend
 
-| Aspect | Backend API | Cloud Functions |
-|--------|------------|-----------------|
-| **Maintenance** | Server to manage | Zero maintenance |
-| **Scaling** | Manual/Complex | Automatic |
-| **Cost** | $7-15/month | $0-2/month |
+| Aspect            | Backend API        | Cloud Functions      |
+| ----------------- | ------------------ | -------------------- |
+| **Maintenance**   | Server to manage   | Zero maintenance     |
+| **Scaling**       | Manual/Complex     | Automatic            |
+| **Cost**          | $7-15/month        | $0-2/month           |
 | **Words storage** | Need file/database | Included in function |
-| **Deployment** | CI/CD setup | `firebase deploy` |
-| **Cold starts** | None | 1-2s (rarely) |
+| **Deployment**    | CI/CD setup        | `firebase deploy`    |
+| **Cold starts**   | None               | 1-2s (rarely)        |
 
 ## 🔧 How it Works
 
 1. **Frontend/Discord** updates room status to `"started"` in Firestore
-2. **Firestore** triggers `onGameStart` Cloud Function automatically
-3. **Function** executes:
+2. **Firestore** triggers `on_game_start` Cloud Function automatically
+3. **Function** executes (Python):
    - Loads words from memory (cached)
    - Selects random word
    - Picks random impostor
@@ -137,12 +149,14 @@ Or: Firebase Console → Functions → Logs
 ## 🆕 Migration from Backend
 
 The Cloud Functions replace:
-- ❌ `backend/game_logic.py` → ✅ `functions/index.js` (onGameStart)
+- ❌ `backend/game_logic.py` → ✅ `functions/main.py` (on_game_start)
 - ❌ `backend/api/rooms.py` → ✅ Firestore + triggers
 - ❌ `backend/words.txt` → ✅ `functions/words.txt`
 - ❌ Backend server ($7-15/mo) → ✅ Serverless ($0-2/mo)
 
 **Result**: Simpler, cheaper, more reliable! 🎉
+
+**Code reuse**: Game logic now shared between Discord bot and Cloud Functions!
 
 ## 🔧 Troubleshooting
 

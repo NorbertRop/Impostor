@@ -7,7 +7,7 @@ function Lobby({ roomId, room, players, isHost, onError }) {
   const [toggling, setToggling] = useState(false);
 
   const handleStartGame = async () => {
-    if (players.length < 3) {
+    if (players.length < 2) {
       onError('Potrzebujesz przynajmniej 3 graczy');
       return;
     }
@@ -80,7 +80,7 @@ function Lobby({ roomId, room, players, isHost, onError }) {
         <div className="host-controls">
           <button
             onClick={handleStartGame}
-            disabled={players.length < 3 || starting}
+            disabled={players.length < 2 || starting}
             className="start-button"
           >
             {starting ? 'Rozpoczynanie...' : 'Rozpocznij grę'}
@@ -94,7 +94,7 @@ function Lobby({ roomId, room, players, isHost, onError }) {
             {room.allowJoin ? 'Zablokuj dołączanie' : 'Odblokuj dołączanie'}
           </button>
           
-          {players.length < 3 && (
+          {players.length < 2 && (
             <p className="warning">Potrzebujesz przynajmniej 3 graczy</p>
           )}
         </div>
