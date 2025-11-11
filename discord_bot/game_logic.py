@@ -9,7 +9,7 @@ from loguru import logger
 
 def generate_room_id():
     chars = string.ascii_uppercase + string.digits
-    chars = chars.replace("0", "").replace("O", "").replace("1", "").replace("I")
+    chars = chars.replace("0", "").replace("O", "").replace("1", "").replace("I", "")
     return "".join(random.choice(chars) for _ in range(6))
 
 
