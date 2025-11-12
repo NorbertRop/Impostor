@@ -42,24 +42,24 @@ async def send_word_dm(
             speaking_order = room_data["speakingOrder"]
             discord_user_id = secret.get("discordId")
 
-            logger.debug(f"Speaking order: {speaking_order}")
-            logger.debug(f"All players: {list(all_players.keys())}")
-            logger.debug(f"Discord user ID: {discord_user_id}")
+            logger.info(f"Speaking order: {speaking_order}")
+            logger.info(f"All players: {list(all_players.keys())}")
+            logger.info(f"Discord user ID: {discord_user_id}")
 
             order_lines = []
             for idx, player_id in enumerate(speaking_order, 1):
-                logger.debug(
+                logger.info(
                     f"Processing player_id: '{player_id}' (type: {type(player_id)})"
                 )
                 player = all_players.get(player_id, {})
                 player_name = player.get("name", "Nieznany gracz") or "Nieznany gracz"
 
-                logger.debug(f"  Player data: {player}")
-                logger.debug(f"  Player name: '{player_name}'")
+                logger.info(f"  Player data: {player}")
+                logger.info(f"  Player name: '{player_name}'")
 
                 # Skip players with missing or invalid data
                 if not player or not player_name.strip():
-                    logger.debug(f"  Skipping player {player_id} - invalid data")
+                    logger.info(f"  Skipping player {player_id} - invalid data")
                     continue
 
                 # Check if this is the current user
@@ -68,7 +68,7 @@ async def send_word_dm(
                 else:
                     order_lines.append(f"{player_name}")
 
-            logger.debug(f"Final order_lines: {order_lines}")
+            logger.info(f"Final order_lines: {order_lines}")
             order_text = "\n".join(order_lines)
             embed.add_field(
                 name="🎤 Kolejność wypowiedzi", value=order_text, inline=False
