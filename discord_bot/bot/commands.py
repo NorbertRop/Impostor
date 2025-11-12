@@ -10,21 +10,54 @@ from bot.bot import bot
 from bot.utils import format_player_list
 
 
-class JoinGameButton(View):
+class GameControlView(View):
+    """Unified view with all game control buttons"""
+
     def __init__(self, room_id: str):
         super().__init__(timeout=None)
         self.room_id = room_id
 
+        # Join button
         join_button = Button(
-            label=f"Dołącz do gry {room_id}",
+            label="Dołącz",
             style=discord.ButtonStyle.green,
             emoji="🎮",
-            custom_id=f"join_game:{room_id}",
+            custom_id=f"join:{room_id}",
         )
-        join_button.callback = self.join_game_callback
+        join_button.callback = self.join_callback
         self.add_item(join_button)
 
-    async def join_game_callback(self, interaction: discord.Interaction):
+        # Start button
+        start_button = Button(
+            label="Start",
+            style=discord.ButtonStyle.blurple,
+            emoji="▶️",
+            custom_id=f"start:{room_id}",
+        )
+        start_button.callback = self.start_callback
+        self.add_item(start_button)
+
+        # Restart button
+        restart_button = Button(
+            label="Restart",
+            style=discord.ButtonStyle.blurple,
+            emoji="🔄",
+            custom_id=f"restart:{room_id}",
+        )
+        restart_button.callback = self.restart_callback
+        self.add_item(restart_button)
+
+        # Status button
+        status_button = Button(
+            label="Status",
+            style=discord.ButtonStyle.gray,
+            emoji="📊",
+            custom_id=f"status:{room_id}",
+        )
+        status_button.callback = self.status_callback
+        self.add_item(status_button)
+
+    async def join_callback(self, interaction: discord.Interaction):
         await interaction.response.defer(ephemeral=True)
 
         user_id = str(interaction.user.id)
@@ -44,7 +77,7 @@ class JoinGameButton(View):
 
             embed = discord.Embed(
                 title="✅ Dołączono do pokoju!",
-                description=f"Pokój: **{self.room_id}**\n\n💡",
+                description=f"Pokój: **{self.room_id}**",
                 color=discord.Color.green(),
             )
             embed.add_field(
@@ -63,24 +96,52 @@ class JoinGameButton(View):
                 f"❌ Wystąpił błąd: {str(e)}", ephemeral=True
             )
 
+    async def start_callback(self, interaction: discord.Interaction):
+        user_id = str(interaction.user.id)
 
-class RestartGameButton(View):
-    def __init__(self, room_id: str):
-        super().__init__(timeout=None)
-        self.room_id = room_id
+        try:
+            db = get_db()
+            room_ref = db.collection("rooms").document(self.room_id)
+            room_doc = room_ref.get()
 
-        restart_button = Button(
-            label="Zrestartuj grę",
-            style=discord.ButtonStyle.blurple,
-            emoji="🔄",
-            custom_id=f"restart_game:{room_id}",
-        )
-        restart_button.callback = self.restart_game_callback
-        self.add_item(restart_button)
+            if not room_doc.exists:
+                await interaction.response.send_message(
+                    f"❌ Pokój {self.room_id} nie istnieje!", ephemeral=True
+                )
+                return
 
-    async def restart_game_callback(self, interaction: discord.Interaction):
-        await interaction.response.defer(ephemeral=True)
+            room_data = room_doc.to_dict()
 
+            if room_data.get("hostUid") != user_id:
+                await interaction.response.send_message(
+                    "❌ Tylko host może rozpocząć grę!", ephemeral=True
+                )
+                return
+
+            players_ref = room_ref.collection("players")
+            players_count = len(list(players_ref.stream()))
+
+            if players_count < 2:
+                await interaction.response.send_message(
+                    f"❌ Potrzeba minimum 3 graczy do rozpoczęcia gry! (obecnie: {players_count})",
+                    ephemeral=True,
+                )
+                return
+
+            room_ref.update({"status": "started"})
+            logger.info(f"Game started for room {self.room_id} via button by {user_id}")
+
+            await interaction.response.defer()
+
+        except ValueError as e:
+            await interaction.response.send_message(f"❌ {str(e)}", ephemeral=True)
+        except Exception as e:
+            logger.error(f"Error starting game via button: {e}")
+            await interaction.response.send_message(
+                f"❌ Wystąpił błąd: {str(e)}", ephemeral=True
+            )
+
+    async def restart_callback(self, interaction: discord.Interaction):
         user_id = str(interaction.user.id)
 
         try:
@@ -88,15 +149,70 @@ class RestartGameButton(View):
 
             logger.info(f"User {user_id} restarted room {self.room_id} via button")
 
-            await interaction.followup.send(
-                f"✅ Gra **{self.room_id}** została zrestartowana! Gracze otrzymują nowe role.",
-                ephemeral=True,
-            )
+            await interaction.response.defer()
 
         except ValueError as e:
-            await interaction.followup.send(f"❌ {str(e)}", ephemeral=True)
+            await interaction.response.send_message(f"❌ {str(e)}", ephemeral=True)
         except Exception as e:
             logger.error(f"Error restarting game via button: {e}")
+            await interaction.response.send_message(
+                f"❌ Wystąpił błąd: {str(e)}", ephemeral=True
+            )
+
+    async def status_callback(self, interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=True)
+
+        try:
+            room_status = await game_logic.get_room_status(self.room_id)
+
+            if not room_status:
+                await interaction.followup.send(
+                    f"❌ Pokój {self.room_id} nie istnieje!", ephemeral=True
+                )
+                return
+
+            status_emoji = {
+                "lobby": "⏳",
+                "dealt": "🎮",
+                "playing": "🎭",
+                "ended": "🏁",
+            }
+
+            status_text = {
+                "lobby": "Poczekalnia",
+                "dealt": "Ujawnianie słów",
+                "playing": "Gra w toku",
+                "ended": "Zakończona",
+            }
+
+            embed = discord.Embed(
+                title=f"Status pokoju {self.room_id}", color=discord.Color.blue()
+            )
+            embed.add_field(
+                name="Status",
+                value=f"{status_emoji.get(room_status['status'], '❓')} {status_text.get(room_status['status'], 'Nieznany')}",
+                inline=True,
+            )
+            embed.add_field(
+                name="Gracze",
+                value=f"{len(room_status['players'])} graczy",
+                inline=True,
+            )
+            embed.add_field(
+                name="Dołączanie",
+                value="🟢 Otwarte" if room_status.get("allowJoin") else "🔴 Zamknięte",
+                inline=True,
+            )
+            embed.add_field(
+                name="Lista graczy",
+                value=format_player_list(room_status["players"]),
+                inline=False,
+            )
+
+            await interaction.followup.send(embed=embed, ephemeral=True)
+
+        except Exception as e:
+            logger.error(f"Error fetching status via button: {e}")
             await interaction.followup.send(
                 f"❌ Wystąpił błąd: {str(e)}", ephemeral=True
             )
@@ -124,22 +240,17 @@ async def create_command(interaction: discord.Interaction):
 
         embed = discord.Embed(
             title="✅ Pokój utworzony!",
-            description=f"Kod pokoju: **{room_id}**\n\n💡",
+            description=f"Kod pokoju: **{room_id}**",
             color=discord.Color.green(),
         )
         embed.add_field(
-            name="Jak dołączyć?",
-            value=f"Kliknij przycisk poniżej lub użyj:\n`/join code:{room_id}`",
+            name="Sterowanie",
+            value="🎮 **Dołącz** - wejdź do gry\n▶️ **Start** - rozpocznij (host, min. 3 graczy)\n🔄 **Restart** - nowa runda (host)\n📊 **Status** - sprawdź stan gry",
             inline=False,
         )
-        embed.add_field(
-            name="Rozpoczęcie gry",
-            value="Gdy będzie minimum 3 graczy, użyj:\n`/start`",
-            inline=False,
-        )
-        embed.set_footer(text="Tylko host może rozpocząć grę")
+        embed.set_footer(text="Tylko host może rozpocząć i zrestartować grę")
 
-        view = JoinGameButton(room_id)
+        view = GameControlView(room_id)
         await interaction.followup.send(embed=embed, view=view)
 
     except Exception as e:
@@ -234,21 +345,6 @@ async def start_command(interaction: discord.Interaction, code: str | None = Non
 
         room_ref.update({"status": "started"})
         logger.info(f"Game started for room {code}, Cloud Function will handle secrets")
-
-        embed = discord.Embed(
-            title="🎮 Gra rozpoczęta!",
-            description=f"Pokój: **{code}**\n\nGracze Discord otrzymają DM ze swoim słowem!",
-            color=discord.Color.blue(),
-        )
-        embed.add_field(
-            name="Gracze", value=f"{players_count} graczy w grze", inline=True
-        )
-        embed.set_footer(
-            text="DM-y będą wysłane za chwilę... Jeśli nie dostaniesz, użyj /reveal"
-        )
-
-        view = RestartGameButton(code)
-        await interaction.followup.send(embed=embed, view=view)
 
     except ValueError as e:
         await interaction.followup.send(f"❌ {str(e)}", ephemeral=True)
@@ -402,18 +498,6 @@ async def restart_command(interaction: discord.Interaction, code: str | None = N
             code = code.upper().strip()
 
         await game_logic.restart_game(code, user_id)
-
-        embed = discord.Embed(
-            title="🔄 Gra zrestartowana!",
-            description=f"Pokój: **{code}**\n\nNowa runda rozpoczyna się teraz!\nGracze Discord otrzymają DM z nowymi rolami.",
-            color=discord.Color.orange(),
-        )
-        embed.set_footer(
-            text="Wszyscy gracze pozostali w pokoju. Wybrano nowe słowo i impostora."
-        )
-
-        view = RestartGameButton(code)
-        await interaction.followup.send(embed=embed, view=view)
 
     except ValueError as e:
         await interaction.followup.send(f"❌ {str(e)}", ephemeral=True)
