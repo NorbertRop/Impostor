@@ -42,33 +42,24 @@ async def send_word_dm(
             speaking_order = room_data["speakingOrder"]
             discord_user_id = secret.get("discordId")
 
-            logger.info(f"Speaking order: {speaking_order}")
-            logger.info(f"All players: {list(all_players.keys())}")
-            logger.info(f"Discord user ID: {discord_user_id}")
-
             order_lines = []
-            for idx, player_id in enumerate(speaking_order, 1):
-                logger.info(
-                    f"Processing player_id: '{player_id}' (type: {type(player_id)})"
-                )
+            position = 1
+            for player_id in speaking_order:
                 player = all_players.get(player_id, {})
                 player_name = player.get("name", "Nieznany gracz") or "Nieznany gracz"
 
-                logger.info(f"  Player data: {player}")
-                logger.info(f"  Player name: '{player_name}'")
-
                 # Skip players with missing or invalid data
                 if not player or not player_name.strip():
-                    logger.info(f"  Skipping player {player_id} - invalid data")
                     continue
 
                 # Check if this is the current user
                 if player_id == discord_user_id:
-                    order_lines.append(f"{player_name} (TY)")
+                    order_lines.append(f"**{position}.** {player_name} **(TY)**")
                 else:
-                    order_lines.append(f"{player_name}")
+                    order_lines.append(f"{position}. {player_name}")
 
-            logger.info(f"Final order_lines: {order_lines}")
+                position += 1
+
             order_text = "\n".join(order_lines)
             embed.add_field(
                 name="🎤 Kolejność wypowiedzi", value=order_text, inline=False
