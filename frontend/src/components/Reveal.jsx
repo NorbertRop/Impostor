@@ -5,7 +5,6 @@ import './Reveal.css';
 
 function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
   const [revealed, setRevealed] = useState(false);
-  const [marking, setMarking] = useState(false);
   const [showRestartConfirm, setShowRestartConfirm] = useState(false);
   const [restarting, setRestarting] = useState(false);
   const [room, setRoom] = useState(null);
@@ -15,18 +14,13 @@ function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
   const totalCount = players.length;
   const allPlayersSeen = seenCount === totalCount;
 
-  const handleReveal = () => {
+  const handleReveal = async () => {
     setRevealed(true);
-  };
-
-  const handleMarkSeen = async () => {
-    setMarking(true);
     try {
       await markSeen(roomId, myUid, true);
     } catch (error) {
       console.error('Error marking seen:', error);
       onError('Nie udało się zapisać');
-      setMarking(false);
     }
   };
 
@@ -184,40 +178,9 @@ function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
             </div>
           )}
 
-          {room?.speakingOrder && (
-            <div className="speaking-order compact">
-              <h3>🎤 Kolejność wypowiedzi:</h3>
-              <ol className="order-list">
-                {room.speakingOrder.map((playerId) => {
-                  const player = players.find(p => p.uid === playerId);
-                  const isMe = playerId === myUid;
-                  return (
-                    <li key={playerId} className={isMe ? 'my-turn' : ''}>
-                      {player?.name || 'Nieznany gracz'}
-                      {isMe && ' (Ty)'}
-                    </li>
-                  );
-                })}
-              </ol>
-            </div>
-          )}
-
-          <div className="button-group">
-            <button
-              onClick={handleMarkSeen}
-              disabled={marking}
-              className="confirm-button"
-            >
-              {marking ? 'Zapisywanie...' : 'Zapamiętałem/am'}
-            </button>
-            {isHost && (
-              <button 
-                onClick={() => setShowRestartConfirm(true)} 
-                className="restart-button small"
-              >
-                Restartuj grę
-              </button>
-            )}
+          <div className="marking-status">
+            <div className="spinner"></div>
+            <p>Przechodzenie do poczekalni...</p>
           </div>
         </div>
       )}
