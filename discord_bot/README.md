@@ -79,11 +79,12 @@ discord_bot/
 - ✅ Automatic reconnection on disconnect
 - ✅ Error handling and retry logic
 - ✅ Health monitoring
-- ✅ DM word distribution
+- ✅ DM word distribution with random speaking order
 - ✅ Integration with Firebase Firestore
 - ✅ Polish language support
 - ✅ Room memory - no need to repeat room codes
 - ✅ Persistent user sessions across bot restarts
+- ✅ Random speaking order for fair gameplay
 
 ## 🤝 Contributing
 

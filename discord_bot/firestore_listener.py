@@ -69,7 +69,19 @@ class FirestoreListener:
             user = await self.bot.fetch_user(user_id)
 
             if user:
-                success = await send_word_dm(user, room_id, secret)
+                # Fetch room data and all players for speaking order
+                room_ref = self.db.collection("rooms").document(room_id)
+                room_doc = room_ref.get()
+                room_data = room_doc.to_dict() if room_doc.exists else None
+
+                # Fetch all players
+                players_ref = room_ref.collection("players")
+                players_docs = list(players_ref.stream())
+                all_players = {doc.id: doc.to_dict() for doc in players_docs}
+
+                success = await send_word_dm(
+                    user, room_id, secret, room_data, all_players
+                )
                 if success:
                     # Mark player as having seen their word
                     player_ref = (

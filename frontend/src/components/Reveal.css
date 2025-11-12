@@ -284,11 +284,21 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.speaking-order.compact {
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
 .speaking-order h3 {
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 1.5rem;
   text-align: center;
+}
+
+.speaking-order.compact h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
 }
 
 .order-list {
@@ -311,6 +321,12 @@
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
+.speaking-order.compact .order-list li {
+  padding: 0.75rem 1.2rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+}
+
 .order-list li:hover {
   transform: translateY(-2px);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
@@ -324,6 +340,11 @@
   font-size: 1.3rem;
 }
 
+.speaking-order.compact .order-list li::before {
+  font-size: 1.1rem;
+  margin-right: 0.8rem;
+}
+
 .order-list li.my-turn {
   background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
   color: white;
@@ -333,5 +354,24 @@
 
 .order-list li.my-turn::before {
   color: white;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.button-group button {
+  width: 100%;
+  max-width: 300px;
+}
+
+.restart-button.small {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  margin-top: 0;
 }
 

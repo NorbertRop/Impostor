@@ -183,13 +183,42 @@ function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
               </p>
             </div>
           )}
-          <button
-            onClick={handleMarkSeen}
-            disabled={marking}
-            className="confirm-button"
-          >
-            {marking ? 'Zapisywanie...' : 'Zapamiętałem/am'}
-          </button>
+
+          {room?.speakingOrder && (
+            <div className="speaking-order compact">
+              <h3>🎤 Kolejność wypowiedzi:</h3>
+              <ol className="order-list">
+                {room.speakingOrder.map((playerId) => {
+                  const player = players.find(p => p.uid === playerId);
+                  const isMe = playerId === myUid;
+                  return (
+                    <li key={playerId} className={isMe ? 'my-turn' : ''}>
+                      {player?.name || 'Nieznany gracz'}
+                      {isMe && ' (Ty)'}
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+          )}
+
+          <div className="button-group">
+            <button
+              onClick={handleMarkSeen}
+              disabled={marking}
+              className="confirm-button"
+            >
+              {marking ? 'Zapisywanie...' : 'Zapamiętałem/am'}
+            </button>
+            {isHost && (
+              <button 
+                onClick={() => setShowRestartConfirm(true)} 
+                className="restart-button small"
+              >
+                Restartuj grę
+              </button>
+            )}
+          </div>
         </div>
       )}
     </div>

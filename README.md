@@ -155,6 +155,7 @@ impostor/
 ✅ **Real-time sync** - Firestore realtime updates
 ✅ **Pokoje gry** - krótkie kody dołączania (ABC123)
 ✅ **Prywatne słowa** - każdy widzi swoją rolę tylko na swoim urządzeniu
+✅ **Kolejność wypowiedzi** - losowa kolejność graczy dla sprawiedliwej rozgrywki
 ✅ **10,000+ polskich słów** - zoptymalizowany słownik
 ✅ **PWA** - instalacja jak natywna aplikacja
 ✅ **Responsywne UI** - piękny gradient, nowoczesny design
