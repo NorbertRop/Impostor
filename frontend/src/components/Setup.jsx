@@ -33,8 +33,8 @@ function Setup() {
       const trimmedName = playerName.trim();
       localStorage.setItem(PLAYER_NAME_KEY, trimmedName);
       await ensureAnonAuth();
-      const roomId = await createRoom(trimmedName);
-      navigate(`/r/${roomId}`);
+      const response = await createRoom(trimmedName);
+      navigate(`/r/${response.roomId}`);
     } catch (err) {
       console.error('Error creating room:', err);
       setError('Nie udało się utworzyć pokoju: ' + err.message);

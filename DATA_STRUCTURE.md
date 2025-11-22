@@ -22,9 +22,8 @@ Main room document.
 {
   hostUid: string,              // Player ID of room host
   hostSource: "web" | "discord", // Where host created the room
-  status: "lobby" | "started" | "dealt" | "playing",
+  status: "lobby" | "started",
   createdAt: timestamp,
-  allowJoin: boolean,
   
   // Set when game starts (by Cloud Function)
   word?: string,                // The secret word (only after game starts)
@@ -47,8 +46,6 @@ Public player information (visible to all in room).
   isHost: boolean,              // Is this player the host?
   source: "web" | "discord",    // Where player joined from
   joinedAt: timestamp,
-  seen: boolean,                // Has player seen their secret?
-  present: boolean,             // Is player still in room?
   
   // ONLY for Discord players
   discordId?: string            // Discord user ID (numeric string)
@@ -95,7 +92,6 @@ Private game information (readable only by that player).
 | `createdAt`  | `timestamp`          | Creation time (camelCase)      |
 | `joinedAt`   | `timestamp`          | Join time (camelCase)          |
 | `startedAt`  | `timestamp`          | Start time (camelCase)         |
-| `allowJoin`  | `boolean`            | Can join flag (camelCase)      |
 | `hostUid`    | `string`             | Host player ID (camelCase)     |
 | `hostSource` | `string`             | Host source (camelCase)        |
 | `impostorId` | `string`             | Impostor player ID (camelCase) |
@@ -120,7 +116,6 @@ Private game information (readable only by that player).
   hostSource: "web",
   status: "lobby",
   createdAt: 2025-01-01T12:00:00Z,
-  allowJoin: true
 }
 
 // rooms/ABC123/players/firebase-uid-123
@@ -128,9 +123,7 @@ Private game information (readable only by that player).
   name: "Alice",
   isHost: true,
   source: "web",
-  joinedAt: 2025-01-01T12:00:00Z,
-  seen: false,
-  present: true
+  joinedAt: 2025-01-01T12:00:00Z
 }
 ```
 
@@ -143,9 +136,7 @@ Private game information (readable only by that player).
   isHost: false,
   source: "discord",
   discordId: "987654321",  // Discord user ID
-  joinedAt: 2025-01-01T12:01:00Z,
-  seen: false,
-  present: true
+  joinedAt: 2025-01-01T12:01:00Z
 }
 ```
 
@@ -155,7 +146,7 @@ Private game information (readable only by that player).
 // rooms/ABC123 (updated by Cloud Function)
 {
   ...previousFields,
-  status: "dealt",
+  status: "started",
   word: "kot",
   impostorId: "firebase-uid-123",
   speakingOrder: ["987654321", "firebase-uid-123", "firebase-uid-456"],
@@ -196,7 +187,7 @@ Private game information (readable only by that player).
 ### Cloud Function
 - ✅ Copies `discordId` from `players/` to `secrets/`
 - ✅ Creates secrets for ALL players (web + discord)
-- ✅ Sets room `status: "dealt"` after creating secrets
+- ✅ Sets room `status: "started"` after creating secrets
 
 ## Migration Notes
 
@@ -253,8 +244,6 @@ interface Player {
   isHost: boolean;
   source: 'web' | 'discord';
   joinedAt: Timestamp;
-  seen: boolean;
-  present: boolean;
   discordId?: string; // Required if source === 'discord'
 }
 

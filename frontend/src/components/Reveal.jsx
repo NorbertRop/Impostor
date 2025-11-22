@@ -1,43 +1,23 @@
 import { useState, useEffect } from 'react';
-import { markSeen, restartGame } from '../api/room';
-import { subscribeRoom } from '../api/room';
+import { restartGame, getNextHint } from '../api/room';
 
-function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
-  const [revealed, setRevealed] = useState(false);
+function Reveal({ roomId, myUid, mySecret, players, isHost, onError, room }) {
   const [showRestartConfirm, setShowRestartConfirm] = useState(false);
   const [restarting, setRestarting] = useState(false);
-  const [room, setRoom] = useState(null);
+  const [revealedHints, setRevealedHints] = useState([]);
+  const [loadingHint, setLoadingHint] = useState(false);
 
-  const myPlayer = players.find(p => p.uid === myUid);
-
-  const handleReveal = async () => {
-    setRevealed(true);
-    try {
-      await markSeen(roomId, myUid, true);
-    } catch (error) {
-      console.error('Error marking seen:', error);
-      onError('Nie udało się zapisać');
-    }
-  };
-
+  // Restore revealed hints from database when secret loads
   useEffect(() => {
-    if (myPlayer?.seen) {
-      setRevealed(true);
+    if (mySecret?.revealedHints && Array.isArray(mySecret.revealedHints)) {
+      setRevealedHints(mySecret.revealedHints);
     }
-  }, [myPlayer?.seen]);
-
-  useEffect(() => {
-    const unsubscribe = subscribeRoom(roomId, (roomData) => {
-      setRoom(roomData);
-    });
-    return () => unsubscribe();
-  }, [roomId]);
+  }, [mySecret?.revealedHints]);
 
   const handleRestartGame = async () => {
     setRestarting(true);
     try {
       await restartGame(roomId);
-      setRevealed(false);
       setShowRestartConfirm(false);
     } catch (error) {
       console.error('Error restarting game:', error);
@@ -87,24 +67,7 @@ function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
           </div>
         </div>
       )}
-      {!revealed ? (
-        <div className="text-center w-full">
-          <div className="mb-4">
-            <span className="text-5xl">🎭</span>
-          </div>
-          <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-4">Twoja kolej!</h1>
-          <p className="text-base text-gray-600 mb-6">
-            Upewnij się, że tylko Ty widzisz ekran 👀
-          </p>
-          <button 
-            onClick={handleReveal} 
-            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold rounded-xl hover:from-purple-700 hover:to-indigo-700 transition-all shadow-2xl"
-          >
-            ✨ Pokaż moją rolę
-          </button>
-        </div>
-      ) : (
-        <div className="w-full">
+      <div className="w-full">
           {mySecret.role === 'impostor' ? (
             <div className="bg-gradient-to-br from-purple-100 to-pink-100 border-3 border-purple-500 rounded-xl p-4 mb-4 shadow-xl">
               <div className="text-center mb-3">
@@ -117,21 +80,45 @@ function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
                 Inni gracze widzą słowo, a Ty musisz udawać, że je znasz.
                 Spróbuj odkryć, co to za słowo, obserwując innych graczy! 🕵️
               </p>
-              {mySecret.hints && mySecret.hints.length > 0 && (
+                {(room?.totalHints) ? (
                 <div className="mt-3 bg-white/80 backdrop-blur-sm border-2 border-purple-300 rounded-lg p-3">
                   <h3 className="text-sm font-bold text-purple-700 mb-2 flex items-center gap-2">
                     💡 Podpowiedzi:
                   </h3>
-                  <ul className="space-y-1">
-                    {mySecret.hints.map((hint, index) => (
-                      <li key={index} className="text-xs text-gray-700 flex items-start gap-2">
-                        <span className="text-purple-500 font-bold">•</span>
-                        <span>{hint}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  
+                  {revealedHints.length > 0 && (
+                    <ul className="space-y-1 mb-3">
+                      {revealedHints.map((hint, index) => (
+                        <li key={index} className="text-xs text-gray-700 flex items-start gap-2 animate-fadeIn">
+                          <span className="text-purple-500 font-bold">•</span>
+                          <span>{hint}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  
+                  
+                  {room.totalHints && revealedHints.length < room.totalHints && (
+                    <button
+                      onClick={async () => {
+                        setLoadingHint(true);
+                        try {
+                          await getNextHint(roomId);
+                        } catch (err) {
+                          console.error('Error getting hint:', err);
+                          onError('Nie udało się pobrać podpowiedzi: ' + err.message);
+                        } finally {
+                          setLoadingHint(false);
+                        }
+                      }}
+                      disabled={loadingHint}
+                      className="w-full py-2 bg-purple-100 hover:bg-purple-200 text-purple-700 text-xs font-bold rounded transition-colors border border-purple-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {loadingHint ? '⏳ Ładowanie...' : `➕ Pokaż kolejną podpowiedź (${room.totalHints - revealedHints.length})`} 
+                    </button>
+                  )}
                 </div>
-              )}
+              ) : null}
             </div>
           ) : (
             <div className="bg-gradient-to-br from-green-100 to-emerald-100 border-3 border-green-500 rounded-xl p-4 mb-4 text-center shadow-xl">
@@ -145,6 +132,15 @@ function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
               <p className="text-sm text-gray-700 mt-3 font-medium">
                 🤫 Zapamiętaj to słowo i nie pokazuj go innym!
               </p>
+            </div>
+          )}
+
+          {mySecret.role !== 'impostor' && (
+            <div className="bg-purple-50 border border-purple-200 rounded-xl p-3 mb-3 flex items-center justify-center gap-2 animate-fadeIn">
+              <span className="text-xl">💡</span>
+              <span className="text-purple-900 font-medium">
+                Impostor użył podpowiedzi: <span className="font-bold text-lg">{room?.impostorHintsUsed ?? 0}</span>
+              </span>
             </div>
           )}
 
@@ -187,7 +183,6 @@ function Reveal({ roomId, myUid, mySecret, players, isHost, onError }) {
             </div>
           )}
         </div>
-      )}
     </div>
   );
 }

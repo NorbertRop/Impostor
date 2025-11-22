@@ -1,5 +1,60 @@
 import discord
+from firestore_client import get_db
 from loguru import logger
+
+
+class HintsView(discord.ui.View):
+    def __init__(self, hints: list[str], room_id: str, user_id: str):
+        super().__init__(timeout=None)
+        self.hints = hints
+        self.room_id = room_id
+        self.user_id = user_id
+        self.current_index = 1
+        self.update_button()
+
+    def update_button(self):
+        self.clear_items()
+        if self.current_index < len(self.hints):
+            remaining = len(self.hints) - self.current_index
+            button = discord.ui.Button(
+                label=f"Pokaż kolejną podpowiedź ({remaining})",
+                style=discord.ButtonStyle.primary,
+                custom_id="show_hint",
+            )
+            button.callback = self.show_next_hint
+            self.add_item(button)
+
+    async def show_next_hint(self, interaction: discord.Interaction):
+        self.current_index += 1
+        self.update_button()
+
+        # Update hints used in Firestore
+        try:
+            from bot.firestore_client import update_document
+
+            # We need room_id and user_id to update the secret
+            # These are not directly available in the view, so we need to pass them
+            if hasattr(self, "room_id") and hasattr(self, "user_id"):
+                await update_document(
+                    f"rooms/{self.room_id}/secrets/{self.user_id}",
+                    {"hintsUsed": self.current_index},
+                )
+        except Exception as e:
+            logger.error(f"Error updating hints used: {e}")
+
+        # Reconstruct embed with more hints
+        embed = interaction.message.embeds[0]
+        # Find the hints field and update it
+        for i, field in enumerate(embed.fields):
+            if field.name == "💡 Podpowiedzi":
+                visible_hints = self.hints[: self.current_index]
+                hints_text = "\n".join([f"• {hint}" for hint in visible_hints])
+                embed.set_field_at(
+                    i, name="💡 Podpowiedzi", value=hints_text, inline=False
+                )
+                break
+
+        await interaction.response.edit_message(embed=embed, view=self)
 
 
 async def send_word_dm(
@@ -8,8 +63,10 @@ async def send_word_dm(
     secret: dict,
     room_data: dict | None = None,
     all_players: dict | None = None,
+    hints: list[str] | None = None,
 ):
     try:
+        view = None
         if secret["role"] == "impostor":
             embed = discord.Embed(
                 title="🎭 Jesteś IMPOSTOREM!",
@@ -20,11 +77,15 @@ async def send_word_dm(
                 color=discord.Color.purple(),
             )
 
-            # Add hints if available
-            hints = secret.get("hints", [])
+            # Add hints if provided (from hint_data collection)
             if hints:
-                hints_text = "\n".join([f"• {hint}" for hint in hints])
+                # Show only first hint initially
+                visible_hints = hints[:1]
+                hints_text = "\n".join([f"• {hint}" for hint in visible_hints])
                 embed.add_field(name="💡 Podpowiedzi", value=hints_text, inline=False)
+
+                if len(hints) > 1:
+                    view = HintsView(hints, room_id, str(user.id))
         else:
             embed = discord.Embed(
                 title="📝 Twoje słowo",
@@ -70,7 +131,7 @@ async def send_word_dm(
             text="Możesz użyć /impostor reveal aby zobaczyć swoje słowo ponownie"
         )
 
-        await user.send(embed=embed)
+        await user.send(embed=embed, view=view)
         return True
     except discord.Forbidden:
         return False
@@ -87,7 +148,6 @@ def format_player_list(players: list) -> str:
     for i, player in enumerate(players, 1):
         status = "👑 Host" if player.get("isHost") else "🎮 Gracz"
         source = "🌐 Web" if player.get("source") == "web" else "💬 Discord"
-        seen = "✅" if player.get("seen") else "⏳"
-        lines.append(f"{i}. {player['name']} {status} {source} {seen}")
+        lines.append(f"{i}. {player['name']} {status} {source}")
 
     return "\n".join(lines)

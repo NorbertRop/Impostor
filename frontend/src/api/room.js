@@ -1,183 +1,126 @@
-import { 
-  collection, 
-  doc, 
-  setDoc, 
-  getDoc, 
-  getDocs,
-  updateDoc,
-  onSnapshot,
-  serverTimestamp,
-  query,
-  orderBy,
-  writeBatch
-} from 'firebase/firestore';
 import { db, auth } from '../firebase';
+import { doc, collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 
-export function generateRoomId() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let result = '';
-  for (let i = 0; i < 6; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
+// Base URL for Cloud Functions
+const FUNCTIONS_URL = import.meta.env.VITE_FUNCTIONS_URL || 
+  `http://127.0.0.1:5001/${import.meta.env.VITE_FIREBASE_PROJECT_ID || 'impostor-6320a'}/us-central1`;
+
+/**
+ * Helper to make authenticated requests to Firebase Cloud Functions
+ */
+async function callFunction(functionName, data = {}) {
+  const user = auth.currentUser;
+  if (!user) {
+    throw new Error('User not authenticated');
   }
-  return result;
+
+  const idToken = await user.getIdToken();
+  
+  const response = await fetch(`${FUNCTIONS_URL}/${functionName}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Request failed');
+  }
+
+  return response.json();
 }
 
-export async function createRoom(playerName) {
-  const roomId = generateRoomId();
-  const uid = auth.currentUser.uid;
-  
-  const roomRef = doc(db, 'rooms', roomId);
-  await setDoc(roomRef, {
-    hostUid: uid,
-    status: 'lobby',
-    createdAt: serverTimestamp(),
-    allowJoin: true
-  });
-  
-  const playerRef = doc(db, 'rooms', roomId, 'players', uid);
-  await setDoc(playerRef, {
-    name: playerName,
-    isHost: true,
-    source: 'web',
-    joinedAt: serverTimestamp(),
-    seen: false,
-    present: true
-  });
-  
-  return roomId;
+/**
+ * Creates a new room
+ */
+export async function createRoom(playerName, source = 'web') {
+  return callFunction('create_room', { playerName, source });
 }
 
-export async function joinRoom(roomId, playerName) {
-  const uid = auth.currentUser.uid;
-  
-  const roomRef = doc(db, 'rooms', roomId);
-  const roomSnap = await getDoc(roomRef);
-  
-  if (!roomSnap.exists()) {
-    throw new Error('Room does not exist');
-  }
-  
-  const roomData = roomSnap.data();
-  if (!roomData.allowJoin) {
-    throw new Error('Room is not accepting new players');
-  }
-  
-  if (roomData.status !== 'lobby') {
-    throw new Error('Game has already started');
-  }
-  
-  const playerRef = doc(db, 'rooms', roomId, 'players', uid);
-  await setDoc(playerRef, {
-    name: playerName,
-    isHost: false,
-    source: 'web',
-    joinedAt: serverTimestamp(),
-    seen: false,
-    present: true
-  });
-  
-  return roomId;
+/**
+ * Joins an existing room
+ */
+export async function joinRoom(roomId, playerName, source = 'web') {
+  return callFunction('join_room', { roomId, playerName, source });
 }
 
+/**
+ * Starts the game
+ */
+export async function startGame(roomId) {
+  return callFunction('start_game', { roomId });
+}
+
+/**
+ * Restarts the game
+ */
+export async function restartGame(roomId) {
+  return callFunction('restart_game', { roomId });
+}
+
+
+
+/**
+ * Gets the next hint for the impostor
+ */
+export async function getNextHint(roomId) {
+  return callFunction('get_next_hint', { roomId });
+}
+
+/**
+ * Subscribes to room data
+ */
 export function subscribeRoom(roomId, callback) {
   const roomRef = doc(db, 'rooms', roomId);
+  
   return onSnapshot(roomRef, (snapshot) => {
     if (snapshot.exists()) {
       callback({ id: snapshot.id, ...snapshot.data() });
     } else {
       callback(null);
     }
+  }, (error) => {
+    console.error('Error subscribing to room:', error);
+    callback(null);
   });
 }
 
+/**
+ * Subscribes to players in a room
+ */
 export function subscribePlayers(roomId, callback) {
   const playersRef = collection(db, 'rooms', roomId, 'players');
-  const q = query(playersRef, orderBy('joinedAt', 'asc'));
+  const playersQuery = query(playersRef, orderBy('joinedAt', 'asc'));
   
-  return onSnapshot(q, (snapshot) => {
-    const players = [];
-    snapshot.forEach((doc) => {
-      players.push({ uid: doc.id, ...doc.data() });
-    });
+  return onSnapshot(playersQuery, (snapshot) => {
+    const players = snapshot.docs.map(doc => ({
+      uid: doc.id,
+      ...doc.data()
+    }));
     callback(players);
+  }, (error) => {
+    console.error('Error subscribing to players:', error);
+    callback([]);
   });
 }
 
+/**
+ * Subscribes to the current user's secret in a room
+ */
 export function subscribeMySecret(roomId, uid, callback) {
   const secretRef = doc(db, 'rooms', roomId, 'secrets', uid);
+  
   return onSnapshot(secretRef, (snapshot) => {
     if (snapshot.exists()) {
       callback(snapshot.data());
     } else {
       callback(null);
     }
+  }, (error) => {
+    console.error('Error subscribing to secret:', error);
+    callback(null);
   });
 }
-
-export async function startGame(roomId) {
-  const playersRef = collection(db, 'rooms', roomId, 'players');
-  const playersSnap = await getDocs(playersRef);
-  
-  if (playersSnap.size < 2) {
-    throw new Error('Need at least 3 players to start');
-  }
-  
-  const roomRef = doc(db, 'rooms', roomId);
-  await updateDoc(roomRef, {
-    status: 'started'
-  });
-}
-
-export async function markSeen(roomId, uid, seen) {
-  const playerRef = doc(db, 'rooms', roomId, 'players', uid);
-  await updateDoc(playerRef, {
-    seen: seen
-  });
-}
-
-export async function toggleAllowJoin(roomId, allow) {
-  const roomRef = doc(db, 'rooms', roomId);
-  await updateDoc(roomRef, {
-    allowJoin: allow
-  });
-}
-
-export async function resetGame(roomId) {
-  const playersRef = collection(db, 'rooms', roomId, 'players');
-  const playersSnap = await getDocs(playersRef);
-  
-  const batch = writeBatch(db);
-  
-  playersSnap.forEach((playerDoc) => {
-    const playerRef = doc(db, 'rooms', roomId, 'players', playerDoc.id);
-    batch.update(playerRef, { seen: false });
-  });
-  
-  const roomRef = doc(db, 'rooms', roomId);
-  batch.update(roomRef, {
-    status: 'lobby',
-    allowJoin: true
-  });
-  
-  await batch.commit();
-}
-
-export async function restartGame(roomId) {
-  const playersRef = collection(db, 'rooms', roomId, 'players');
-  const playersSnap = await getDocs(playersRef);
-  
-  const batch = writeBatch(db);
-  
-  playersSnap.forEach((playerDoc) => {
-    const playerRef = doc(db, 'rooms', roomId, 'players', playerDoc.id);
-    batch.update(playerRef, { seen: false });
-  });
-  
-  const roomRef = doc(db, 'rooms', roomId);
-  batch.update(roomRef, {
-    status: 'started'
-  });
-  
-  await batch.commit();
-}
-

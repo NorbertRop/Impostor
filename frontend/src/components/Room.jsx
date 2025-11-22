@@ -99,7 +99,7 @@ function Room() {
     return null;
   }
 
-  const isHost = room.hostUid === myUid;
+  const isHost = room.hostId === myUid;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -129,16 +129,6 @@ function Room() {
       )}
 
       {room.status === 'started' && (
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <div className="text-center">
-            <div className="w-16 h-16 border-4 border-gray-200 border-t-green-500 rounded-full animate-spin mb-4 mx-auto"></div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Rozpoczynanie gry...</h2>
-            <p className="text-base text-gray-600">Losowanie ról i słów...</p>
-          </div>
-        </div>
-      )}
-
-      {(room.status === 'dealt' || room.status === 'playing') && (
         <Reveal
           roomId={roomId}
           myUid={myUid}
@@ -146,6 +136,7 @@ function Room() {
           players={players}
           isHost={isHost}
           onError={handleError}
+          room={room}
         />
       )}
     </div>

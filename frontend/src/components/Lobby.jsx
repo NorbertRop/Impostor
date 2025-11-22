@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { startGame, toggleAllowJoin } from '../api/room';
+import { startGame } from '../api/room';
 
 function Lobby({ roomId, room, players, isHost, onError }) {
   const [starting, setStarting] = useState(false);
-  const [toggling, setToggling] = useState(false);
 
   const handleStartGame = async () => {
     if (players.length < 2) {
@@ -21,17 +20,6 @@ function Lobby({ roomId, room, players, isHost, onError }) {
     }
   };
 
-  const handleToggleJoin = async () => {
-    setToggling(true);
-    try {
-      await toggleAllowJoin(roomId, !room.allowJoin);
-    } catch (error) {
-      console.error('Error toggling join:', error);
-      onError('Nie udało się zmienić ustawień');
-    } finally {
-      setToggling(false);
-    }
-  };
 
   const handleCopyRoomCode = () => {
     navigator.clipboard.writeText(roomId);
@@ -107,14 +95,7 @@ function Lobby({ roomId, room, players, isHost, onError }) {
           >
             {starting ? '⏳ Rozpoczynanie...' : '🎮 Rozpocznij grę'}
           </button>
-          
-          <button
-            onClick={handleToggleJoin}
-            disabled={toggling}
-            className="w-full px-4 py-2 bg-white border-2 border-gray-300 text-gray-800 font-semibold rounded-lg hover:bg-gray-50 hover:border-gray-400 disabled:opacity-50 transition-all text-sm"
-          >
-            {room.allowJoin ? '🔒 Zablokuj dołączanie' : '🔓 Odblokuj dołączanie'}
-          </button>
+    
           
           {players.length < 2 && (
             <div className="mt-3 p-3 bg-amber-50 border-l-4 border-amber-500 rounded-lg">

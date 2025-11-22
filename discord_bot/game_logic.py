@@ -34,7 +34,6 @@ async def create_room(
         "hostSource": source,
         "status": "lobby",
         "createdAt": SERVER_TIMESTAMP,
-        "allowJoin": True,
     }
 
     if channel_id:
@@ -48,8 +47,6 @@ async def create_room(
         "name": username,
         "isHost": True,
         "joinedAt": SERVER_TIMESTAMP,
-        "seen": False,
-        "present": True,
         "source": source,
         "discordId": user_id,
     }
@@ -67,22 +64,12 @@ async def join_room(room_id: str, user_id: str, username: str, source: str = "di
     if not room_doc.exists:
         raise ValueError(f"Room {room_id} does not exist")
 
-    room_data = room_doc.to_dict()
-
-    if not room_data.get("allowJoin", True):
-        raise ValueError("Room is not accepting new players")
-
-    if room_data.get("status") != "lobby":
-        raise ValueError("Game has already started")
-
     # Add player
     player_ref = room_ref.collection("players").document(user_id)
     player_data = {
         "name": username,
         "isHost": False,
         "joinedAt": SERVER_TIMESTAMP,
-        "seen": False,
-        "present": True,
         "source": source,
     }
 
@@ -119,7 +106,6 @@ async def get_room_status(room_id: str):
         "status": room_data.get("status"),
         "hostUid": room_data.get("hostUid"),
         "hostSource": room_data.get("hostSource"),
-        "allowJoin": room_data.get("allowJoin"),
         "players": players,
     }
 
@@ -145,10 +131,6 @@ async def restart_game(room_id: str, host_uid: str):
 
     secrets_ref = room_ref.collection("secrets")
     secrets_docs = list(secrets_ref.stream())
-
-    for player_doc in players_docs:
-        player_ref = room_ref.collection("players").document(player_doc.id)
-        player_ref.update({"seen": False})
 
     for secret_doc in secrets_docs:
         secret_doc.reference.delete()

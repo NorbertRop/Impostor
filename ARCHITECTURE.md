@@ -32,12 +32,10 @@
          │  │    {roomId}/            │ │
          │  │      - hostUid          │ │
          │  │      - status           │ │
-         │  │      - allowJoin        │ │
          │  │      players/           │ │
          │  │        {uid}/           │ │
          │  │          - name         │ │
          │  │          - isHost       │ │
-         │  │          - seen         │ │
          │  │      secrets/           │ │
          │  │        {uid}/           │ │
          │  │          - role         │ │
@@ -101,7 +99,7 @@ Host Device                    Firebase                 Cloud Function         O
     │                             │<─setDoc(secrets/uid2)────│                     │
     │                             │<─setDoc(secrets/uid3)────│                     │
     │                             │                          │                     │
-    │                             │<─updateDoc(status='dealt')│                     │
+    │                             │<─updateDoc(status='started')│                     │
     │                             │                          │                     │
     │                             │────status update─────────────────────────────>│
     │                             │──secrets/uid available───────────────────────>│
@@ -117,15 +115,6 @@ Player Device                  Firebase
     │                             │
     │ [User clicks "Show"]        │
     │                             │
-    │ [User clicks "Seen"]        │
-    │                             │
-    │──updateDoc(seen=true)──────>│
-    │                             │
-    │<────success─────────────────│
-    │                             │
-All Devices                       │
-    │<────player.seen update──────│
-    │  (via subscribePlayers)     │
 ```
 
 ## Component Hierarchy
@@ -154,13 +143,12 @@ App (Router)
         │           ├── Start game
         │           └── Lock/unlock join
         │
-        └── status === 'dealt' || 'playing'
+        └── status === 'started'
             └── Reveal
                 ├── Pre-reveal
                 │   └── "Show my role" button
                 ├── Post-reveal
-                │   ├── Role/word display
-                │   └── "I've seen it" button
+                │   └── Role/word display
                 └── Waiting
                     └── Ready counter
 ```
@@ -173,13 +161,12 @@ App (Router)
 - Revealed state (has player clicked reveal?)
 
 ### Firebase State (Real-time)
-- Room data (status, hostUid, allowJoin)
-- Players list (names, seen status)
+- Room data (status, hostUid)
+- Players list (names)
 - My secret (role, word) - private to each player
 
 ### Derived State
 - `isHost` - computed from `room.hostUid === myUid`
-- `seenCount` - computed from `players.filter(p => p.seen).length`
 - `canStart` - computed from `isHost && players.length >= 3`
 
 ## Security Model
@@ -199,7 +186,6 @@ App (Router)
 │  WRITE PERMISSIONS:                                   │
 │    ✓ Host can: start game, update room, write secrets│
 │    ✓ Players can: update own player doc              │
-│    ✓ Anyone can: join room (if allowJoin=true)       │
 │                                                        │
 │  RULES ENFORCED BY:                                   │
 │    - firestore.rules (server-side)                    │

@@ -19,10 +19,20 @@ service cloud.firestore {
 
       match /secrets/{uid} {
         allow read: if request.auth != null && request.auth.uid == uid;
-        allow create, update: if request.auth != null && isHost(roomId);
+        allow create: if request.auth != null && isHost(roomId);
+        allow update: if request.auth != null && (
+          isHost(roomId) || 
+          (request.auth.uid == uid && 
+           request.resource.data.diff(resource.data).affectedKeys().hasOnly(['hintsUsed']) &&
+           request.resource.data.hintsUsed >= resource.data.get('hintsUsed', 0))
+        );
         allow delete: if request.auth != null && isHost(roomId);
+      }
+
+      // Server-only collection for hint storage - no client access
+      match /hint_data/{uid} {
+        allow read, write: if false;
       }
     }
   }
 }
-

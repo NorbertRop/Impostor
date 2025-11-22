@@ -31,7 +31,6 @@ dist/
 
 # Environment
 .env
-.env.local
 
 # Firebase
 .firebase/

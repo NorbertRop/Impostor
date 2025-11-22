@@ -1,4 +1,4 @@
-const CACHE_NAME = 'impostor-v5';
+const CACHE_NAME = 'impostor-v6';
 const urlsToCache = [
   '/',
   '/index.html',

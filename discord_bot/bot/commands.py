@@ -117,16 +117,12 @@ class GameControlView(View):
 
             status_emoji = {
                 "lobby": "⏳",
-                "dealt": "🎮",
-                "playing": "🎭",
-                "ended": "🏁",
+                "started": "🎮",
             }
 
             status_text = {
                 "lobby": "Poczekalnia",
-                "dealt": "Ujawnianie słów",
-                "playing": "Gra w toku",
-                "ended": "Zakończona",
+                "started": "Gra w toku",
             }
 
             embed = discord.Embed(
@@ -140,11 +136,6 @@ class GameControlView(View):
             embed.add_field(
                 name="Gracze",
                 value=f"{len(room_status['players'])} graczy",
-                inline=True,
-            )
-            embed.add_field(
-                name="Dołączanie",
-                value="🟢 Otwarte" if room_status.get("allowJoin") else "🔴 Zamknięte",
                 inline=True,
             )
             embed.add_field(
@@ -303,14 +294,12 @@ async def status_command(interaction: discord.Interaction, code: str | None = No
             "lobby": "⏳",
             "dealt": "🎮",
             "playing": "🎭",
-            "ended": "🏁",
         }
 
         status_text = {
             "lobby": "Poczekalnia",
             "dealt": "Ujawnianie słów",
             "playing": "Gra w toku",
-            "ended": "Zakończona",
         }
 
         embed = discord.Embed(title=f"Status pokoju {code}", color=discord.Color.blue())
@@ -322,11 +311,6 @@ async def status_command(interaction: discord.Interaction, code: str | None = No
         embed.add_field(
             name="Gracze",
             value=f"{len(room_status['players'])} graczy",
-            inline=True,
-        )
-        embed.add_field(
-            name="Dołączanie",
-            value="🟢 Otwarte" if room_status.get("allowJoin") else "🔴 Zamknięte",
             inline=True,
         )
         embed.add_field(
